@@ -15,14 +15,14 @@ import {
   Copy,
   Shuffle,
   Search,
-  Eye,
   Contrast,
-  Sun,
-  Moon,
   Settings,
   History,
-  Download,
-  Upload
+  Paintbrush,
+  Layers,
+  Droplets,
+  Star,
+  Flame
 } from "lucide-react";
 import { useTheme, ThemeColor } from "@/hooks/use-theme";
 
@@ -48,6 +48,41 @@ interface GradientColor {
   colors: string[];
 }
 
+// Nouvelles collections de couleurs tendance
+interface ColorCollection {
+  name: string;
+  description: string;
+  colors: string[];
+  icon: React.ElementType;
+}
+
+const TRENDING_COLLECTIONS: ColorCollection[] = [
+  {
+    name: "Neo Pastel",
+    description: "Couleurs pastel modernes avec une touche de vivacité",
+    colors: ["#FFD6E0", "#FFEFCF", "#C1FFC1", "#C1F0FF", "#E0C1FF"],
+    icon: Droplets
+  },
+  {
+    name: "Tech Neon",
+    description: "Palette néon vibrante pour interfaces futuristes",
+    colors: ["#00FFFF", "#FF00FF", "#FE53BB", "#08F7FE", "#09FBD3"],
+    icon: Flame
+  },
+  {
+    name: "Earthy Tones",
+    description: "Couleurs naturelles et apaisantes",
+    colors: ["#D4A373", "#CCD5AE", "#E9EDC9", "#FAEDCD", "#FEFAE0"],
+    icon: Layers
+  },
+  {
+    name: "Midnight",
+    description: "Tons sombres et élégants",
+    colors: ["#0F172A", "#1E293B", "#334155", "#475569", "#64748B"],
+    icon: Star
+  }
+];
+
 type ColorPickerMode = 'primary' | 'accent' | 'both' | 'custom' | 'gradient';
 type ColorFormat = 'hex' | 'rgb' | 'hsl' | 'hsv';
 type ViewMode = 'grid' | 'list' | 'wheel';
@@ -63,11 +98,13 @@ interface ColorPickerProps {
   showCustomColors?: boolean;
   showGradients?: boolean;
   showAccessibility?: boolean;
+  showTrendingCollections?: boolean;
   maxHistoryItems?: number;
   onColorChange?: (color: string, mode: ColorPickerMode) => void;
   onFormatChange?: (format: ColorFormat) => void;
   disabled?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'minimal' | 'embedded';
 }
 
 // Hook personnalisé pour la gestion des couleurs
@@ -75,7 +112,7 @@ const useColorManager = () => {
   const [customColors, setCustomColors] = React.useState<CustomColor[]>([]);
   const [favorites, setFavorites] = React.useState<string[]>([]);
   const [history, setHistory] = React.useState<ColorHistory[]>([]);
-  const [gradients, setGradients] = React.useState<GradientColor[]>([
+  const [gradients] = React.useState<GradientColor[]>([
     {
       id: '1',
       name: 'Sunset',
@@ -133,6 +170,14 @@ const useColorManager = () => {
     setHistory([]);
   }, []);
 
+  // Ajout des collections tendance
+  const applyTrendingCollection = React.useCallback((collection: ColorCollection, mode: ColorPickerMode) => {
+    // Ajoute toutes les couleurs de la collection à l'historique
+    collection.colors.forEach(color => {
+      addToHistory(color, mode);
+    });
+  }, [addToHistory]);
+
   return {
     customColors,
     favorites,
@@ -142,7 +187,8 @@ const useColorManager = () => {
     removeCustomColor,
     toggleFavorite,
     addToHistory,
-    clearHistory
+    clearHistory,
+    applyTrendingCollection
   };
 };
 
@@ -160,7 +206,8 @@ const colorUtils = {
   rgbToHsl: (r: number, g: number, b: number) => {
     r /= 255; g /= 255; b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
+    let h, s;
+    const l = (max + min) / 2;
 
     if (max === min) {
       h = s = 0;
@@ -207,17 +254,13 @@ const colorUtils = {
   formatColor: (color: string, format: ColorFormat) => {
     const rgb = colorUtils.hexToRgb(color);
     if (!rgb) return color;
+    const hsl = colorUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
 
     switch (format) {
       case 'rgb':
         return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
       case 'hsl':
-        const hsl = colorUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
         return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
-      case 'hsv':
-        // Conversion HSV simplifiée
-        const hsv = colorUtils.rgbToHsl(rgb.r, rgb.g, rgb.b);
-        return `hsv(${hsv.h}, ${hsv.s}%, ${hsv.l}%)`;
       default:
         return color;
     }
@@ -254,13 +297,14 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
   showFavorites = true,
   showHistory = true,
   showCustomColors = true,
-  showGradients = false,
   showAccessibility = false,
+  showTrendingCollections = true,
   maxHistoryItems = 10,
   onColorChange,
   onFormatChange,
   disabled = false,
-  size = 'md'
+  size = 'md',
+  variant = 'default'
 }) => {
   const { colorCategories, setTheme, currentTheme, getColorValue } = useTheme();
   const colorManager = useColorManager();
@@ -271,7 +315,6 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
   const [hoveredColor, setHoveredColor] = React.useState<string | null>(null);
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedFormat, setSelectedFormat] = React.useState<ColorFormat>(format);
-  const [viewMode, setViewMode] = React.useState<ViewMode>('grid');
   const [activeTab, setActiveTab] = React.useState('colors');
   const [customColorName, setCustomColorName] = React.useState('');
   const [showColorInput, setShowColorInput] = React.useState(false);
@@ -666,6 +709,97 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
     </motion.div>
   );
 
+  // Rendu des collections tendance
+  const renderTrendingCollections = () => (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-medium text-white">Collections tendance</h3>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="text-white/60 hover:text-white"
+        >
+          <Paintbrush className="h-3 w-3 mr-1" />
+          Explorer
+        </Button>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-3">
+        {TRENDING_COLLECTIONS.map((collection, index) => {
+          const IconComponent = collection.icon;
+          return (
+            <motion.div
+              key={index}
+              className="p-3 bg-white/10 rounded-lg hover:bg-white/15 transition-colors cursor-pointer group"
+              whileHover={{ y: -2 }}
+              onClick={() => colorManager.applyTrendingCollection(collection, mode)}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-1 rounded-md bg-white/15">
+                  <IconComponent className="h-3.5 w-3.5 text-white" />
+                </div>
+                <h4 className="text-sm font-medium text-white">{collection.name}</h4>
+              </div>
+              <div className="flex mb-2">
+                {collection.colors.map((clr, i) => (
+                  <div
+                    key={i}
+                    className="h-4 w-full first:rounded-l-sm last:rounded-r-sm border-r border-white/5 last:border-0"
+                    style={{ backgroundColor: clr }}
+                  />
+                ))}
+              </div>
+              <p className="text-xs text-white/60 line-clamp-1">{collection.description}</p>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  // Rendu du composant selon la variante
+  if (variant === 'minimal') {
+    return (
+      <div className={cn("flex flex-wrap gap-1", className)}>
+        {Object.entries(colorCategories).slice(0, 2).map(([category, colors]) => (
+          <div key={category} className="flex gap-1">
+            {colors.slice(0, 5).map((colorItem) => {
+              const colorValue = getColorValue(colorItem as ThemeColor, '500');
+              const isSelected = isColorSelected(colorItem as ThemeColor);
+              
+              return (
+                <motion.button
+                  key={colorItem}
+                  className={cn(
+                    "h-6 w-6 rounded-full transition-all duration-200",
+                    "border-2 focus:outline-none",
+                    isSelected
+                      ? "border-white ring-2 ring-[color:var(--accent-400)] scale-110" 
+                      : "border-white/30 hover:border-white hover:scale-105"
+                  )}
+                  style={{ backgroundColor: colorValue }}
+                  onClick={() => handleColorChange(colorItem as ThemeColor)}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                />
+              );
+            })}
+          </div>
+        ))}
+        
+        <motion.button
+          onClick={() => handleColorChange(colorUtils.generateRandomColor(), true)}
+          className="h-6 w-6 rounded-full bg-gradient-to-r from-[color:var(--accent-500)] to-[color:var(--primary-500)] border-2 border-white/30 flex items-center justify-center"
+          whileHover={{ y: -2, rotate: 180 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Shuffle className="h-3 w-3 text-white" />
+        </motion.button>
+      </div>
+    );
+  }
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -739,10 +873,15 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
             {/* Tabs pour organiser le contenu */}
             <motion.div variants={itemVariants}>
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-4 bg-white/10 rounded-lg p-1 mb-4">
+                <TabsList className="grid w-full grid-cols-5 bg-white/10 rounded-lg p-1 mb-4">
                   <TabsTrigger value="colors" className="text-xs data-[state=active]:bg-[color:var(--accent-500)] data-[state=active]:text-white">
                     Couleurs
                   </TabsTrigger>
+                  {showTrendingCollections && (
+                    <TabsTrigger value="trending" className="text-xs data-[state=active]:bg-[color:var(--accent-500)] data-[state=active]:text-white">
+                      Tendances
+                    </TabsTrigger>
+                  )}
                   {showFavorites && (
                     <TabsTrigger value="favorites" className="text-xs data-[state=active]:bg-[color:var(--accent-500)] data-[state=active]:text-white">
                       Favoris
@@ -750,7 +889,7 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
                   )}
                   {showCustomColors && (
                     <TabsTrigger value="custom" className="text-xs data-[state=active]:bg-[color:var(--accent-500)] data-[state=active]:text-white">
-                      Personnalisé
+                      Perso
                     </TabsTrigger>
                   )}
                   {showHistory && (
@@ -776,7 +915,14 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
                   ))}
                 </TabsContent>
 
-                {/* Onglet Favoris */}
+                {/* Nouvel onglet Collections tendance */}
+                {showTrendingCollections && (
+                  <TabsContent value="trending" className="space-y-4 max-h-80 overflow-y-auto">
+                    {renderTrendingCollections()}
+                  </TabsContent>
+                )}
+
+                {/* Autres onglets existants */}
                 {showFavorites && (
                   <TabsContent value="favorites" className="space-y-4 max-h-80 overflow-y-auto">
                     {colorManager.favorites.length === 0 ? (
@@ -1078,36 +1224,6 @@ const EnhancedColorPicker: React.FC<ColorPickerProps> = ({
   );
 };
 
-// Hook pour la gestion des raccourcis clavier
-const useColorPickerKeyboard = (isOpen: boolean, onClose: () => void) => {
-  React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) return;
-      
-      switch (event.key) {
-        case 'Escape':
-          onClose();
-          break;
-        case 'c':
-          if (event.ctrlKey || event.metaKey) {
-            event.preventDefault();
-            // Logique de copie
-          }
-          break;
-        case 'r':
-          if (event.ctrlKey || event.metaKey) {
-            event.preventDefault();
-            // Couleur aléatoire
-          }
-          break;
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
-};
-
 // Composant d'exportation avec toutes les optimisations
 const ColorPicker = React.memo(EnhancedColorPicker);
 
@@ -1121,8 +1237,9 @@ export type {
   ViewMode,
   CustomColor,
   ColorHistory,
-  GradientColor
+  GradientColor,
+  ColorCollection
 };
 
 // Utilitaires exportés
-export { colorUtils };
+export { colorUtils, TRENDING_COLLECTIONS };

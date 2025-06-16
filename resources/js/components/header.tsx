@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {DesktopNav, MobileNav } from '@/components/ui/menu';
 import { ExtendedPageProps } from '@/types/global';
 import { useFavorites } from '@/hooks/use-favorites';
+import ThemeSwitcher from '@/components/ui/theme-switcher';
 
 const Header: React.FC = () => {
   const pageProps = usePage<ExtendedPageProps>().props;
@@ -193,6 +194,19 @@ const Header: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
+              {/* Theme Switcher */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ThemeSwitcher 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-white/20 hover:border-white/40"
+                />
+              </motion.div>
+
               {/* Favorites avec animation sophistiquée */}
               <Link href="/favorites" className="relative">
                 <motion.div

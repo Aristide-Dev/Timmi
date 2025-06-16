@@ -34,11 +34,6 @@ if (app()->environment(['local', 'testing'])) {
     })->name('theme.demo');
 }
 
-// Route temporaire pour la page de connexion (en attendant l'auth complète)
-Route::get('/login', function () {
-    return Inertia::render('auth/login');
-})->name('login');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
