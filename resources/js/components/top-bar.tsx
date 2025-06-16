@@ -39,7 +39,7 @@ export const TopBar = () => {
 
     return (
         <motion.div 
-            className="bg-gradient-to-r from-slate-800 via-primary to-slate-800 text-white shadow-xl border-none relative overflow-hidden"
+            className="bg-gradient-to-r from-slate-800 via-[color:var(--primary-600)] to-slate-800 text-white shadow-xl border-none relative overflow-hidden"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -154,7 +154,7 @@ export const TopBar = () => {
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/10 to-[color:var(--accent-500)]/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                             <div className="p-2 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors duration-300 group-hover:shadow-lg relative z-10">
                                 <Phone size={16} className="text-white" />
                             </div>
@@ -169,7 +169,7 @@ export const TopBar = () => {
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/10 to-[color:var(--accent-500)]/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                             <div className="p-2 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors duration-300 group-hover:shadow-lg relative z-10">
                                 <Mail size={16} className="text-white" />
                             </div>
@@ -195,7 +195,7 @@ export const TopBar = () => {
                             >
                                 <div className="relative w-full group">
                                     {/* Effet de glassmorphism sophistiqué au focus */}
-                                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full opacity-0 group-focus-within:opacity-100 transition-all duration-300 blur-md" />
+                                    <div className="absolute -inset-1 bg-gradient-to-r from-[color:var(--primary-500)]/20 via-[color:var(--accent-500)]/20 to-[color:var(--primary-500)]/20 rounded-full opacity-0 group-focus-within:opacity-100 transition-all duration-300 blur-md" />
                                     
                                     <input
                                         type="text"
@@ -263,7 +263,7 @@ export const TopBar = () => {
                                             animate={{ opacity: 1, scale: 1 }}
                                             exit={{ opacity: 0, scale: 0 }}
                                         >
-                                            <div className="w-4 h-4 border-2 border-white/30 border-t-blue-400 rounded-full animate-spin" />
+                                            <div className="w-4 h-4 border-2 border-white/30 border-t-[color:var(--primary-400)] rounded-full animate-spin" />
                                         </motion.div>
                                     )}
                                 </div>

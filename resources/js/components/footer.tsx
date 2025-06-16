@@ -4,7 +4,7 @@ import {
   Globe, Building2, FileText, Users, Sparkles, Send, ArrowRight,
   Sun, Moon, Palette, Info
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import { useTheme } from '@/hooks/use-theme';
 import { cn } from '@/lib/utils';
@@ -137,38 +137,38 @@ const Footer: React.FC = () => {
     <footer 
       className={cn(
         "relative text-white shadow-2xl overflow-hidden",
-        "bg-gradient-to-br from-[var(--primary-800)] via-[var(--primary-700)] to-[var(--primary-600)]"
+        "bg-gradient-to-br from-[color:var(--primary-800)] via-[color:var(--primary-700)] to-[color:var(--primary-600)]"
       )} 
       role="contentinfo"
     >
       {/* Effet de brillance décoratif amélioré */}
       <div className={cn(
         "absolute inset-0 opacity-60",
-        "bg-gradient-to-r from-[var(--primary-600)]/20 via-[var(--accent-500)]/30 to-[var(--primary-600)]/20"
+        "bg-gradient-to-r from-[color:var(--primary-600)]/20 via-[color:var(--accent-500)]/30 to-[color:var(--primary-600)]/20"
       )} />
       
       {/* Particules décoratives ultra-sophistiquées inspirées du top-bar */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
             className="absolute rounded-full bg-white/20"
             style={{
-              top: `${15 + i * 8}%`,
-              left: `${5 + i * 8}%`,
-              width: `${Math.random() * 8 + 4}px`,
-              height: `${Math.random() * 8 + 4}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              width: `${Math.random() * 6 + 2}px`,
+              height: `${Math.random() * 6 + 2}px`,
             }}
             animate={{
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1],
-              y: [0, -20, 0],
-              x: [0, Math.random() * 12 - 6, 0],
+              opacity: [0.2, 0.6, 0.2],
+              scale: [1, 1.3, 1],
+              y: [0, -15, 0],
+              x: [0, Math.random() * 10 - 5, 0],
             }}
             transition={{
-              duration: 5 + i * 0.3,
+              duration: 3 + i * 0.5,
               repeat: Infinity,
-              delay: i * 0.4,
+              delay: i * 0.3,
               ease: "easeInOut"
             }}
           />
@@ -179,10 +179,10 @@ const Footer: React.FC = () => {
           className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/8 to-transparent"
           animate={{ x: ['-100%', '100%'] }}
           transition={{ 
-            duration: 15, 
+            duration: 8, 
             repeat: Infinity, 
             ease: "linear",
-            repeatDelay: 5
+            repeatDelay: 2
           }}
         />
 
@@ -190,7 +190,7 @@ const Footer: React.FC = () => {
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={`shine-${i}`}
-            className="absolute w-1.5 h-1.5 bg-accent-300/40 rounded-full"
+            className="absolute w-1.5 h-1.5 bg-[color:var(--accent-300)]/40 rounded-full"
             style={{
               top: `${20 + i * 12}%`,
               left: `${15 + i * 10}%`,
@@ -234,7 +234,7 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Effet de halo lumineux */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-500/5 to-transparent opacity-50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[color:var(--accent-500)]/5 to-transparent opacity-50" />
 
       <div className="relative container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -250,7 +250,7 @@ const Footer: React.FC = () => {
           >
             {/* Effet de halo au hover inspiré de la top-bar */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-accent-500/15 to-primary-500/10 rounded-2xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
+              className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/10 via-[color:var(--accent-500)]/15 to-[color:var(--primary-500)]/10 rounded-2xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
               initial={{ scale: 0.8 }}
               whileHover={{ scale: 1.2 }}
               transition={{ duration: 0.4 }}
@@ -258,8 +258,8 @@ const Footer: React.FC = () => {
 
             <div className={cn(
               "glass-strong rounded-2xl p-6 space-y-6 transition-all duration-500",
-              "border border-white/10 hover:border-accent-400/30",
-              "hover:shadow-lg hover:shadow-accent-500/20"
+              "border border-white/10 hover:border-[color:var(--accent-400)]/30",
+              "hover:shadow-lg hover:shadow-[color:var(--accent-500)]/20"
             )}>
               {/* Logo avec effets sophistiqués */}
               <Link href="/" className="group/logo relative overflow-hidden rounded-2xl p-3 -m-3 block">
@@ -273,11 +273,11 @@ const Footer: React.FC = () => {
                 
                 <div className="relative flex items-center gap-3">
                   <motion.div 
-                    className="w-12 h-12 bg-gradient-to-br from-white/30 to-accent-500/20 rounded-xl flex items-center justify-center relative overflow-hidden"
+                    className="w-12 h-12 bg-gradient-to-br from-white/30 to-[color:var(--accent-500)]/20 rounded-xl flex items-center justify-center relative overflow-hidden"
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <LazyImage
+                    <img
                       src="/images/logo.svg"
                       alt="MyApp Logo"
                       className="w-8 h-8 object-contain relative z-10"
@@ -288,13 +288,13 @@ const Footer: React.FC = () => {
                       animate={{ rotate: [0, 360] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                     >
-                      <Sparkles size={10} className="text-accent-300" />
+                      <Sparkles size={10} className="text-[color:var(--accent-300)]" />
                     </motion.div>
                   </motion.div>
                   <div>
                     <span className={cn(
                       "text-2xl font-bold bg-clip-text text-transparent",
-                      "bg-gradient-to-r from-white to-[var(--accent-200)]"
+                      "bg-gradient-to-r from-white to-[color:var(--accent-200)]"
                     )}>MyApp</span>
                     <p className="text-xs text-white/70 tracking-wider uppercase font-medium">
                       {currentTheme.name}
@@ -314,17 +314,17 @@ const Footer: React.FC = () => {
               
               {/* Badge technologique sophistiqué */}
               <motion.div 
-                className="glass rounded-xl p-4 border border-white/10 hover:border-accent-400/50 transition-all duration-300 group/tech relative overflow-hidden"
+                className="glass rounded-xl p-4 border border-white/10 hover:border-[color:var(--accent-400)]/50 transition-all duration-300 group/tech relative overflow-hidden"
                 whileHover={{ scale: 1.02 }}
               >
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-500/10 to-transparent opacity-0 group-hover/tech:opacity-100"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-[color:var(--accent-500)]/10 to-transparent opacity-0 group-hover/tech:opacity-100"
                   initial={{ x: '-100%' }}
                   whileHover={{ x: '100%' }}
                   transition={{ duration: 0.6 }}
                 />
                 <h4 className="font-semibold mb-2 flex items-center gap-2 relative z-10">
-                  <Globe className="w-4 h-4 text-accent-300" />
+                  <Globe className="w-4 h-4 text-[color:var(--accent-300)]" />
                   Technologie moderne
                 </h4>
                 <p className="text-sm text-white/80 relative z-10">Laravel 12 • React 19 • TypeScript • Tailwind CSS 4</p>
@@ -507,7 +507,7 @@ const Footer: React.FC = () => {
           >
             {/* Effet de halo au hover */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-accent-500/15 to-primary-500/10 rounded-2xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
+              className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/10 via-[color:var(--accent-500)]/15 to-[color:var(--primary-500)]/10 rounded-2xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
               initial={{ scale: 0.8 }}
               whileHover={{ scale: 1.2 }}
               transition={{ duration: 0.4 }}
@@ -515,27 +515,27 @@ const Footer: React.FC = () => {
 
             <div className={cn(
               "glass-strong rounded-2xl p-6 space-y-6 transition-all duration-500",
-              "border border-white/10 hover:border-accent-400/30",
-              "hover:shadow-lg hover:shadow-accent-500/20"
+              "border border-white/10 hover:border-[color:var(--accent-400)]/30",
+              "hover:shadow-lg hover:shadow-[color:var(--accent-500)]/20"
             )}>
-              <h3 className="text-xl font-bold text-accent-200 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-[color:var(--accent-200)] flex items-center gap-2">
                 <motion.div
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-              <Globe className="w-5 h-5" />
+                  <Globe className="w-5 h-5" />
                 </motion.div>
-              Liens utiles
+                Liens utiles
                 {hoveredSection === 'links' && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Sparkles size={14} className="text-accent-300" />
+                    <Sparkles size={14} className="text-[color:var(--accent-300)]" />
                   </motion.div>
                 )}
-            </h3>
+              </h3>
               <div className="space-y-2">
               {usefulLinks.map((link, index) => (
                 <motion.div
@@ -546,7 +546,7 @@ const Footer: React.FC = () => {
                 >
                   <Link
                     href={link.href}
-                      className="flex items-center gap-3 text-white/90 hover:text-white p-3 rounded-xl hover:glass-strong transition-all duration-300 group/link relative overflow-hidden border border-transparent hover:border-accent-400/30"
+                      className="flex items-center gap-3 text-white/90 hover:text-white p-3 rounded-xl hover:glass-strong transition-all duration-300 group/link relative overflow-hidden border border-transparent hover:border-[color:var(--accent-400)]/30"
                   >
                       <motion.div 
                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/link:opacity-100"
@@ -555,7 +555,7 @@ const Footer: React.FC = () => {
                         transition={{ duration: 0.6 }}
                       />
                       <motion.div 
-                        className="p-2 rounded-lg bg-white/10 text-accent-300 relative z-10"
+                        className="p-2 rounded-lg bg-white/10 text-[color:var(--accent-300)] relative z-10"
                         whileHover={{ scale: 1.1, rotate: 360 }}
                         transition={{ duration: 0.6 }}
                       >
@@ -581,9 +581,9 @@ const Footer: React.FC = () => {
           </motion.div>
 
           {/* Newsletter Section avec effets ultra-sophistiqués */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             className="relative group"
             onMouseEnter={() => setHoveredSection('newsletter')}
@@ -591,7 +591,7 @@ const Footer: React.FC = () => {
           >
             {/* Effet de halo au hover */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-accent-500/10 via-primary-500/15 to-accent-500/10 rounded-2xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
+              className="absolute inset-0 bg-gradient-to-r from-[color:var(--accent-500)]/10 via-[color:var(--primary-500)]/15 to-[color:var(--accent-500)]/10 rounded-2xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
               initial={{ scale: 0.8 }}
               whileHover={{ scale: 1.2 }}
               transition={{ duration: 0.4 }}
@@ -599,11 +599,11 @@ const Footer: React.FC = () => {
 
             <div className={cn(
               "glass-strong rounded-2xl p-6 space-y-6 transition-all duration-500",
-              "border border-white/10 hover:border-accent-400/30",
-              "hover:shadow-lg hover:shadow-accent-500/20"
+              "border border-white/10 hover:border-[color:var(--accent-400)]/30",
+              "hover:shadow-lg hover:shadow-[color:var(--accent-500)]/20"
             )}>
               <div className="text-center">
-                <h3 className="text-2xl font-bold mb-2 text-accent-200 flex items-center justify-center gap-2">
+                <h3 className="text-2xl font-bold mb-2 text-[color:var(--accent-200)] flex items-center justify-center gap-2">
                   <motion.div
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
@@ -617,46 +617,46 @@ const Footer: React.FC = () => {
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Sparkles size={16} className="text-accent-300" />
+                      <Sparkles size={16} className="text-[color:var(--accent-300)]" />
                     </motion.div>
                   )}
                 </h3>
                 <p className="text-white/80 mb-6">
-              Recevez nos dernières actualités et mises à jour directement dans votre boîte mail.
-            </p>
+                  Recevez nos dernières actualités et mises à jour directement dans votre boîte mail.
+                </p>
               </div>
               
               <form onSubmit={handleNewsletterSubmit} className="space-y-4">
                 <div className="relative group/input">
                   <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-accent-500/20 to-primary-500/20 rounded-xl opacity-0 group-focus-within/input:opacity-100 transition-all duration-300 blur-sm"
+                    className="absolute inset-0 bg-gradient-to-r from-[color:var(--accent-500)]/20 to-[color:var(--primary-500)]/20 rounded-xl opacity-0 group-focus-within/input:opacity-100 transition-all duration-300 blur-sm"
                     whileFocus={{ opacity: 1 }}
                   />
-              <input
-                type="email"
-                placeholder="Votre email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                    className="relative w-full px-4 py-3 glass border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-400/50 focus:glass-strong transition-all duration-300 hover:border-accent-400/40"
-                required
+                  <input
+                    type="email"
+                    placeholder="Votre email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="relative w-full px-4 py-3 glass border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[color:var(--accent-400)]/50 focus:glass-strong transition-all duration-300 hover:border-[color:var(--accent-400)]/40"
+                    required
                     disabled={isSubmitting}
-              />
-              </div>
+                  />
+                </div>
                 
-              <motion.button
-                type="submit"
+                <motion.button
+                  type="submit"
                   disabled={isSubmitting}
                   className={cn(
                     "w-full text-white font-semibold py-3 rounded-xl",
                     "transition-all duration-300 relative overflow-hidden",
                     "group/submit disabled:opacity-50",
-                    "gradient-button from-[var(--accent-500)] to-[var(--accent-600)]",
-                    "shadow-[var(--accent-500)]/30",
-                    "hover:shadow-[var(--accent-500)]/50"
+                    "gradient-button from-[color:var(--accent-500)] to-[color:var(--accent-600)]",
+                    "shadow-[color:var(--accent-500)]/30",
+                    "hover:shadow-[color:var(--accent-500)]/50"
                   )}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-              >
+                >
                   <motion.div 
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover/submit:opacity-100"
                     initial={{ x: '-100%' }}
@@ -681,8 +681,8 @@ const Footer: React.FC = () => {
                     )}
                     <span>{isSubmitting ? 'Envoi...' : "S'abonner"}</span>
                   </div>
-              </motion.button>
-            </form>
+                </motion.button>
+              </form>
 
               {/* Avantages de la newsletter */}
               <div className="pt-4 border-t border-white/20">
@@ -710,8 +710,8 @@ const Footer: React.FC = () => {
                   ))}
                 </div>
               </div>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
 
           {/* Section de contrôle du thème avec design amélioré */}
           <motion.div 
@@ -940,7 +940,7 @@ const Footer: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="relative mt-12 pt-8"
+          className="relative mt-12 pt-8 col-span-full"
         >
           {/* Séparateur décoratif sophistiqué */}
           <div className="relative mb-8">
@@ -950,12 +950,12 @@ const Footer: React.FC = () => {
             <div className="flex justify-center -mt-1">
               <div className={cn(
                 "flex space-x-2 px-4 rounded-full",
-                "bg-[var(--primary-700)]"
+                "bg-[color:var(--primary-700)]"
               )}>
                 {[0, 0.3, 0.6].map((delay, index) => (
                   <motion.div 
                     key={index}
-                    className="w-2 h-2 bg-accent-300 rounded-full"
+                    className="w-2 h-2 bg-[color:var(--accent-300)] rounded-full"
                     animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.3, 1] }}
                     transition={{ duration: 2, delay, repeat: Infinity }}
                   />
@@ -966,13 +966,13 @@ const Footer: React.FC = () => {
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center">
             <motion.p 
-              className="text-white/90 text-lg glass px-6 py-3 rounded-full border border-white/20 hover:border-accent-400/50 transition-all duration-300"
+              className="text-white/90 text-lg glass px-6 py-3 rounded-full border border-white/20 hover:border-[color:var(--accent-400)]/50 transition-all duration-300"
               whileHover={{ scale: 1.02 }}
             > 
-              © {new Date().getFullYear()} <span className="font-medium text-white bg-gradient-to-r from-white to-accent-200 bg-clip-text text-transparent">MyApp</span> - Tous droits réservés
+              © {new Date().getFullYear()} <span className="font-medium text-white bg-gradient-to-r from-white to-[color:var(--accent-200)] bg-clip-text text-transparent">MyApp</span> - Tous droits réservés
             </motion.p>
           
-          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6">
               {[
                 { href: "/privacy", text: "Confidentialité" },
                 { href: "/terms", text: "Conditions d'utilisation" },
@@ -985,7 +985,7 @@ const Footer: React.FC = () => {
                   >
                     <span className="relative z-10">{link.text}</span>
                     <motion.div
-                      className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-accent-400 to-primary-400 origin-left"
+                      className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[color:var(--accent-400)] to-[color:var(--primary-400)] origin-left"
                       initial={{ scaleX: 0 }}
                       whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.3 }}

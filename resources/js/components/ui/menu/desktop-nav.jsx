@@ -91,13 +91,13 @@ const DesktopNav = () => {
                       "text-white/90 hover:text-white",
                       "bg-white/5 hover:bg-gradient-to-r hover:from-white/15 hover:to-white/10",
                       "focus:bg-gradient-to-r focus:from-white/15 focus:to-white/10 focus:text-white",
-                      "data-[state=open]:bg-gradient-to-r data-[state=open]:from-primary-500/20 data-[state=open]:to-purple-500/20 data-[state=open]:text-white",
+                      "data-[state=open]:bg-gradient-to-r data-[state=open]:from-[color:var(--primary-500)]/20 data-[state=open]:to-[color:var(--accent-500)]/20 data-[state=open]:text-white",
                       "transition-all duration-300 ease-out",
                       "backdrop-blur-sm border border-white/10 hover:border-white/20",
                       "shadow-lg hover:shadow-xl hover:shadow-white/10",
                       "relative overflow-hidden rounded-xl",
                       (isActiveRoute(item) || isActiveParent(item)) && 
-                        "bg-gradient-to-r from-primary-500/30 to-purple-500/30 text-white border-white/30 shadow-primary-500/20"
+                        "bg-gradient-to-r from-[color:var(--primary-500)]/30 to-[color:var(--accent-500)]/30 text-white border-white/30 shadow-[color:var(--primary-500)]/20"
                     )}
                   >
                     {/* Effet de brillance interne au hover */}
@@ -141,7 +141,7 @@ const DesktopNav = () => {
                       transition={{ duration: 0.3 }}
                     >
                       {/* Effet de brillance dans le menu déroulant */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary-50/50 via-purple-50/30 to-pink-50/50 rounded-lg" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-50)]/50 via-[color:var(--accent-50)]/30 to-[color:var(--primary-50)]/50 rounded-lg" />
                       
                       {item.children.map((child, childIndex) => (
                         <motion.div
@@ -155,13 +155,13 @@ const DesktopNav = () => {
                             href={route(child.href)}
                             className={cn(
                               "flex items-center gap-3 rounded-xl p-4 text-sm transition-all duration-300 relative overflow-hidden",
-                              "hover:bg-gradient-to-r hover:from-primary-500/10 hover:to-purple-500/10",
-                              "focus:bg-gradient-to-r focus:from-primary-500/10 focus:to-purple-500/10",
+                              "hover:bg-gradient-to-r hover:from-[color:var(--primary-500)]/10 hover:to-[color:var(--accent-500)]/10",
+                              "focus:bg-gradient-to-r focus:from-[color:var(--primary-500)]/10 focus:to-[color:var(--accent-500)]/10",
                               "hover:shadow-lg hover:scale-[1.02] hover:translate-x-1",
-                              "border border-transparent hover:border-primary-200/50",
+                              "border border-transparent hover:border-[color:var(--primary-200)]/50",
                               "group",
                               url === route(child.href) && 
-                                "bg-gradient-to-r from-primary-500/20 to-purple-500/20 text-primary shadow-lg border-primary-300/50"
+                                "bg-gradient-to-r from-[color:var(--primary-500)]/20 to-[color:var(--accent-500)]/20 text-[color:var(--primary-700)] shadow-lg border-[color:var(--primary-300)]/50"
                             )}
                           >
                             {/* Effet de brillance interne */}
@@ -174,15 +174,15 @@ const DesktopNav = () => {
                             
                             {child.icon && (
                               <motion.div 
-                                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-purple-500/20 shadow-lg relative z-10"
+                                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[color:var(--primary-500)]/20 to-[color:var(--accent-500)]/20 shadow-lg relative z-10"
                                 whileHover={{ scale: 1.1, rotate: 5 }}
                                 transition={{ duration: 0.2 }}
                               >
-                                <child.icon className="h-5 w-5 text-primary" />
+                                <child.icon className="h-5 w-5 text-[color:var(--primary-700)]" />
                               </motion.div>
                             )}
                             <div className="flex-1 relative z-10">
-                              <div className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                              <div className="font-semibold text-gray-900 group-hover:text-[color:var(--primary-700)] transition-colors">
                                 {child.label}
                               </div>
                             </div>
@@ -193,7 +193,7 @@ const DesktopNav = () => {
                                 transition={{ duration: 2, repeat: Infinity }}
                                 className="relative z-10"
                               >
-                                <Sparkles size={14} className="text-primary" />
+                                <Sparkles size={14} className="text-[color:var(--primary-700)]" />
                               </motion.div>
                             )}
                           </Link>
@@ -216,7 +216,7 @@ const DesktopNav = () => {
                     "shadow-lg hover:shadow-xl hover:shadow-white/10",
                     "relative overflow-hidden rounded-xl group",
                     isActiveRoute(item) && 
-                      "bg-gradient-to-r from-primary-500/30 to-purple-500/30 text-white border-white/30 shadow-primary-500/20"
+                      "bg-gradient-to-r from-[color:var(--primary-500)]/30 to-[color:var(--accent-500)]/30 text-white border-white/30 shadow-[color:var(--primary-500)]/20"
                   )}
                 >
                   {/* Effet de brillance interne au hover */}
@@ -257,7 +257,7 @@ const DesktopNav = () => {
               {/* Indicateur actif sophistiqué */}
               {(isActiveRoute(item) || isActiveParent(item)) && (
                 <motion.div
-                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 via-purple-400 to-pink-400 rounded-full shadow-lg"
+                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-[color:var(--primary-400)] via-[color:var(--accent-400)] to-[color:var(--primary-400)] rounded-full shadow-lg"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: 1, opacity: 1 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
@@ -266,7 +266,7 @@ const DesktopNav = () => {
               
               {/* Effet de halo au hover */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-purple-500/10 to-pink-500/10 rounded-xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
+                className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/10 via-[color:var(--accent-500)]/10 to-[color:var(--primary-500)]/10 rounded-xl opacity-0 group-hover:opacity-100 -z-10 blur-xl"
                 initial={{ scale: 0.8 }}
                 whileHover={{ scale: 1.2 }}
                 transition={{ duration: 0.3 }}

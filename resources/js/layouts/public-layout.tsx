@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { ArrowUp, X, CheckCircle, AlertCircle, AlertTriangle, Info, Sparkles } from 'lucide-react';
 import Header from '@/components/header';
-import Footer from '@/components/Footer';
+import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PublicLayoutProps, ExtendedPageProps } from '@/types/global';
@@ -390,14 +390,14 @@ export default function PublicLayout({
               <div className={`
                 max-w-md mx-auto px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-md border border-white/20
                 ${flash.type === 'success' 
-                  ? 'bg-gradient-to-r from-emerald-500/90 to-green-500/90' 
+                  ? 'bg-gradient-to-r from-[color:var(--primary-500)]/90 to-[color:var(--accent-500)]/90' 
                   : flash.type === 'error'
                   ? 'bg-gradient-to-r from-rose-500/90 to-red-500/90'
                   : flash.type === 'warning'
                   ? 'bg-gradient-to-r from-amber-500/90 to-orange-500/90'
                   : flash.type === 'info'
-                  ? 'bg-gradient-to-r from-cyan-500/90 to-blue-500/90'
-                  : 'bg-gradient-to-r from-blue-500/90 to-indigo-500/90'
+                  ? 'bg-gradient-to-r from-[color:var(--primary-500)]/90 to-[color:var(--primary-700)]/90'
+                  : 'bg-gradient-to-r from-[color:var(--primary-500)]/90 to-[color:var(--accent-500)]/90'
                 } text-white relative overflow-hidden
               `}>
                 {/* Effet de brillance avec repeatDelay */}
@@ -518,8 +518,8 @@ export default function PublicLayout({
                   "hover:shadow-[var(--primary-500)]/25 hover:scale-110",
                   "backdrop-blur-sm border border-white/10",
                   "group overflow-hidden w-12 h-12",
-                  "bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-800)]",
-                  "hover:from-[var(--primary-500)] hover:to-[var(--primary-800)]"
+                  "bg-gradient-to-r from-[color:var(--primary-600)] to-[color:var(--primary-800)]",
+                  "hover:from-[color:var(--primary-500)] hover:to-[color:var(--primary-800)]"
                 )}
                 aria-label="Retour en haut de la page"
               >

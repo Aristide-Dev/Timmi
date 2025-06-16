@@ -4,83 +4,205 @@ import { useState, useEffect, useCallback } from 'react';
 export type ThemeColor = 
   | 'blue' | 'purple' | 'green' | 'orange' | 'pink' | 'cyan' | 'red' | 'yellow'
   | 'indigo' | 'emerald' | 'rose' | 'teal' | 'amber' | 'violet' | 'lime' | 'slate'
-  | 'gray' | 'zinc' | 'stone';
+  | 'gray' | 'zinc' | 'stone' | 'sky' | 'fuchsia' | 'mint';
 
 export interface ThemeConfig {
   primary: ThemeColor;
   accent: ThemeColor;
   name: string;
   isDark?: boolean;
+  category?: 'nature' | 'urban' | 'cosmic' | 'seasons' | 'premium' | 'classic' | 'modern';
+  gradient?: boolean;
 }
 
 // Configurations de thèmes prédéfinis étendues
 export const THEME_PRESETS: Record<string, ThemeConfig> = {
+  // Classiques
   default: {
     primary: 'blue',
     accent: 'purple',
-    name: 'Thème par Défaut'
+    name: 'Océan Profond',
+    category: 'classic'
   },
-  nature: {
-    primary: 'green',
-    accent: 'emerald',
-    name: 'Thème Nature'
-  },
-  sunset: {
-    primary: 'orange',
-    accent: 'red',
-    name: 'Thème Coucher de Soleil'
-  },
-  ocean: {
-    primary: 'cyan',
-    accent: 'teal',
-    name: 'Thème Océan'
-  },
-  galaxy: {
-    primary: 'purple',
-    accent: 'violet',
-    name: 'Thème Galaxie'
-  },
-  forest: {
-    primary: 'emerald',
-    accent: 'lime',
-    name: 'Thème Forêt'
-  },
-  sunrise: {
-    primary: 'amber',
-    accent: 'yellow',
-    name: 'Thème Lever de Soleil'
-  },
-  cherry: {
-    primary: 'rose',
-    accent: 'pink',
-    name: 'Thème Cerisier'
-  },
-  midnight: {
-    primary: 'indigo',
-    accent: 'slate',
-    name: 'Thème Minuit',
-    isDark: true
-  },
-  volcanic: {
+  classic_red: {
     primary: 'red',
     accent: 'orange',
-    name: 'Thème Volcanique'
+    name: 'Feu Ardent',
+    category: 'classic'
   },
-  arctic: {
+  classic_green: {
+    primary: 'green',
+    accent: 'emerald',
+    name: 'Forêt Enchantée',
+    category: 'classic'
+  },
+  royal_purple: {
+    primary: 'purple',
+    accent: 'violet',
+    name: 'Majesté Royale',
+    category: 'premium'
+  },
+
+  // Nature
+  nature_forest: {
+    primary: 'emerald',
+    accent: 'lime',
+    name: 'Forêt Mystique',
+    category: 'nature',
+    gradient: true
+  },
+  ocean_breeze: {
+    primary: 'cyan',
+    accent: 'teal',
+    name: 'Brise Océanique',
+    category: 'nature'
+  },
+  sunset_glow: {
+    primary: 'orange',
+    accent: 'amber',
+    name: 'Éclat du Couchant',
+    category: 'nature',
+    gradient: true
+  },
+  cherry_blossom: {
+    primary: 'rose',
+    accent: 'pink',
+    name: 'Fleur de Cerisier',
+    category: 'nature'
+  },
+  mint_fresh: {
+    primary: 'mint',
+    accent: 'emerald',
+    name: 'Fraîcheur Menthe',
+    category: 'nature'
+  },
+
+  // Saisons
+  spring_bloom: {
+    primary: 'emerald',
+    accent: 'rose',
+    name: 'Floraison Printanière',
+    category: 'seasons',
+    gradient: true
+  },
+  summer_sky: {
+    primary: 'sky',
+    accent: 'yellow',
+    name: 'Ciel d\'Été',
+    category: 'seasons'
+  },
+  autumn_leaves: {
+    primary: 'amber',
+    accent: 'red',
+    name: 'Feuilles d\'Automne',
+    category: 'seasons',
+    gradient: true
+  },
+  winter_frost: {
     primary: 'slate',
     accent: 'cyan',
-    name: 'Thème Arctique'
+    name: 'Givre Hivernal',
+    category: 'seasons',
+    isDark: true
   },
-  tropical: {
-    primary: 'lime',
-    accent: 'emerald',
-    name: 'Thème Tropical'
+
+  // Cosmique
+  galaxy_nebula: {
+    primary: 'purple',
+    accent: 'fuchsia',
+    name: 'Nébuleuse Galactique',
+    category: 'cosmic',
+    isDark: true,
+    gradient: true
+  },
+  starlight: {
+    primary: 'indigo',
+    accent: 'violet',
+    name: 'Lumière Stellaire',
+    category: 'cosmic',
+    isDark: true
+  },
+  aurora_borealis: {
+    primary: 'teal',
+    accent: 'violet',
+    name: 'Aurore Boréale',
+    category: 'cosmic',
+    isDark: true,
+    gradient: true
+  },
+  cosmic_dust: {
+    primary: 'slate',
+    accent: 'purple',
+    name: 'Poussière Cosmique',
+    category: 'cosmic',
+    isDark: true
+  },
+
+  // Urbain moderne
+  neon_city: {
+    primary: 'fuchsia',
+    accent: 'cyan',
+    name: 'Ville Néon',
+    category: 'urban',
+    isDark: true,
+    gradient: true
+  },
+  cyberpunk: {
+    primary: 'violet',
+    accent: 'lime',
+    name: 'Cyberpunk 2077',
+    category: 'urban',
+    isDark: true
+  },
+  midnight_blue: {
+    primary: 'indigo',
+    accent: 'sky',
+    name: 'Bleu Minuit',
+    category: 'urban',
+    isDark: true
+  },
+  electric_pink: {
+    primary: 'pink',
+    accent: 'purple',
+    name: 'Rose Électrique',
+    category: 'modern',
+    gradient: true
+  },
+
+  // Premium
+  gold_luxury: {
+    primary: 'amber',
+    accent: 'yellow',
+    name: 'Luxe Doré',
+    category: 'premium',
+    gradient: true
+  },
+  platinum_elite: {
+    primary: 'slate',
+    accent: 'zinc',
+    name: 'Élite Platine',
+    category: 'premium',
+    isDark: true
+  },
+  emerald_prestige: {
+    primary: 'emerald',
+    accent: 'teal',
+    name: 'Prestige Émeraude',
+    category: 'premium'
+  },
+  ruby_excellence: {
+    primary: 'red',
+    accent: 'rose',
+    name: 'Excellence Rubis',
+    category: 'premium',
+    gradient: true
   }
 };
 
 // Palettes de couleurs OKLCH étendues (16 couleurs)
+// Palettes de couleurs OKLCH étendues (22 couleurs)
 const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
-  // Couleurs existantes
+  // Couleurs existantes améliorées
   blue: {
     '50': 'oklch(0.98 0.015 250)',
     '100': 'oklch(0.95 0.03 250)',
@@ -185,7 +307,6 @@ const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
     '900': 'oklch(0.16 0.12 90)',
     '950': 'oklch(0.1 0.08 90)',
   },
-  // Nouvelles couleurs
   indigo: {
     '50': 'oklch(0.98 0.02 260)',
     '100': 'oklch(0.95 0.04 260)',
@@ -290,7 +411,6 @@ const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
     '900': 'oklch(0.16 0.015 240)',
     '950': 'oklch(0.1 0.01 240)',
   },
-  // Nouvelles couleurs neutres
   gray: {
     '50': 'oklch(0.98 0.003 240)',
     '100': 'oklch(0.95 0.006 240)',
@@ -330,15 +450,57 @@ const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
     '900': 'oklch(0.16 0.012 80)',
     '950': 'oklch(0.1 0.008 80)',
   },
+  // Nouvelles couleurs
+  sky: {
+    '50': 'oklch(0.98 0.015 220)',
+    '100': 'oklch(0.95 0.03 220)',
+    '200': 'oklch(0.9 0.06 220)',
+    '300': 'oklch(0.8 0.09 220)',
+    '400': 'oklch(0.65 0.12 220)',
+    '500': 'oklch(0.5 0.15 220)',
+    '600': 'oklch(0.4 0.18 220)',
+    '700': 'oklch(0.3 0.15 220)',
+    '800': 'oklch(0.22 0.12 220)',
+    '900': 'oklch(0.16 0.09 220)',
+    '950': 'oklch(0.1 0.06 220)',
+  },
+  fuchsia: {
+    '50': 'oklch(0.98 0.02 320)',
+    '100': 'oklch(0.95 0.04 320)',
+    '200': 'oklch(0.9 0.08 320)',
+    '300': 'oklch(0.8 0.12 320)',
+    '400': 'oklch(0.65 0.16 320)',
+    '500': 'oklch(0.5 0.2 320)',
+    '600': 'oklch(0.4 0.2 320)',
+    '700': 'oklch(0.3 0.18 320)',
+    '800': 'oklch(0.22 0.15 320)',
+    '900': 'oklch(0.16 0.12 320)',
+    '950': 'oklch(0.1 0.08 320)',
+  },
+  mint: {
+    '50': 'oklch(0.98 0.02 150)',
+    '100': 'oklch(0.95 0.04 150)',
+    '200': 'oklch(0.9 0.08 150)',
+    '300': 'oklch(0.8 0.12 150)',
+    '400': 'oklch(0.65 0.16 150)',
+    '500': 'oklch(0.5 0.2 150)',
+    '600': 'oklch(0.4 0.2 150)',
+    '700': 'oklch(0.3 0.18 150)',
+    '800': 'oklch(0.22 0.15 150)',
+    '900': 'oklch(0.16 0.12 150)',
+    '950': 'oklch(0.1 0.08 150)',
+  },
 };
 
-// Catégories de couleurs
-export const COLOR_CATEGORIES = {
-  'Primaires': ['blue', 'red', 'yellow'] as ThemeColor[],
-  'Secondaires': ['purple', 'green', 'orange'] as ThemeColor[],
-  'Tertiaires': ['indigo', 'teal', 'rose', 'amber'] as ThemeColor[],
-  'Neutres': ['slate', 'gray', 'zinc', 'stone'] as ThemeColor[],
-  'Spéciales': ['cyan', 'emerald', 'violet', 'lime'] as ThemeColor[],
+// Catégories de couleurs étendues
+export const THEME_CATEGORIES = {
+  'Classiques': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'classic'),
+  'Nature': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'nature'),
+  'Saisons': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'seasons'),
+  'Cosmique': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'cosmic'),
+  'Urbain': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'urban'),
+  'Premium': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'premium'),
+  'Moderne': Object.keys(THEME_PRESETS).filter(key => THEME_PRESETS[key].category === 'modern'),
 };
 
 const STORAGE_KEY = 'myapp-theme';
@@ -389,19 +551,25 @@ export function useTheme() {
     Object.entries(primaryPalette).forEach(([shade, value]) => {
       const rgbValue = oklchToRgb(value);
       root.style.setProperty(`--primary-rgb-${shade}`, rgbValue);
+      // Définir aussi directement les variables de couleur pour faciliter l'accès
+      root.style.setProperty(`--primary-${shade}`, `rgb(${rgbValue})`);
     });
 
     // Mise à jour des variables CSS pour les couleurs d'accent
     Object.entries(accentPalette).forEach(([shade, value]) => {
       const rgbValue = oklchToRgb(value);
       root.style.setProperty(`--accent-rgb-${shade}`, rgbValue);
+      // Définir aussi directement les variables de couleur pour faciliter l'accès
+      root.style.setProperty(`--accent-${shade}`, `rgb(${rgbValue})`);
     });
 
     // Mise à jour du mode sombre/clair
     if (theme.isDark) {
       root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
     } else {
       root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
     }
   }, []);
 
@@ -434,32 +602,20 @@ export function useTheme() {
   // Fonction pour appliquer le thème aux variables CSS
   const applyTheme = useCallback((theme: ThemeConfig) => {
     const root = document.documentElement;
-    const primaryColors = COLOR_PALETTES[theme.primary];
-    const accentColors = COLOR_PALETTES[theme.accent];
-
-    // Appliquer les couleurs primary
-    Object.entries(primaryColors).forEach(([variant, color]) => {
-      root.style.setProperty(`--primary-${variant}`, color);
-    });
-
-    // Appliquer les couleurs accent
-    Object.entries(accentColors).forEach(([variant, color]) => {
-      root.style.setProperty(`--accent-${variant}`, color);
-    });
-
-    // Mettre à jour les couleurs principales
-    root.style.setProperty('--primary', primaryColors['500']);
-    root.style.setProperty('--accent', accentColors['500']);
-
+    updateCSSVariables(theme);
+    
     // Ajouter un attribut data pour les transitions et le mode sombre
     root.setAttribute('data-theme', `${theme.primary}-${theme.accent}`);
     
+    // Gestion cohérente du mode clair/sombre
     if (theme.isDark) {
+      root.classList.add('dark');
       root.setAttribute('data-theme-mode', 'dark');
     } else {
-      root.removeAttribute('data-theme-mode');
+      root.classList.remove('dark');
+      root.setAttribute('data-theme-mode', 'light');
     }
-  }, []);
+  }, [updateCSSVariables]);
 
   // Fonction pour ajouter un thème aux récents
   const addToRecentThemes = useCallback((theme: ThemeConfig) => {

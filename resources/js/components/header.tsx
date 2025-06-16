@@ -82,22 +82,22 @@ const Header: React.FC = () => {
         className={`fixed w-full transition-all duration-700 ease-out
           ${state.visible ? 'translate-y-0' : '-translate-y-full'}
           ${state.isScrolled 
-            ? 'bg-gradient-to-r from-primary-900/95 via-primary-800/95 to-primary-700/95 shadow-2xl border-b border-white/10 is-scrolled' 
-            : 'bg-gradient-to-r from-primary-800/90 via-primary-700/90 to-primary-600/90 backdrop-blur-xl'}
+            ? 'bg-gradient-to-r from-[color:var(--primary-900)]/95 via-[color:var(--primary-800)]/95 to-[color:var(--primary-700)]/95 shadow-2xl border-b border-white/10 is-scrolled' 
+            : 'bg-gradient-to-r from-[color:var(--primary-800)]/90 via-[color:var(--primary-700)]/90 to-[color:var(--primary-600)]/90 backdrop-blur-xl'}
           ${state.isMenuOpen ? 'z-50' : 'z-30'}
           backdrop-blur-xl backdrop-saturate-150
         `}
         style={{
           background: state.isScrolled && !state.isMenuOpen 
-            ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(37, 99, 235, 0.98) 50%, rgba(29, 78, 216, 0.95) 100%)'
-            : 'linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(37, 99, 235, 0.92) 30%, rgba(29, 78, 216, 0.9) 100%)'
+            ? 'linear-gradient(135deg, rgba(var(--primary-rgb-500), 0.95) 0%, rgba(var(--primary-rgb-600), 0.98) 50%, rgba(var(--primary-rgb-700), 0.95) 100%)'
+            : 'linear-gradient(135deg, rgba(var(--primary-rgb-500), 0.9) 0%, rgba(var(--primary-rgb-600), 0.92) 30%, rgba(var(--primary-rgb-700), 0.9) 100%)'
         }}
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         {/* Effet de brillance subtil */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-700 via-primary-900 to-primary-700" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-700)] via-[color:var(--primary-900)] to-[color:var(--primary-700)]" />
         
         {/* Bordure lumineuse en bas */}
         <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent transition-opacity duration-500 ${state.isScrolled ? 'opacity-100' : 'opacity-60'}`} />
@@ -269,7 +269,7 @@ const Header: React.FC = () => {
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Button asChild className="bg-white text-primary hover:bg-gray-100">
+                    <Button asChild className="bg-white text-[color:var(--primary-700)] hover:bg-gray-100">
                       <Link href="/register">S'inscrire</Link>
                     </Button>
                   </motion.div>
@@ -282,7 +282,7 @@ const Header: React.FC = () => {
                 className={`md:hidden relative z-50 p-3 rounded-2xl 
                   transition-all duration-500 ease-out
                   ${state.isMenuOpen 
-                    ? 'bg-gradient-to-br from-white via-gray-50 to-gray-100 text-primary-800 hover:from-gray-50 hover:to-white shadow-2xl border border-white/50' 
+                    ? 'bg-gradient-to-br from-white via-gray-50 to-gray-100 text-[color:var(--primary-800)] hover:from-gray-50 hover:to-white shadow-2xl border border-white/50' 
                     : 'hover:bg-gradient-to-br hover:from-white/20 hover:via-white/15 hover:to-white/10 text-white border border-white/10 hover:border-white/30 backdrop-blur-sm'}
                   shadow-lg hover:shadow-2xl
                 `}

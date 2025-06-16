@@ -52,14 +52,14 @@ const MobileNav = ({ isOpen, onClose }) => {
         >
           {/* Header du menu mobile */}
           <motion.div 
-            className="p-6 border-b border-gray-100 bg-gradient-to-r from-primary/5 to-primary/10"
+            className="p-6 border-b border-gray-100 bg-gradient-to-r from-[color:var(--primary-500)]/5 to-[color:var(--primary-500)]/10"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-[color:var(--primary-500)] rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-sm">M</span>
                 </div>
                 <span className="text-lg font-bold text-gray-900">Menu</span>
@@ -86,7 +86,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                         className={cn(
                           "w-full flex items-center justify-between p-3 rounded-lg text-left transition-all duration-200",
                           "hover:bg-gray-50 focus:bg-gray-50 focus:outline-none",
-                          (isActiveRoute(item) || isActiveParent(item)) && "bg-primary/10 text-primary"
+                          (isActiveRoute(item) || isActiveParent(item)) && "bg-[color:var(--primary-500)]/10 text-[color:var(--primary-700)]"
                         )}
                       >
                         <div className="flex items-center gap-3">
@@ -94,7 +94,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                             <div className={cn(
                               "flex h-8 w-8 items-center justify-center rounded-md",
                               (isActiveRoute(item) || isActiveParent(item)) 
-                                ? "bg-primary/20 text-primary" 
+                                ? "bg-[color:var(--primary-500)]/20 text-[color:var(--primary-700)]" 
                                 : "bg-gray-100 text-gray-600"
                             )}>
                               <item.icon className="h-4 w-4" />
@@ -133,14 +133,14 @@ const MobileNav = ({ isOpen, onClose }) => {
                                   className={cn(
                                     "flex items-center gap-3 p-3 rounded-lg text-sm transition-all duration-200",
                                     "hover:bg-gray-50 focus:bg-gray-50",
-                                    url === route(child.href) && "bg-primary/10 text-primary"
+                                    url === route(child.href) && "bg-[color:var(--primary-500)]/10 text-[color:var(--primary-700)]"
                                   )}
                                 >
                                   {child.icon && (
                                     <div className={cn(
                                       "flex h-6 w-6 items-center justify-center rounded-md",
                                       url === route(child.href) 
-                                        ? "bg-primary/20 text-primary" 
+                                        ? "bg-[color:var(--primary-500)]/20 text-[color:var(--primary-700)]" 
                                         : "bg-gray-100 text-gray-500"
                                     )}>
                                       <child.icon className="h-3 w-3" />
@@ -149,7 +149,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                                   <span className="font-medium">{child.label}</span>
                                   {url === route(child.href) && (
                                     <motion.div
-                                      className="ml-auto w-2 h-2 bg-primary rounded-full"
+                                      className="ml-auto w-2 h-2 bg-[color:var(--primary-500)] rounded-full"
                                       initial={{ scale: 0 }}
                                       animate={{ scale: 1 }}
                                       transition={{ duration: 0.2 }}
@@ -170,14 +170,14 @@ const MobileNav = ({ isOpen, onClose }) => {
                       className={cn(
                         "flex items-center gap-3 p-3 rounded-lg transition-all duration-200",
                         "hover:bg-gray-50 focus:bg-gray-50",
-                        isActiveRoute(item) && "bg-primary/10 text-primary"
+                        isActiveRoute(item) && "bg-[color:var(--primary-500)]/10 text-[color:var(--primary-700)]"
                       )}
                     >
                       {item.icon && (
                         <div className={cn(
                           "flex h-8 w-8 items-center justify-center rounded-md",
                           isActiveRoute(item) 
-                            ? "bg-primary/20 text-primary" 
+                            ? "bg-[color:var(--primary-500)]/20 text-[color:var(--primary-700)]" 
                             : "bg-gray-100 text-gray-600"
                         )}>
                           <item.icon className="h-4 w-4" />
@@ -186,7 +186,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                       <span className="font-medium text-gray-900">{item.label}</span>
                       {isActiveRoute(item) && (
                         <motion.div
-                          className="ml-auto w-2 h-2 bg-primary rounded-full"
+                          className="ml-auto w-2 h-2 bg-[color:var(--primary-500)] rounded-full"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ duration: 0.2 }}
@@ -198,7 +198,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                   {/* Indicateur actif pour les éléments parents */}
                   {(isActiveRoute(item) || isActiveParent(item)) && (
                     <motion.div
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-[color:var(--primary-500)] rounded-r-full"
                       initial={{ scaleY: 0 }}
                       animate={{ scaleY: 1 }}
                       transition={{ duration: 0.3 }}
