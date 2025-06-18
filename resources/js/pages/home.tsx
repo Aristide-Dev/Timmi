@@ -8,8 +8,6 @@ import {
 import PublicLayout from '@/layouts/public-layout'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useState, useMemo } from 'react'
-import ThemeSwitcher from '@/components/ui/theme-switcher'
-import ThemeSelector from '@/components/ui/theme-selector'
 
 // Optimisation des animations avec respect des préférences utilisateur
 const useOptimizedAnimations = () => {
@@ -18,10 +16,10 @@ const useOptimizedAnimations = () => {
   return useMemo(() => ({
     // Animations de base respectant les préférences utilisateur
     containerVariants: {
-      hidden: { opacity: 0 },
-      visible: { 
-        opacity: 1,
-        transition: {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: {
           staggerChildren: prefersReducedMotion ? 0 : 0.15,
           duration: prefersReducedMotion ? 0.3 : 0.8
         }
@@ -128,29 +126,29 @@ export default function HomePage() {
           
           {/* Éléments décoratifs optimisés */}
           {shouldAnimate && !prefersReducedMotion && (
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
               {/* Particules réduites pour de meilleures performances */}
               {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={`particle-${i}`}
+              <motion.div
+                key={`particle-${i}`}
                   className="absolute rounded-full bg-white/15 blur-sm"
-                  style={{
+                style={{
                     top: `${20 + i * 8}%`,
                     left: `${10 + i * 10}%`,
                     width: `${4 + Math.random() * 6}px`,
                     height: `${4 + Math.random() * 6}px`,
                   }}
                   {...animations.particleVariants}
-                  transition={{
+                transition={{
                     ...animations.particleVariants.transition,
                     delay: i * 0.8,
-                  }}
-                />
-              ))}
+                }}
+              />
+            ))}
 
               {/* Cercles lumineux optimisés */}
               {[...Array(3)].map((_, i) => (
-                <motion.div
+            <motion.div
                   key={`circle-${i}`}
                   className="absolute rounded-full bg-white/5 blur-xl"
                   style={{
@@ -163,15 +161,15 @@ export default function HomePage() {
                     scale: [1, 1.1, 1],
                     opacity: [0.1, 0.15, 0.1],
                   }}
-                  transition={{
+              transition={{ 
                     duration: 12 + i * 2,
-                    repeat: Infinity,
+                repeat: Infinity, 
                     delay: i * 3,
                     ease: "easeInOut"
-                  }}
-                />
+              }}
+            />
               ))}
-            </div>
+          </div>
           )}
 
           <motion.div 
@@ -211,14 +209,14 @@ export default function HomePage() {
                 <motion.div variants={animations.itemVariants}>
                   <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] text-white">
                     Votre{' '}
-                    <motion.span 
+                  <motion.span 
                       className="relative text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 inline-block"
                       animate={prefersReducedMotion ? {} : { 
                         backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                      }}
-                      transition={{ 
+                    }}
+                    transition={{ 
                         duration: 5,
-                        repeat: Infinity,
+                      repeat: Infinity,
                         ease: "linear"
                       }}
                       style={{
@@ -235,7 +233,7 @@ export default function HomePage() {
                         }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                       />
-                    </motion.span>
+                  </motion.span>
                     <br />
                     expérience
                   </h1>
@@ -244,8 +242,8 @@ export default function HomePage() {
                 {/* Description améliorée */}
                 <motion.div variants={animations.itemVariants} className="space-y-4">
                   <p className="text-xl lg:text-2xl text-white/90 max-w-2xl leading-relaxed">
-                    Une plateforme moderne et intuitive conçue pour vous offrir 
-                    la meilleure expérience utilisateur possible.
+                  Une plateforme moderne et intuitive conçue pour vous offrir 
+                  la meilleure expérience utilisateur possible.
                   </p>
                   
                   {/* Points clés */}
@@ -289,9 +287,9 @@ export default function HomePage() {
                         <span>Commencer maintenant</span>
                         <motion.div
                           animate={prefersReducedMotion ? {} : { x: [0, 4, 0] }}
-                          transition={{ 
-                            duration: 2,
-                            repeat: Infinity,
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
                             ease: "easeInOut"
                           }}
                         >
@@ -457,7 +455,7 @@ export default function HomePage() {
 
           {/* Indicateur de scroll */}
           {!prefersReducedMotion && (
-            <motion.div
+                <motion.div 
               className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -470,80 +468,9 @@ export default function HomePage() {
               >
                 <span className="text-xs uppercase tracking-wider">Découvrez plus</span>
                 <div className="w-px h-8 bg-gradient-to-b from-white/60 to-transparent" />
-              </motion.div>
+                </motion.div>
             </motion.div>
           )}
-        </section>
-
-        {/* Hero section avec sélecteur de thème */}
-        <section className="relative">
-
-          <div className="mx-auto max-w-7xl px-6 py-20 md:py-32 flex flex-col items-center justify-center bg-gradient-to-r from-[color:var(--accent-700)]/95 via-[color:var(--accent-600)]/95 to-[color:var(--accent-500)]/95 shadow-2xl border-b border-white/10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-10"
-            >
-              <Badge className="mb-4 px-3 py-1 bg-[color:var(--accent-200)]/20 text-[color:var(--accent-200)] backdrop-blur-sm rounded-full">
-                <span className="mr-1">✨</span> Personnalisez votre expérience
-              </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Personnalisez votre <span className="text-gradient bg-gradient-to-r from-[color:var(--accent-400)] to-[color:var(--primary-400)]">interface</span>
-              </h1>
-              <p className="text-lg text-white/70 max-w-2xl mx-auto">
-                Notre application s'adapte à vos préférences avec des thèmes élégants et personnalisables
-              </p>
-            </motion.div>
-
-            {/* Showcase des sélecteurs de thème */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full max-w-3xl mx-auto px-6 py-10 bg-[color:var(--primary-900)]/60 border border-white/10 rounded-2xl backdrop-blur-md shadow-xl"
-            >
-              <h2 className="text-xl font-semibold text-white mb-8 text-center">Personnalisez votre expérience</h2>
-              
-              {/* Sélecteur de thème avec AnimatedDock */}
-              <div className="mb-10">
-                <h3 className="text-lg font-medium text-white/90 mb-4 text-center">Thèmes complets</h3>
-                <p className="text-sm text-white/70 text-center mb-6">
-                  Choisissez parmi nos thèmes prédéfinis qui combinent harmonieusement couleurs primaires et d'accentuation
-                </p>
-                <ThemeSelector className="mx-auto max-w-md" />
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                {/* Mode clair/sombre */}
-                <div className="flex flex-col items-center space-y-4 p-6 bg-[color:var(--primary-800)]/40 rounded-xl border border-white/5">
-                  <h3 className="text-white font-medium">Mode d'affichage</h3>
-                  <ThemeSwitcher variant="default" size="md" />
-                  <p className="text-xs text-white/60 text-center">
-                    Basculez entre les modes clair et sombre
-                  </p>
-                </div>
-                
-                {/* Thèmes minimalistes */}
-                <div className="flex flex-col items-center space-y-4 p-6 bg-[color:var(--primary-800)]/40 rounded-xl border border-white/5">
-                  <h3 className="text-white font-medium">Sélection rapide</h3>
-                  <ThemeSelector variant="minimal" showTitle={false} />
-                  <p className="text-xs text-white/60 text-center">
-                    Changez rapidement de thème avec un seul clic
-                  </p>
-                </div>
-              </div>
-              
-              <div className="mt-10 text-center">
-                <p className="text-sm text-white/70 mb-6">
-                  Tous vos paramètres sont automatiquement sauvegardés pour votre prochaine visite
-                </p>
-                <Button className="bg-[color:var(--accent-500)] hover:bg-[color:var(--accent-600)]">
-                  Explorer plus d'options <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </motion.div>
-          </div>
         </section>
       </div>
       
@@ -599,4 +526,4 @@ export default function HomePage() {
       `}</style>
     </PublicLayout>
   )
-}
+} 

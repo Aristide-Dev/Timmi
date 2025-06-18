@@ -462,7 +462,7 @@ export default function PublicLayout({
 
         {/* Contenu principal avec état de chargement */}
         <main 
-          className="flex-grow relative z-10 pt-[calc(4rem+var(--top-bar-height,2.5rem))] transition-[padding] duration-300"
+          className="flex-grow relative z-10 pt-[calc(4rem+var(--top-bar-height,10rem))] transition-[padding] duration-300"
           role="main"
           aria-label="Contenu principal"
         >
