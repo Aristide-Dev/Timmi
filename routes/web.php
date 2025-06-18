@@ -40,5 +40,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
+// Routes pour l'administration
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Routes pour les rôles
+    Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
+    
+    // Routes pour la gestion des rôles utilisateur
+    Route::get('user-roles', [\App\Http\Controllers\Admin\UserRoleController::class, 'index'])->name('user-roles.index');
+    Route::get('user-roles/{user}/edit', [\App\Http\Controllers\Admin\UserRoleController::class, 'edit'])->name('user-roles.edit');
+    Route::put('user-roles/{user}', [\App\Http\Controllers\Admin\UserRoleController::class, 'update'])->name('user-roles.update');
+    Route::post('user-roles/{user}/add-role', [\App\Http\Controllers\Admin\UserRoleController::class, 'addRole'])->name('user-roles.add-role');
+    Route::delete('user-roles/{user}/remove-role', [\App\Http\Controllers\Admin\UserRoleController::class, 'removeRole'])->name('user-roles.remove-role');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

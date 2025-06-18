@@ -14,21 +14,7 @@ import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import {
-    Bell,
-    BookOpen,
-    Calendar,
-    FileText,
-    Folder,
-    HelpCircle,
-    LayoutGrid,
-    Menu,
-    Palette,
-    Search,
-    Settings,
-    ShoppingCart,
-    Users,
-} from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Menu, Palette, Search, ShieldCheck, Users } from 'lucide-react';
 import { useState } from 'react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
@@ -39,40 +25,16 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    // Section Administration
     {
-        title: 'Utilisateurs',
-        href: '/users',
+        title: 'Gestion des rôles',
+        href: route('admin.roles.index'),
+        icon: ShieldCheck,
+    },
+    {
+        title: 'Rôles utilisateurs',
+        href: route('admin.user-roles.index'),
         icon: Users,
-    },
-    {
-        title: 'Paramètres',
-        href: '/settings',
-        icon: Settings,
-    },
-    {
-        title: 'Documents',
-        href: '/documents',
-        icon: FileText,
-    },
-    {
-        title: 'Calendrier',
-        href: '/calendar',
-        icon: Calendar,
-    },
-    {
-        title: 'Produits',
-        href: '/products',
-        icon: ShoppingCart,
-    },
-    {
-        title: 'Aide',
-        href: '/help',
-        icon: HelpCircle,
-    },
-    {
-        title: 'Notifications',
-        href: '/notifications',
-        icon: Bell,
     },
     // Autres éléments de navigation simplifiés
 ];

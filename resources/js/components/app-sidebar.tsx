@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, Users, Settings, FileText, Calendar, ShoppingCart, BarChart, HelpCircle, Bell } from 'lucide-react';
+import { LayoutGrid, ShieldCheck, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -13,45 +13,21 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    // Section Administration
     {
-        title: 'Utilisateurs',
-        href: '/users',
-        icon: Users,
-    },
-    {
-        title: 'Paramètres',
-        href: '/settings',
-        icon: Settings,
-    },
-    {
-        title: 'Documents',
-        href: '/documents',
-        icon: FileText,
-    },
-    {
-        title: 'Calendrier',
-        href: '/calendar',
-        icon: Calendar,
-    },
-    {
-        title: 'Produits',
-        href: '/products',
-        icon: ShoppingCart,
-    },
-    {
-        title: 'Statistiques',
-        href: '/statistics',
-        icon: BarChart,
-    },
-    {
-        title: 'Aide',
-        href: '/help',
-        icon: HelpCircle, 
-    },
-    {
-        title: 'Notifications',
-        href: '/notifications',
-        icon: Bell,
+        title: 'Administration',
+        items: [
+            {
+                title: 'Gestion des rôles',
+                href: route('admin.roles.index'),
+                icon: ShieldCheck,
+            },
+            {
+                title: 'Rôles utilisateurs',
+                href: route('admin.user-roles.index'),
+                icon: Users,
+            },
+        ],
     },
     // Autres éléments de navigation simplifiés
 ];
