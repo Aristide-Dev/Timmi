@@ -1,11 +1,11 @@
 import React from 'react';
-import { Sun, Moon, Lock } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/hooks/use-theme';
 import { cn } from '@/lib/utils';
 
 // Récupération des variables d'environnement
-const ALLOW_THEME_CHANGE = import.meta.env.VITE_THEME_ALLOW_CHANGE !== 'false';
+const ALLOW_THEME_CHANGE = import.meta.env.VITE_THEME_ALLOW_CHANGE !== false;
 
 interface ThemeSwitcherProps {
   variant?: 'default' | 'outline' | 'minimal';
@@ -20,6 +20,11 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 }) => {
   const { currentTheme, toggleDarkMode } = useTheme();
   const isDark = currentTheme?.isDark || false;
+
+  // Ne pas afficher le composant si le changement de thème est désactivé
+  if (!ALLOW_THEME_CHANGE) {
+    return null;
+  }
 
   // Définition des tailles
   const sizes = {
@@ -39,37 +44,35 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     return (
       <div className={cn("flex items-center gap-1", className)}>
         <motion.button
-          onClick={() => ALLOW_THEME_CHANGE && isDark && toggleDarkMode()}
+          onClick={() => isDark && toggleDarkMode()}
           className={cn(
             "p-2 rounded-lg transition-all duration-300",
             !isDark 
               ? "bg-white/20 backdrop-blur-sm text-yellow-300" 
-              : "bg-transparent text-white/50 hover:text-white/80 hover:bg-white/10",
-            !ALLOW_THEME_CHANGE && "opacity-50 cursor-not-allowed"
+              : "bg-transparent text-white/50 hover:text-white/80 hover:bg-white/10"
           )}
-          whileHover={ALLOW_THEME_CHANGE ? { scale: 1.05 } : {}}
-          whileTap={ALLOW_THEME_CHANGE ? { scale: 0.95 } : {}}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           aria-label="Mode clair"
-          title={ALLOW_THEME_CHANGE ? "Mode clair" : "Changement de thème désactivé"}
+          title="Mode clair"
         >
-          {!ALLOW_THEME_CHANGE ? <Lock className={iconSizes[size]} /> : <Sun className={iconSizes[size]} />}
+          <Sun className={iconSizes[size]} />
         </motion.button>
         
         <motion.button
-          onClick={() => ALLOW_THEME_CHANGE && !isDark && toggleDarkMode()}
+          onClick={() => !isDark && toggleDarkMode()}
           className={cn(
             "p-2 rounded-lg transition-all duration-300",
             isDark 
               ? "bg-white/20 backdrop-blur-sm text-blue-300" 
-              : "bg-transparent text-white/50 hover:text-white/80 hover:bg-white/10",
-            !ALLOW_THEME_CHANGE && "opacity-50 cursor-not-allowed"
+              : "bg-transparent text-white/50 hover:text-white/80 hover:bg-white/10"
           )}
-          whileHover={ALLOW_THEME_CHANGE ? { scale: 1.05 } : {}}
-          whileTap={ALLOW_THEME_CHANGE ? { scale: 0.95 } : {}}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           aria-label="Mode sombre"
-          title={ALLOW_THEME_CHANGE ? "Mode sombre" : "Changement de thème désactivé"}
+          title="Mode sombre"
         >
-          {!ALLOW_THEME_CHANGE ? <Lock className={iconSizes[size]} /> : <Moon className={iconSizes[size]} />}
+          <Moon className={iconSizes[size]} />
         </motion.button>
       </div>
     );
@@ -79,16 +82,15 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   return (
     <div 
       className={cn(
-        "relative rounded-full transition-all duration-300",
+        "relative rounded-full transition-all duration-300 cursor-pointer",
         sizes[size],
         variant === 'default' 
           ? "bg-gradient-to-r from-blue-900/80 to-indigo-900/80 p-1" 
           : "border-2 border-white/20 p-0.5",
-        ALLOW_THEME_CHANGE ? "cursor-pointer" : "cursor-not-allowed opacity-70",
         className
       )}
-      onClick={() => ALLOW_THEME_CHANGE && toggleDarkMode()}
-      title={ALLOW_THEME_CHANGE ? (isDark ? "Passer en mode clair" : "Passer en mode sombre") : "Changement de thème désactivé"}
+      onClick={() => toggleDarkMode()}
+      title={isDark ? "Passer en mode clair" : "Passer en mode sombre"}
     >
       <motion.div 
         className={cn(
@@ -108,12 +110,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
           <Moon className={cn(iconSizes[size], "text-blue-300")} />
         ) : (
           <Sun className={cn(iconSizes[size], "text-yellow-500")} />
-        )}
-        
-        {!ALLOW_THEME_CHANGE && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
-            <Lock className={cn(iconSizes[size], "text-white/80")} />
-          </div>
         )}
       </motion.div>
       

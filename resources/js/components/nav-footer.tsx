@@ -15,6 +15,7 @@ export function NavFooter({
     items: NavItem[];
 }) {
     const [showThemeSelector, setShowThemeSelector] = useState(false);
+    const ALLOW_THEME_CHANGE  = import.meta.env.VITE_THEME_ALLOW_CHANGE !== false;
 
     return (
         <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 ${className || ''}`}>
@@ -72,44 +73,46 @@ export function NavFooter({
                     </div>
 
                     {/* Sélecteur de thème */}
-                    <motion.div
-                        className="relative z-10 mb-3 p-2"
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.2 }}
-                    >
-                        <div className="flex items-center justify-between">
-                            <motion.button
-                                onClick={() => setShowThemeSelector(!showThemeSelector)}
-                                className={`group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/20`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <Palette className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                                <span className="font-medium">Thème</span>
-                                <motion.div className="ml-1 text-xs" animate={{ rotate: showThemeSelector ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                                    {showThemeSelector ? '▲' : '▼'}
-                                </motion.div>
-                            </motion.button>
-
-                            <ThemeSwitcher variant="minimal" size="sm" />
-                        </div>
-
-                        {/* Panneau de sélection de thème */}
+                    {ALLOW_THEME_CHANGE && (
                         <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{
-                                height: showThemeSelector ? 'auto' : 0,
-                                opacity: showThemeSelector ? 1 : 0,
-                            }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
+                            className="relative z-10 mb-3 p-2"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.2 }}
                         >
-                            <div className="pt-3 pb-1">
-                                <ThemeSelector variant="minimal" showTitle={false} />
+                            <div className="flex items-center justify-between">
+                                <motion.button
+                                    onClick={() => setShowThemeSelector(!showThemeSelector)}
+                                    className={`group flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/20`}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <Palette className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+                                    <span className="font-medium">Thème</span>
+                                    <motion.div className="ml-1 text-xs" animate={{ rotate: showThemeSelector ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                                        {showThemeSelector ? '▲' : '▼'}
+                                    </motion.div>
+                                </motion.button>
+
+                                <ThemeSwitcher variant="minimal" size="sm" />
                             </div>
+
+                            {/* Panneau de sélection de thème */}
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{
+                                    height: showThemeSelector ? 'auto' : 0,
+                                    opacity: showThemeSelector ? 1 : 0,
+                                }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                            >
+                                <div className="pt-3 pb-1">
+                                    <ThemeSelector variant="minimal" showTitle={false} />
+                                </div>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
+                    )}
 
                     <SidebarMenu>
                         {items.map((item, index) => (

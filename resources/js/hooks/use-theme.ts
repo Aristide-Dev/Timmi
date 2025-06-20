@@ -2,8 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 
 // Récupération des variables d'environnement
 const DEFAULT_THEME_KEY = import.meta.env.VITE_THEME_DEFAULT || 'default';
-const ALLOW_THEME_CHANGE = import.meta.env.VITE_THEME_ALLOW_CHANGE !== 'false';
-const DEFAULT_DARK_MODE = import.meta.env.VITE_THEME_DEFAULT_DARK_MODE === 'true';
+const ALLOW_THEME_CHANGE = import.meta.env.VITE_THEME_ALLOW_CHANGE !== false;
+const DEFAULT_DARK_MODE = import.meta.env.VITE_THEME_DEFAULT_DARK_MODE === true;
+
+console.log('VITE_THEME_ALLOW_CHANGE', import.meta.env.VITE_THEME_ALLOW_CHANGE);
+console.log('VITE_THEME_DEFAULT', import.meta.env.VITE_THEME_DEFAULT);
+console.log('VITE_THEME_DEFAULT_DARK_MODE', import.meta.env.VITE_THEME_DEFAULT_DARK_MODE);
+
 
 // Types pour les thèmes disponibles (16 couleurs)
 export type ThemeColor =
@@ -24,18 +29,23 @@ export type ThemeColor =
     | 'lime'
     | 'slate'
     | 'gray'
+    | 'white'
     | 'zinc'
     | 'stone'
     | 'sky'
     | 'fuchsia'
-    | 'mint';
+    | 'mint'
+    | 'makity_purple'
+    | 'makity_yellow'
+    | 'makity_purple'
+    ;
 
 export interface ThemeConfig {
     primary: ThemeColor;
     accent: ThemeColor;
     name: string;
     isDark?: boolean;
-    category?: 'nature' | 'urban' | 'cosmic' | 'seasons' | 'premium' | 'classic' | 'modern';
+    category?: 'nature' | 'urban' | 'cosmic' | 'seasons' | 'premium' | 'classic' | 'modern' | 'makity_theme' | 'makity_white' | 'makity_yellow';
     gradient?: boolean;
 }
 
@@ -212,6 +222,30 @@ export const THEME_PRESETS: Record<string, ThemeConfig> = {
         category: 'premium',
         gradient: true,
     },
+
+    // Thème 7MAKITY
+    makity_theme: {
+        primary: 'makity_purple',
+        accent: 'makity_yellow',
+        name: '7MAKITY',
+        category: 'premium',
+        gradient: true,
+    },
+    makity_white: {
+        primary: 'white',
+        accent: 'makity_purple',
+        name: '7MAKITY Blanc',
+        category: 'premium',
+        gradient: true,
+    },
+    makity_yellow: {
+        primary: 'makity_yellow',
+        accent: 'makity_purple',
+        name: '7MAKITY Jaune Moutarde',
+        category: 'premium',
+        gradient: true,
+    },
+
 };
 
 // Palettes de couleurs OKLCH étendues (16 couleurs)
@@ -439,6 +473,13 @@ const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
         '900': 'oklch(0.16 0.009 240)',
         '950': 'oklch(0.1 0.006 240)',
     },
+    white: {
+        '50': 'oklch(0.98 0.003 0)',
+        '100': 'oklch(0.95 0.006 0)',
+        '200': 'oklch(0.9 0.009 0)',
+        '300': 'oklch(0.8 0.012 0)',
+        '400': 'oklch(0.65 0.015 0)',
+    },
     zinc: {
         '50': 'oklch(0.98 0.004 220)',
         '100': 'oklch(0.95 0.008 220)',
@@ -505,6 +546,33 @@ const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
         '900': 'oklch(0.16 0.12 150)',
         '950': 'oklch(0.1 0.08 150)',
     },
+    // Couleurs 7MAKITY personnalisées
+    makity_purple: {
+        '50': 'oklch(0.98 0.02 285)',
+        '100': 'oklch(0.95 0.04 285)',
+        '200': 'oklch(0.9 0.08 285)',
+        '300': 'oklch(0.8 0.12 285)',
+        '400': 'oklch(0.65 0.16 285)',
+        '500': 'oklch(0.35 0.18 285)', // Violet foncé #570E6C équivalent
+        '600': 'oklch(0.3 0.2 285)',
+        '700': 'oklch(0.25 0.18 285)',
+        '800': 'oklch(0.2 0.15 285)',
+        '900': 'oklch(0.15 0.12 285)',
+        '950': 'oklch(0.1 0.08 285)',
+    },
+    makity_yellow: {
+        '50': 'oklch(0.98 0.02 80)',
+        '100': 'oklch(0.95 0.04 80)',
+        '200': 'oklch(0.9 0.08 80)',
+        '300': 'oklch(0.8 0.12 80)',
+        '400': 'oklch(0.75 0.16 80)',
+        '500': 'oklch(0.7 0.18 80)', // Jaune moutarde #FDB912 équivalent
+        '600': 'oklch(0.6 0.16 80)',
+        '700': 'oklch(0.5 0.14 80)',
+        '800': 'oklch(0.4 0.12 80)',
+        '900': 'oklch(0.3 0.1 80)',
+        '950': 'oklch(0.2 0.08 80)',
+    },
 };
 
 // Catégories de couleurs étendues
@@ -516,6 +584,9 @@ export const THEME_CATEGORIES = {
     Urbain: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'urban'),
     Premium: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'premium'),
     Moderne: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'modern'),
+    Makity: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'makity_theme'),   
+    Makity_Gris: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'makity_white'),   
+    Makity_Jaune: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'makity_yellow'),   
 };
 
 const STORAGE_KEY = 'myapp-theme';
@@ -538,28 +609,40 @@ export function useTheme() {
         Tertiaires: ['indigo', 'teal', 'rose', 'amber'] as ThemeColor[],
         Neutres: ['slate', 'gray', 'zinc', 'stone'] as ThemeColor[],
         Spéciales: ['cyan', 'emerald', 'violet', 'lime'] as ThemeColor[],
+        '7MAKITY': ['makity_purple', 'makity_yellow', 'makity_white'] as ThemeColor[],
     });
 
     // Charger le thème et les thèmes récents depuis localStorage au démarrage
     useEffect(() => {
+        // Si le changement de thème est désactivé, toujours utiliser le thème par défaut de la config
+        if (!ALLOW_THEME_CHANGE) {
+            setCurrentTheme(defaultThemeConfig);
+            applyTheme(defaultThemeConfig);
+            return;
+        }
+
         const savedTheme = localStorage.getItem(STORAGE_KEY);
         const savedRecentThemes = localStorage.getItem(RECENT_THEMES_KEY);
 
-        // Ne charger le thème sauvegardé que si le changement de thème est autorisé
-        if (savedTheme && ALLOW_THEME_CHANGE) {
+        // Charger le thème sauvegardé seulement si le changement de thème est autorisé
+        if (savedTheme) {
             try {
                 const parsedTheme = JSON.parse(savedTheme);
                 setCurrentTheme(parsedTheme);
                 applyTheme(parsedTheme);
             } catch (error) {
                 console.warn('Erreur lors du chargement du thème sauvegardé:', error);
+                // En cas d'erreur, utiliser le thème par défaut
+                setCurrentTheme(defaultThemeConfig);
+                applyTheme(defaultThemeConfig);
             }
         } else {
             // Appliquer le thème par défaut défini dans .env
+            setCurrentTheme(defaultThemeConfig);
             applyTheme(defaultThemeConfig);
         }
 
-        if (savedRecentThemes && ALLOW_THEME_CHANGE) {
+        if (savedRecentThemes) {
             try {
                 const parsedRecentThemes = JSON.parse(savedRecentThemes);
                 setRecentThemes(parsedRecentThemes);
@@ -659,6 +742,22 @@ export function useTheme() {
     useEffect(() => {
         updateCSSVariables(currentTheme);
     }, [currentTheme, updateCSSVariables]);
+
+    // Surveillance des changements de thème pour forcer le thème par défaut si nécessaire
+    useEffect(() => {
+        if (!ALLOW_THEME_CHANGE) {
+            // Si le changement de thème est désactivé, toujours forcer le thème par défaut
+            if (
+                currentTheme.primary !== defaultThemeConfig.primary ||
+                currentTheme.accent !== defaultThemeConfig.accent ||
+                currentTheme.isDark !== defaultThemeConfig.isDark
+            ) {
+                console.warn('Tentative de changement de thème détectée. Restauration du thème par défaut.');
+                setCurrentTheme(defaultThemeConfig);
+                updateCSSVariables(defaultThemeConfig);
+            }
+        }
+    }, [currentTheme, defaultThemeConfig, updateCSSVariables]);
 
     // Fonction pour appliquer le thème aux variables CSS
     const applyTheme = useCallback(

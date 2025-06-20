@@ -34,7 +34,7 @@ if (app()->environment(['local', 'testing'])) {
     })->name('theme.demo');
 }
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
