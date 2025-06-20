@@ -1,4 +1,4 @@
-import AuthLayoutTemplate from '@/layouts/auth/auth-card-layout';
+import AuthLayoutTemplate from '@/layouts/auth/auth-split-layout';
 import ThemeSelector from '@/components/ui/theme-selector';
 import ThemeSwitcher from '@/components/ui/theme-switcher';
 import { motion, AnimatePresence } from 'framer-motion';

@@ -33,6 +33,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Message de succès
+        $request->session()->flash('success', 'Connexion réussie ! Bienvenue sur votre tableau de bord.');
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -45,6 +48,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        // Message de déconnexion
+        session()->flash('info', 'Vous avez été déconnecté avec succès.');
 
         return redirect('/');
     }
