@@ -32,12 +32,18 @@ return Application::configure(basePath: dirname(__DIR__))
         // Gestionnaire d'erreur personnalisé pour les pages d'erreur React
         $exceptions->render(function (Throwable $e, $request) {
             if (!$request->expectsJson()) {
+                // Vérifier si c'est une exception d'authentification
+                if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                    // Laisser Laravel gérer la redirection vers login
+                    return null;
+                }
+                
                 $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
                 
                 // Définir les pages d'erreur disponibles
                 $errorPages = [
                     400 => 'errors/400',
-                    401 => 'errors/401', 
+                    // 401 retiré pour permettre la redirection vers login
                     403 => 'errors/403',
                     404 => 'errors/404',
                     405 => 'errors/405',

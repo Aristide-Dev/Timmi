@@ -6,11 +6,11 @@ import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { 
-    Facebook, Globe, Linkedin, Mail, MapPin, Phone, Twitter, 
-    ChevronRight, ExternalLink, Building2, Truck, Package, 
-    Factory, Wrench, Clock, Star
+    Mail, MapPin, Phone, Globe,
+    ChevronRight, ExternalLink, Building2, Package, Wrench, Clock, Star
 } from 'lucide-react';
 import React, { useState } from 'react';
+import { appDetails } from '@/constants/app-details';
 
 // Composant optimisé pour le préchargement des ressources critiques
 const PreloadCriticalResources = () => (
@@ -65,73 +65,29 @@ const Footer: React.FC = () => {
         { href: '/terms', text: 'Conditions', icon: <Package className="w-4 h-4" /> },
     ];
 
-    const socialMedia = [
-        { 
-            href: 'https://www.facebook.com', 
-            icon: Facebook, 
-            label: 'Facebook',
-            color: '#1877f2',
-            hoverBg: 'hover:bg-blue-500'
-        },
-        { 
-            href: 'https://twitter.com', 
-            icon: Twitter, 
-            label: 'Twitter',
-            color: '#1da1f2',
-            hoverBg: 'hover:bg-sky-500'
-        },
-        { 
-            href: 'https://www.linkedin.com', 
-            icon: Linkedin, 
-            label: 'LinkedIn',
-            color: '#0a66c2',
-            hoverBg: 'hover:bg-blue-600'
-        },
-    ];
+    // Utilisation des données depuis app-details.js
+    const socialMedia = appDetails.social.map(social => ({
+        ...social,
+        label: social.href.includes('facebook') ? 'Facebook' : 
+               social.href.includes('twitter') ? 'Twitter' : 
+               social.href.includes('linkedin') ? 'LinkedIn' : 
+               social.href.includes('instagram') ? 'Instagram' : 
+               social.href.includes('youtube') ? 'YouTube' : 'Social',
+        color: social.href.includes('facebook') ? '#1877f2' : 
+               social.href.includes('twitter') ? '#1da1f2' : 
+               social.href.includes('linkedin') ? '#0a66c2' : 
+               social.href.includes('instagram') ? '#E4405F' : 
+               social.href.includes('youtube') ? '#FF0000' : '#666',
+        hoverBg: social.href.includes('facebook') ? 'hover:bg-blue-500' : 
+                 social.href.includes('twitter') ? 'hover:bg-sky-500' : 
+                 social.href.includes('linkedin') ? 'hover:bg-blue-600' : 
+                 social.href.includes('instagram') ? 'hover:bg-pink-500' : 
+                 social.href.includes('youtube') ? 'hover:bg-red-500' : 'hover:bg-gray-500'
+    }));
 
-    const usefulLinks = [
-        { 
-            href: "https://service-public.gov.gn/", 
-            text: "Service Public Guinéen",
-            icon: <Globe className="w-4 h-4" />
-        },
-        { 
-            href: "https://www.entreprises.gouv.fr/", 
-            text: "Portail des Entreprises",
-            icon: <Building2 className="w-4 h-4" />
-        },
-        { 
-            href: "https://www.urssaf.fr/", 
-            text: "URSSAF",
-            icon: <Truck className="w-4 h-4" />
-        },
-        { 
-            href: "https://www.pole-emploi.fr/", 
-            text: "Pôle Emploi",
-            icon: <Factory className="w-4 h-4" />
-        },
-    ];
-
-    const services = [
-        { title: "Développement Web", link: "/services/web" },
-        { title: "Applications Mobile", link: "/services/mobile" },
-        { title: "Consultation IT", link: "/services/consulting" },
-        { title: "Support Technique", link: "/services/support" },
-        { title: "Hébergement Cloud", link: "/services/cloud" },
-        { title: "Sécurité Informatique", link: "/services/security" },
-        { title: "Formation Digitale", link: "/services/training" },
-        { title: "Analytics & BI", link: "/services/analytics" },
-    ];
-
-    const contactInfo = {
-        phones: ["+33 1 23 45 67 89", "+33 6 98 76 54 32"],
-        emails: ["contact@myapp.fr", "support@myapp.fr"],
-        address: "123 Rue de la Technologie, 75001 Paris, France",
-        hours: {
-            weekdays: "Lundi - Vendredi",
-            weekhours: "9h00 - 18h00"
-        }
-    };
+    const usefulLinks = appDetails.usefulLinks;
+    const services = appDetails.services;
+    const contactInfo = appDetails.contact;
 
     return (
         <footer
@@ -215,14 +171,14 @@ const Footer: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-white text-xl font-bold">Aristech</span>
-                                    <span className="text-xs text-gray-300 uppercase tracking-wide">Innovation & Technologie</span>
+                                    <span className="text-white text-xl font-bold">{appDetails.name}</span>
+                                    <span className="text-xs text-gray-300 uppercase tracking-wide">{appDetails.author}</span>
                                 </div>
                             </div>
                         </div>
                         
                         <p className="text-sm text-justify text-gray-100 md:text-left leading-relaxed backdrop-blur-sm bg-white/5 p-4 rounded-xl">
-                            Votre plateforme moderne pour une expérience utilisateur optimale. Nous développons des solutions innovantes avec les dernières technologies.
+                            {appDetails.description}
                         </p>
                         
                         {/* Mission et Vision */}
@@ -319,26 +275,23 @@ const Footer: React.FC = () => {
                         <div className="pt-4 border-t border-white/10">
                             <h4 className="text-lg font-semibold mb-4 text-[color:var(--accent-400)]">Suivez-nous</h4>
                             <div className="flex flex-wrap gap-3">
-                                {socialMedia.map((social, index) => {
-                                    const Icon = social.icon;
-                                    return (
-                                        <motion.a
-                                            key={index}
-                                            href={social.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`p-3 rounded-lg bg-white/10 text-white hover:text-white ${social.hoverBg} transition-all duration-300 group backdrop-blur-sm`}
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            style={{
-                                                boxShadow: `0 0 20px ${social.color}20`
-                                            }}
-                                        >
-                                            <Icon className="w-5 h-5" />
-                                            <span className="sr-only">{social.label}</span>
-                                        </motion.a>
-                                    );
-                                })}
+                                {socialMedia.map((social, index) => (
+                                    <motion.a
+                                        key={index}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`p-3 rounded-lg bg-white/10 text-white hover:text-white ${social.hoverBg} transition-all duration-300 group backdrop-blur-sm`}
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        style={{
+                                            boxShadow: `0 0 20px ${social.color}20`
+                                        }}
+                                    >
+                                        <social.icon className="w-4 h-4" />
+                                        <span className="sr-only">{social.label}</span>
+                                    </motion.a>
+                                ))}
                             </div>
                         </div>
                     </motion.div>
@@ -457,7 +410,7 @@ const Footer: React.FC = () => {
                                         whileHover={{ x: 5, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
                                     >
                                         <span className="text-[color:var(--accent-400)] group-hover:scale-110 transition-transform duration-300">
-                                            {link.icon}
+                                            <link.icon className="w-4 h-4" />
                                         </span>
                                         <span className="flex-1 text-xs">{link.text}</span>
                                         <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-300" />
@@ -486,18 +439,21 @@ const Footer: React.FC = () => {
                         </div>
                         <div className="text-center md:text-left">
                             <p className="text-gray-200 text-lg backdrop-blur-sm bg-white/5 px-6 py-2 rounded-full mb-2"> 
-                                © {new Date().getFullYear()} <span className="font-medium text-white">MyApp</span> - Tous droits réservés
+                                © {new Date().getFullYear()} <span className="font-medium text-white">{appDetails.name}</span> - Tous droits réservés
                             </p>
                             <p className="text-xs text-gray-400 italic">Innovation & Excellence depuis 2024</p>
                     </div>
                 </div>
 
                     <div className="flex flex-wrap gap-4 justify-center">
-                        <a href="/privacy-policy" className="text-gray-300 hover:text-[color:var(--accent-400)] transition-colors text-sm">
+                        <a href={appDetails.legal.privacyPolicy} className="text-gray-300 hover:text-[color:var(--accent-400)] transition-colors text-sm">
                             Politique de confidentialité
                         </a>
-                        <a href="/terms" className="text-gray-300 hover:text-[color:var(--accent-400)] transition-colors text-sm">
+                        <a href={appDetails.legal.termsOfService} className="text-gray-300 hover:text-[color:var(--accent-400)] transition-colors text-sm">
                             Conditions d'utilisation
+                        </a>
+                        <a href={appDetails.legal.cookiePolicy} className="text-gray-300 hover:text-[color:var(--accent-400)] transition-colors text-sm">
+                            Politique de cookies
                         </a>
                 </div>
                 </motion.div>

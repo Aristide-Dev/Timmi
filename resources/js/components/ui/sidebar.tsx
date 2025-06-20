@@ -168,17 +168,19 @@ function Sidebar({
       <div
         data-slot="sidebar"
         className={cn(
-          "bg-gradient-to-b from-slate-800 via-[color:var(--primary-600)] to-slate-800 text-white flex h-full w-(--sidebar-width) flex-col shadow-xl relative overflow-hidden",
+          "bg-gradient-to-b from-[color:var(--primary-800)] via-[color:var(--primary-700)] to-[color:var(--primary-800)] text-white flex h-full w-(--sidebar-width) flex-col shadow-xl relative overflow-hidden",
           className
         )}
         {...props}
       >
         {/* Effet de brillance décoratif */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-50 pointer-events-none" />
+        {/* Gradient border animé */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/20 via-[color:var(--accent-500)]/20 to-[color:var(--primary-500)]/20 opacity-30" />
         {/* Effet décoratif haut */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/60 to-transparent pointer-events-none" />
         {/* Effet décoratif bas */}
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/60 to-transparent pointer-events-none" />
         <div className="relative z-10 flex flex-col h-full overflow-hidden">{children}</div>
       </div>
     )
@@ -195,7 +197,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-gradient-to-b from-slate-800 via-[color:var(--primary-600)] to-slate-800 text-white w-(--sidebar-width) p-0 [&>button]:hidden relative overflow-hidden shadow-xl"
+          className="bg-gradient-to-b from-[color:var(--primary-800)] via-[color:var(--primary-700)] to-[color:var(--primary-800)] text-white w-(--sidebar-width) p-0 [&>button]:hidden relative overflow-hidden shadow-xl backdrop-blur-2xl backdrop-saturate-200"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -205,10 +207,12 @@ function Sidebar({
         >
           {/* Effet de brillance décoratif */}
           <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-50 pointer-events-none" />
+          {/* Gradient border animé */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/20 via-[color:var(--accent-500)]/20 to-[color:var(--primary-500)]/20 opacity-30" />
           {/* Effet décoratif haut */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/60 to-transparent pointer-events-none" />
           {/* Effet décoratif bas */}
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/60 to-transparent pointer-events-none" />
           <div className="flex h-full w-full flex-col relative z-10 overflow-hidden">{children}</div>
         </SheetContent>
       </Sheet>
@@ -251,14 +255,36 @@ function Sidebar({
       >
         <div
           data-sidebar="sidebar"
-          className="bg-gradient-to-b from-slate-800 via-[color:var(--primary-600)] to-slate-800 text-white flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border-white/20 group-data-[variant=floating]:shadow-xl relative overflow-hidden"
+          className="bg-gradient-to-r from-[color:var(--primary-800)]/95 via-[color:var(--primary-700)]/90 to-[color:var(--primary-600)]/95 text-white flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border-[color:var(--primary-400)]/20 group-data-[variant=floating]:shadow-2xl group-data-[variant=floating]:shadow-[color:var(--primary-500)]/20 relative overflow-hidden backdrop-blur-2xl backdrop-saturate-200"
         >
-          {/* Effet de brillance décoratif */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-50 pointer-events-none" />
-          {/* Effet décoratif haut */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
-          {/* Effet décoratif bas */}
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+          {/* Effet de brillance dynamique */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-50 pointer-events-none" />
+          
+          {/* Gradient border animé */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/20 via-[color:var(--accent-500)]/20 to-[color:var(--primary-500)]/20 opacity-30" />
+          
+          {/* Ligne lumineuse animée haut */}
+          <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/60 to-transparent shadow-lg shadow-[color:var(--primary-400)]/50" />
+          
+          {/* Ligne lumineuse animée bas */}
+          <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/60 to-transparent shadow-lg shadow-[color:var(--primary-400)]/50" />
+          
+          {/* Effet de particules flottantes */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white/20 rounded-full animate-float"
+                style={{
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${i * 200}ms`,
+                  animationDuration: `${3 + Math.random() * 2}s`
+                }}
+              />
+            ))}
+          </div>
+          
           <div className="relative z-10 flex flex-col h-full overflow-hidden">{children}</div>
         </div>
       </div>
@@ -375,7 +401,7 @@ function SidebarSeparator({
     <Separator
       data-slot="sidebar-separator"
       data-sidebar="separator"
-      className={cn("bg-sidebar-border mx-2 w-auto", className)}
+      className={cn("bg-gradient-to-r from-transparent via-[color:var(--primary-400)]/30 to-transparent mx-2 w-auto h-px", className)}
       {...props}
     />
   )
@@ -387,7 +413,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="sidebar-content"
       data-sidebar="content"
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-[color:var(--primary-400)]/20 scrollbar-track-transparent hover:scrollbar-thumb-[color:var(--primary-400)]/30 group-data-[collapsible=icon]:overflow-hidden",
         className
       )}
       {...props}
@@ -418,7 +444,7 @@ function SidebarGroupLabel({
       data-slot="sidebar-group-label"
       data-sidebar="group-label"
       className={cn(
-        "text-white/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-full px-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "text-white/70 ring-[color:var(--primary-400)]/30 flex h-8 shrink-0 items-center rounded-full px-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className
       )}
@@ -487,13 +513,13 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-full p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-white/10 hover:text-white focus-visible:ring-2 active:bg-white/15 active:text-white disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-white/15 data-[active=true]:font-medium data-[active=true]:text-white data-[state=open]:hover:bg-white/15 data-[state=open]:hover:text-white group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-full p-2 text-left text-sm outline-hidden ring-[color:var(--primary-400)]/30 transition-[width,height,padding,background-color,transform] hover:bg-white/10 hover:text-white focus-visible:ring-2 active:bg-white/15 active:text-white disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-gradient-to-r data-[active=true]:from-white/15 data-[active=true]:to-white/10 data-[active=true]:font-medium data-[active=true]:text-white data-[active=true]:shadow-lg data-[active=true]:shadow-[color:var(--primary-500)]/20 data-[state=open]:hover:bg-white/15 data-[state=open]:hover:text-white group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:scale-105 active:scale-95",
   {
     variants: {
       variant: {
-        default: "hover:bg-white/10 hover:text-white",
+        default: "hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 hover:text-white",
         outline:
-          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-white/10 hover:text-white hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+          "bg-transparent shadow-[0_0_0_1px_rgba(var(--primary-400),0.3)] hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 hover:text-white hover:shadow-[0_0_0_1px_rgba(var(--primary-300),0.5)]",
       },
       size: {
         default: "h-8 text-sm",
@@ -656,7 +682,7 @@ function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
       data-slot="sidebar-menu-sub"
       data-sidebar="menu-sub"
       className={cn(
-        "border-sidebar-border mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5",
+        "border-[color:var(--primary-400)]/20 mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5",
         "group-data-[collapsible=icon]:hidden",
         className
       )}
@@ -699,8 +725,8 @@ function SidebarMenuSubButton({
       data-size={size}
       data-active={isActive}
       className={cn(
-        "text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground [&>svg]:text-sidebar-accent-foreground flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 outline-hidden focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
-        "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
+        "text-white/80 ring-[color:var(--primary-400)]/30 hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 hover:text-white active:bg-white/15 active:text-white [&>svg]:text-white/70 flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 outline-hidden focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 transition-all duration-200",
+        "data-[active=true]:bg-gradient-to-r data-[active=true]:from-white/15 data-[active=true]:to-white/10 data-[active=true]:text-white data-[active=true]:font-medium",
         size === "sm" && "text-xs",
         size === "md" && "text-sm",
         "group-data-[collapsible=icon]:hidden",
@@ -736,4 +762,21 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
+}
+
+// Ajout des styles CSS pour les animations
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-10px) rotate(120deg); }
+      66% { transform: translateY(-5px) rotate(240deg); }
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+  `;
+  document.head.appendChild(style);
 }
