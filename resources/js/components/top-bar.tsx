@@ -98,9 +98,9 @@ export const TopBar = () => {
                             transition={{ duration: 0.3 }}
                         >
                             <div className="absolute -inset-3 bg-gradient-to-br from-white/15 to-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur-sm" />
-                            <div className="relative bg-white/10 backdrop-blur-sm p-3 rounded-xl border border-white/20 group-hover:border-white/40 transition-all duration-300 shadow-lg">
-                                <div className="w-10 h-10 bg-gradient-to-br from-white/30 to-white/10 rounded-lg flex items-center justify-center relative overflow-hidden">
-                                    <span className="text-white font-bold text-xl">M</span>
+                            <div className="relative bg-white/10 backdrop-blur-sm p-0 rounded-xl border border-white/20 group-hover:border-white/40 transition-all duration-300 shadow-lg">
+                                <div className="w-16 h-16 bg-gradient-to-br from-white/30 to-white/10 rounded-lg flex items-center justify-center relative overflow-hidden">
+                                    <img src="/images/aristech-brand.png" className="size-full object-cover"/>
                                     {/* Effet de brillance interne */}
                                     <motion.div
                                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"

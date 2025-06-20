@@ -17,7 +17,7 @@ export default function AuthSplitLayout({ children, title, description }: PropsW
     const isDark = currentTheme?.isDark || false;
 
     return (
-        <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0 sm:min-h-svh md:max-h-screen  sm:overflow-y-auto lg:overflow-hidden">
             <motion.div 
                 className="relative hidden h-full flex-col p-10 text-white lg:flex"
                 initial={{ opacity: 0, x: -50 }}
@@ -119,7 +119,8 @@ export default function AuthSplitLayout({ children, title, description }: PropsW
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                    <motion.div 
+                    <motion.a
+                        href='/' 
                         className="mr-2 size-10 flex items-center justify-center rounded-lg backdrop-blur-sm border transition-all duration-300"
                         style={{
                             background: `rgba(255, 255, 255, 0.1)`,
@@ -137,7 +138,7 @@ export default function AuthSplitLayout({ children, title, description }: PropsW
                         >
                             <Sparkles className="w-full h-full text-yellow-300" />
                         </motion.div>
-                    </motion.div>
+                    </motion.a>
                     {name}
                 </motion.div>
                 

@@ -206,16 +206,16 @@ const Footer: React.FC = () => {
                         transition={{ duration: 0.5 }}
                         className="flex flex-col items-center md:items-start space-y-6"
                     >
-                        <div className="group relative overflow-hidden rounded-2xl p-2 -m-2">
+                        <div className="group relative overflow-hidden rounded-2xl p-2 space-y-3">
                             <div className="absolute w-full -inset-0.5 bg-gradient-to-r from-[color:var(--primary-600)] to-[color:var(--accent-600)] rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
                             <div className="relative w-full flex items-center space-x-3">
-                                <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
-                                    <div className="h-12 w-12 rounded-lg bg-white/15 flex items-center justify-center">
-                                        <span className="text-2xl font-bold">M</span>
+                                <div className="bg-white/20 p-0 rounded-xl backdrop-blur-sm">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-white/30 to-white/10 rounded-xl flex items-center justify-center">
+                                        <img src="/images/aristech-brand.png" className="size-full object-cover rounded-xl"/>
                                     </div>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-white text-xl font-bold">MyApp</span>
+                                    <span className="text-white text-xl font-bold">Aristech</span>
                                     <span className="text-xs text-gray-300 uppercase tracking-wide">Innovation & Technologie</span>
                                 </div>
                             </div>
