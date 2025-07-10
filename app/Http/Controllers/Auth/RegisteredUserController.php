@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\TeacherProfile;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,18 +35,45 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required|in:parent,teacher',
+            'phone' => 'required|string|max:20',
+            'city' => 'required|string|max:100',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'phone' => $request->phone,
+            'city' => $request->city,
+            'status' => $request->role === 'teacher' ? 'pending' : 'active',
         ]);
+
+        // Si c'est un professeur, créer un profil vide
+        if ($user->role === 'teacher') {
+            TeacherProfile::create([
+                'user_id' => $user->id,
+                'hourly_rate' => 0,
+                'teaching_mode' => 'both',
+            ]);
+        }
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Rediriger selon le rôle
+        switch ($user->role) {
+            case 'parent':
+                return redirect()->route('parent.dashboard');
+            case 'teacher':
+                if ($user->status === 'pending') {
+                    return redirect()->route('teacher.pending');
+                }
+                return redirect()->route('teacher.dashboard');
+            default:
+                return redirect()->route('dashboard');
+        }
     }
 }

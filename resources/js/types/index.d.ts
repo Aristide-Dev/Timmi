@@ -36,8 +36,16 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
+    role: 'admin' | 'parent' | 'teacher';
+    status: 'pending' | 'active' | 'suspended';
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    [key: string]: unknown;
+}
+
+export interface PageProps {
+    auth: Auth;
+    errors: Record<string, string>;
+    [key: string]: unknown;
 }
