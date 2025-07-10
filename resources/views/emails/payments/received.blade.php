@@ -129,7 +129,7 @@
                 </div>
                 <div class="payment-row">
                     <span class="payment-label">Montant</span>
-                    <span class="payment-value">{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</span>
+                    <span class="payment-value">{{ number_format($payment->amount, 0, ',', ' ') }} GNF</span>
                 </div>
                 <div class="payment-row">
                     <span class="payment-label">Mode de paiement</span>

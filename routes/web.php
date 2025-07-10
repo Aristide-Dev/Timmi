@@ -1,28 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use App\Models\Subject;
-use App\Models\User;
+use App\Http\Controllers\PublicController;
 
-Route::get('/', function () {
-    $subjects = Subject::active()->ordered()->limit(8)->get();
-    $featuredTeachers = User::where('role', 'teacher')
-        ->where('status', 'active')
-        ->whereHas('teacherProfile', function($q) {
-            $q->where('is_verified', true)
-              ->where('rating', '>=', 4);
-        })
-        ->with(['teacherProfile', 'subjects'])
-        ->inRandomOrder()
-        ->limit(6)
-        ->get();
-    
-    return Inertia::render('welcome', [
-        'subjects' => $subjects,
-        'featuredTeachers' => $featuredTeachers,
-    ]);
-})->name('home');
+Route::get('/', [PublicController::class, 'home'])->name('home');
+
+// Routes publiques
+Route::get('/about', [PublicController::class, 'about'])->name('about');
+Route::get('/how-it-works', [PublicController::class, 'howItWorks'])->name('how-it-works');
+Route::get('/faq', [PublicController::class, 'faq'])->name('faq');
+Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
+Route::post('/contact', [PublicController::class, 'contactSubmit'])->name('contact.submit');
+Route::get('/become-teacher', [PublicController::class, 'becomeTeacher'])->name('become-teacher');
+Route::get('/pricing', [PublicController::class, 'pricing'])->name('pricing');
+Route::get('/safety', [PublicController::class, 'safety'])->name('safety');
+Route::get('/terms', [PublicController::class, 'terms'])->name('terms');
+Route::get('/privacy', [PublicController::class, 'privacy'])->name('privacy');
+Route::get('/cookies', [PublicController::class, 'cookies'])->name('cookies');
+Route::get('/disclaimer', [PublicController::class, 'disclaimer'])->name('disclaimer');
+
+// Pages de professeurs et matières
+Route::get('/teachers', [PublicController::class, 'teachers'])->name('teachers');
+Route::get('/teachers/{teacher}', [PublicController::class, 'teacherShow'])->name('teacher.show');
+Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects');
 
 // Redirection du dashboard principal selon le rôle
 Route::middleware(['auth', 'verified'])->group(function () {

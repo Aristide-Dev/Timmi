@@ -262,7 +262,7 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                                         <div className="space-y-2 text-sm">
                                             <div className="flex items-center justify-between">
                                                 <span className="text-muted-foreground">Tarif horaire</span>
-                                                <span className="font-semibold">{teacher.teacherProfile.hourly_rate.toLocaleString()} FCFA</span>
+                                                <span className="font-semibold">{teacher.teacherProfile.hourly_rate.toLocaleString()} GNF</span>
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <span className="text-muted-foreground">Mode</span>

@@ -88,7 +88,7 @@ export default function TeacherDashboard({
         },
         {
             title: 'Revenus du mois',
-            value: `${monthStats.total_earnings.toLocaleString()} FCFA`,
+            value: `${monthStats.total_earnings.toLocaleString()} GNF`,
             icon: DollarSign,
             description: 'Gains de ce mois',
         },

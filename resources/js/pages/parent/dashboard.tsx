@@ -89,7 +89,7 @@ export default function ParentDashboard({
         },
         {
             title: 'Total dépensé',
-            value: `${stats.total_spent.toLocaleString()} FCFA`,
+            value: `${stats.total_spent.toLocaleString()} GNF`,
             icon: CreditCard,
             description: 'Montant total des paiements',
         },

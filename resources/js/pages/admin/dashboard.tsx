@@ -96,9 +96,9 @@ export default function AdminDashboard({
         },
         {
             title: 'Revenus Totaux',
-            value: `${financialStats.total_revenue.toLocaleString()} FCFA`,
+            value: `${financialStats.total_revenue.toLocaleString()} GNF`,
             icon: DollarSign,
-            description: `${financialStats.revenue_this_month.toLocaleString()} FCFA ce mois`,
+            description: `${financialStats.revenue_this_month.toLocaleString()} GNF ce mois`,
         },
     ];
 
@@ -132,7 +132,7 @@ export default function AdminDashboard({
                     <Alert>
                         <DollarSign className="h-4 w-4" />
                         <AlertDescription>
-                            {financialStats.pending_payouts.toLocaleString()} FCFA en attente de paiement aux professeurs.{' '}
+                            {financialStats.pending_payouts.toLocaleString()} GNF en attente de paiement aux professeurs.{' '}
                             <Link href={route('admin.payouts')} className="font-medium underline">
                                 Gérer les paiements
                             </Link>
@@ -175,7 +175,7 @@ export default function AdminDashboard({
                                 <XAxis dataKey="month" />
                                 <YAxis />
                                 <Tooltip 
-                                    formatter={(value: number) => `${value.toLocaleString()} FCFA`}
+                                    formatter={(value: number) => `${value.toLocaleString()} GNF`}
                                 />
                                 <Line 
                                     type="monotone" 
@@ -307,11 +307,11 @@ export default function AdminDashboard({
                         <CardContent className="space-y-2">
                             <div className="flex justify-between">
                                 <span className="text-sm text-muted-foreground">Commissions totales</span>
-                                <span className="font-medium">{financialStats.total_commissions.toLocaleString()} FCFA</span>
+                                <span className="font-medium">{financialStats.total_commissions.toLocaleString()} GNF</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-sm text-muted-foreground">À payer aux profs</span>
-                                <span className="font-medium">{financialStats.pending_payouts.toLocaleString()} FCFA</span>
+                                <span className="font-medium">{financialStats.pending_payouts.toLocaleString()} GNF</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-sm text-muted-foreground">Commission moyenne</span>

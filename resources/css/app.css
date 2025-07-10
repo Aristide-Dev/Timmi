@@ -59,26 +59,26 @@
     --color-sidebar-ring: var(--sidebar-ring);
 
     /* Couleurs personnalisées Timmi */
-    --color-timmi-primary: var(--timmi-primary);
-    --color-timmi-secondary: var(--timmi-secondary);
-    --color-timmi-accent: var(--timmi-accent);
-    --color-timmi-success: var(--timmi-success);
-    --color-timmi-warning: var(--timmi-warning);
-    --color-timmi-info: var(--timmi-info);
+    --color-timmi-primary: var(--primary);
+    --color-timmi-secondary: var(--secondary);
+    --color-timmi-accent: var(--accent);
+    --color-timmi-success: var(--success);
+    --color-timmi-warning: var(--warning);
+    --color-timmi-info: var(--info);
 
     /* Couleurs Timmi */
-    --timmi-primary: oklch(0.55 0.2 240);
-    --timmi-primary-soft: oklch(0.95 0.02 240);
-    --timmi-secondary: oklch(0.5 0.25 280);
-    --timmi-secondary-soft: oklch(0.95 0.025 280);
-    --timmi-accent: oklch(0.65 0.2 200);
-    --timmi-accent-soft: oklch(0.95 0.02 200);
-    --timmi-success: oklch(0.55 0.2 140);
-    --timmi-success-soft: oklch(0.95 0.02 140);
-    --timmi-warning: oklch(0.65 0.2 80);
-    --timmi-warning-soft: oklch(0.95 0.02 80);
-    --timmi-info: oklch(0.6 0.2 220);
-    --timmi-info-soft: oklch(0.95 0.02 220);
+    --primary: oklch(0.55 0.2 240);
+    --primary-soft: oklch(0.95 0.02 240);
+    --secondary: oklch(0.5 0.25 280);
+    --secondary-soft: oklch(0.95 0.025 280);
+    --accent: oklch(0.65 0.2 200);
+    --accent-soft: oklch(0.95 0.02 200);
+    --success: oklch(0.55 0.2 140);
+    --success-soft: oklch(0.95 0.02 140);
+    --warning: oklch(0.65 0.2 80);
+    --warning-soft: oklch(0.95 0.02 80);
+    --info: oklch(0.6 0.2 220);
+    --info-soft: oklch(0.95 0.02 220);
 }
 
 /*
@@ -99,7 +99,9 @@
     }
 }
 
+/* === Déclinaisons de couleurs Timmi === */
 :root {
+    /* Variables système améliorées */
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -134,13 +136,85 @@
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.87 0 0);
 
-    /* Thème Timmi */
-    --timmi-primary: #2563eb; /* Bleu principal */
-    --timmi-secondary: #7c3aed; /* Violet secondaire */
-    --timmi-accent: #0891b2; /* Cyan accent */
-    --timmi-success: #16a34a; /* Vert succès */
-    --timmi-warning: #f59e0b; /* Orange avertissement */
-    --timmi-info: #3b82f6; /* Bleu info */
+    /* Déclinaisons Primary Timmi */
+    --primary-50: #eff6ff;
+    --primary-100: #dbeafe;
+    --primary-200: #bfdbfe;
+    --primary-300: #93c5fd;
+    --primary-400: #60a5fa;
+    --primary-500: #2563eb;
+    --primary-600: #1d4ed8;
+    --primary-700: #1e40af;
+    --primary-800: #1e3a8a;
+    --primary-900: #172554;
+    
+    /* Déclinaisons Secondary */
+    --secondary-50: #f5f3ff;
+    --secondary-100: #ede9fe;
+    --secondary-200: #ddd6fe;
+    --secondary-300: #c4b5fd;
+    --secondary-400: #a78bfa;
+    --secondary-500: #7c3aed;
+    --secondary-600: #6d28d9;
+    --secondary-700: #5b21b6;
+    --secondary-800: #4c1d95;
+    --secondary-900: #2e1065;
+    
+    /* Déclinaisons Accent */
+    --accent-50: #ecfeff;
+    --accent-100: #cffafe;
+    --accent-200: #a5f3fc;
+    --accent-300: #67e8f9;
+    --accent-400: #22d3ee;
+    --accent-500: #0891b2;
+    --accent-600: #0e7490;
+    --accent-700: #155e75;
+    --accent-800: #164e63;
+    --accent-900: #083344;
+
+    /* Déclinaisons Success */
+    --success-50: #f0fdf4;
+    --success-100: #dcfce7;
+    --success-200: #bbf7d0;
+    --success-300: #86efac;
+    --success-400: #4ade80;
+    --success-500: #16a34a;
+    --success-600: #15803d;
+    --success-700: #166534;
+    --success-800: #14532d;
+    --success-900: #052e16;
+
+    /* Déclinaisons Warning */
+    --warning-50: #fffbeb;
+    --warning-100: #fef3c7;
+    --warning-200: #fde68a;
+    --warning-300: #fcd34d;
+    --warning-400: #fbbf24;
+    --warning-500: #f59e0b;
+    --warning-600: #d97706;
+    --warning-700: #b45309;
+    --warning-800: #92400e;
+    --warning-900: #451a03;
+
+    /* Déclinaisons Info */
+    --info-50: #eff6ff;
+    --info-100: #dbeafe;
+    --info-200: #bfdbfe;
+    --info-300: #93c5fd;
+    --info-400: #60a5fa;
+    --info-500: #3b82f6;
+    --info-600: #2563eb;
+    --info-700: #1d4ed8;
+    --info-800: #1e40af;
+    --info-900: #1e3a8a;
+
+    /* Thème Timmi principal */
+    --primary: #2563eb;
+    --secondary: #7c3aed;
+    --accent: #0891b2;
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --info: #3b82f6;
 }
 
 .dark {
@@ -178,79 +252,80 @@
     --sidebar-ring: oklch(0.439 0 0);
 
     /* Thème Timmi Dark */
-    --timmi-primary: #3b82f6;
-    --timmi-secondary: #8b5cf6;
-    --timmi-accent: #06b6d4;
-    --timmi-success: #22c55e;
-    --timmi-warning: #fbbf24;
-    --timmi-info: #60a5fa;
+    --primary: #3b82f6;
+    --secondary: #8b5cf6;
+    --accent: #06b6d4;
+    --success: #22c55e;
+    --warning: #fbbf24;
+    --info: #60a5fa;
 
     /* Couleurs Timmi en mode sombre */
-    --timmi-primary-soft: oklch(0.2 0.02 240);
-    --timmi-secondary-soft: oklch(0.2 0.025 280);
-    --timmi-accent-soft: oklch(0.2 0.02 200);
-    --timmi-success-soft: oklch(0.2 0.02 140);
-    --timmi-warning-soft: oklch(0.2 0.02 80);
-    --timmi-info-soft: oklch(0.2 0.02 220);
+    --primary-soft: oklch(0.2 0.02 240);
+    --secondary-soft: oklch(0.2 0.025 280);
+    --accent-soft: oklch(0.2 0.02 200);
+    --success-soft: oklch(0.2 0.02 140);
+    --warning-soft: oklch(0.2 0.02 80);
+    --info-soft: oklch(0.2 0.02 220);
 }
 
 @layer base {
     * {
-        @apply border-border;
+        @apply border-border outline-ring/50;
     }
 
     body {
         @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
     }
 }
 
 /* Classes utilitaires Timmi */
 @layer utilities {
     .bg-timmi-gradient {
-        @apply bg-gradient-to-r from-[var(--timmi-primary)] to-[var(--timmi-secondary)];
+        @apply bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)];
     }
 
     .text-timmi-primary {
-        color: var(--timmi-primary);
+        color: var(--primary);
     }
 
     .bg-timmi-primary {
-        background-color: var(--timmi-primary);
+        background-color: var(--primary);
     }
 
     .border-timmi-primary {
-        border-color: var(--timmi-primary);
+        border-color: var(--primary);
     }
 
     .bg-timmi-success-soft {
-        background-color: var(--timmi-success-soft);
+        background-color: var(--success-soft);
     }
 
     .bg-timmi-warning-soft {
-        background-color: var(--timmi-warning-soft);
+        background-color: var(--warning-soft);
     }
 
     .bg-timmi-info-soft {
-        background-color: var(--timmi-info-soft);
+        background-color: var(--info-soft);
     }
 
     /* Badges personnalisés */
     .badge-success {
-        background-color: var(--timmi-success-soft);
-        color: var(--timmi-success);
-        border-color: color-mix(in oklab, var(--timmi-success) 20%, transparent);
+        background-color: var(--success-soft);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 20%, transparent);
     }
 
     .badge-warning {
-        background-color: var(--timmi-warning-soft);
-        color: var(--timmi-warning);
-        border-color: color-mix(in oklab, var(--timmi-warning) 20%, transparent);
+        background-color: var(--warning-soft);
+        color: var(--warning);
+        border-color: color-mix(in oklab, var(--warning) 20%, transparent);
     }
 
     .badge-info {
-        background-color: var(--timmi-info-soft);
-        color: var(--timmi-info);
-        border-color: color-mix(in oklab, var(--timmi-info) 20%, transparent);
+        background-color: var(--info-soft);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 20%, transparent);
     }
 
     /* Cards avec hover effect */
@@ -261,6 +336,55 @@
     /* Animations personnalisées */
     .animate-float {
         animation: float 3s ease-in-out infinite;
+    }
+
+    /* Nouvelles animations inspirées de Patrimoine-Bati */
+    .animate-slide-in {
+        animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    .animate-shimmer {
+        background: linear-gradient(
+            90deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,0.3) 50%,
+            rgba(255,255,255,0) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmerLight 2s infinite linear;
+    }
+    
+    .animate-scale-in {
+        animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .animate-pulse-effect {
+        animation: pulseEffect 2s infinite;
+    }
+    
+    /* Transitions améliorées */
+    .transition-smooth {
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    /* Effet de hover pour les cartes */
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Skeleton loader */
+    .skeleton {
+        @apply animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%];
+        animation: shimmerLight 1.5s infinite ease-in-out;
     }
 
     @keyframes float {
@@ -288,4 +412,241 @@
     .category-autres {
         @apply bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950/20 dark:text-orange-300 dark:border-orange-800;
     }
+
+    /* Nouvelles variantes de couleurs pour backgrounds */
+    .bg-timmi-primary-50 { background-color: var(--primary-50); }
+    .bg-timmi-primary-100 { background-color: var(--primary-100); }
+    .bg-timmi-primary-200 { background-color: var(--primary-200); }
+    .bg-timmi-primary-300 { background-color: var(--primary-300); }
+    .bg-timmi-primary-400 { background-color: var(--primary-400); }
+    .bg-timmi-primary-500 { background-color: var(--primary-500); }
+    .bg-timmi-primary-600 { background-color: var(--primary-600); }
+    .bg-timmi-primary-700 { background-color: var(--primary-700); }
+    .bg-timmi-primary-800 { background-color: var(--primary-800); }
+    .bg-timmi-primary-900 { background-color: var(--primary-900); }
+    
+    /* Text colors */
+    .text-timmi-primary-700 { color: var(--primary-700); }
+    .text-timmi-secondary-700 { color: var(--secondary-700); }
+    .text-timmi-accent-700 { color: var(--accent-700); }
+    
+    /* Border colors */
+    .border-timmi-primary-200 { border-color: var(--primary-200); }
+    .border-timmi-secondary-200 { border-color: var(--secondary-200); }
+    .border-timmi-accent-200 { border-color: var(--accent-200); }
+}
+
+@layer components {
+  /* Classes de boutons améliorées */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[var(--primary-500)] hover:bg-[var(--primary-600)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-500)];
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--secondary-500)] hover:bg-[var(--secondary-600)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--secondary-500)];
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--accent-500)] hover:bg-[var(--accent-600)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--accent-500)];
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .input-primary {
+    @apply block w-full rounded-md border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-500)] focus-visible:ring-offset-2;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .card {
+    @apply rounded-lg border bg-white text-foreground shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .badge-primary {
+    @apply inline-block px-2 py-1 rounded bg-[var(--primary-100)] text-[var(--primary-700)] border border-[var(--primary-200)];
+  }
+  
+  .badge-secondary {
+    @apply inline-block px-2 py-1 rounded bg-[var(--secondary-100)] text-[var(--secondary-700)] border border-[var(--secondary-200)];
+  }
+  
+  .badge-accent {
+    @apply inline-block px-2 py-1 rounded bg-[var(--accent-100)] text-[var(--accent-700)] border border-[var(--accent-200)];
+  }
+  
+  .section-title {
+    @apply text-3xl font-extrabold text-foreground sm:text-4xl;
+  }
+  
+  .section-subtitle {
+    @apply mt-4 text-xl text-muted-foreground;
+  }
+}
+
+/* Améliorations des animations existantes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(1.5rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Nouvelles animations */
+@keyframes pulseEffect {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    }
+}
+
+@keyframes shimmerLight {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animations inspirées Patrimoine-Bati */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+
+/* Styles pour le ContentRenderer */
+@layer components {
+  .content-wrapper {
+    @apply text-gray-800 leading-relaxed;
+  }
+
+  .content-wrapper h1,
+  .content-wrapper h2,
+  .content-wrapper h3,
+  .content-wrapper h4,
+  .content-wrapper h5,
+  .content-wrapper h6 {
+    @apply font-bold text-gray-900 leading-tight;
+  }
+
+  .content-wrapper h1 {
+    @apply text-3xl mb-6 mt-8 first:mt-0;
+  }
+
+  .content-wrapper h2 {
+    @apply text-2xl mb-4 mt-6 first:mt-0;
+  }
+
+  .content-wrapper h3 {
+    @apply text-xl mb-3 mt-5 first:mt-0;
+  }
+
+  .content-wrapper h4 {
+    @apply text-lg mb-3 mt-4 first:mt-0;
+  }
+
+  .content-wrapper h5,
+  .content-wrapper h6 {
+    @apply text-base mb-2 mt-3 first:mt-0;
+  }
+
+  .content-wrapper p {
+    @apply mb-4 last:mb-0 leading-relaxed text-gray-700;
+  }
+
+  .content-wrapper a {
+    @apply text-[var(--primary-600)] hover:text-[var(--primary-800)] hover:underline transition-colors;
+  }
+
+  .content-wrapper strong {
+    @apply font-bold text-gray-900;
+  }
+
+  .content-wrapper em {
+    @apply italic;
+  }
+
+  .content-wrapper code {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono text-gray-800;
+  }
+
+  .content-wrapper pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg mb-6 overflow-x-auto text-sm border font-mono;
+  }
+
+  .content-wrapper pre code {
+    @apply bg-transparent p-0 text-gray-100;
+  }
+
+  .content-wrapper ul,
+  .content-wrapper ol {
+    @apply mb-4 ml-6 space-y-1;
+  }
+
+  .content-wrapper ul {
+    @apply list-disc list-outside;
+  }
+
+  .content-wrapper ol {
+    @apply list-decimal list-outside;
+  }
+
+  .content-wrapper li {
+    @apply leading-relaxed text-gray-700;
+  }
+
+  .content-wrapper blockquote {
+    @apply border-l-4 border-[var(--primary-200)] pl-6 py-2 mb-6 italic text-gray-700 bg-gray-50 rounded-r-lg;
+  }
+
+  .content-wrapper hr {
+    @apply my-8 border-gray-200;
+  }
+
+  .content-wrapper img {
+    @apply max-w-full h-auto rounded-lg shadow-md my-6;
+  }
+
+  .content-wrapper table {
+    @apply w-full border-collapse border border-gray-200 my-6;
+  }
+
+  .content-wrapper th,
+  .content-wrapper td {
+    @apply border border-gray-200 px-4 py-2 text-left;
+  }
+
+  .content-wrapper th {
+    @apply bg-gray-50 font-semibold text-gray-900;
+  }
 }

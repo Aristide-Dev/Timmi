@@ -144,7 +144,7 @@ export default function ViewTeacher({ auth, teacher }: ViewTeacherProps) {
                                         <p className="text-sm text-muted-foreground">Élèves</p>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-2xl font-bold">{teacher.teacherProfile.hourly_rate.toLocaleString()} FCFA</p>
+                                        <p className="text-2xl font-bold">{teacher.teacherProfile.hourly_rate.toLocaleString()} GNF</p>
                                         <p className="text-sm text-muted-foreground">Tarif horaire</p>
                                     </div>
                                 </div>
@@ -293,8 +293,8 @@ export default function ViewTeacher({ auth, teacher }: ViewTeacherProps) {
                                         <CardTitle className="text-lg">{subject.name}</CardTitle>
                                         <Badge variant="outline">
                                             {subject.pivot.hourly_rate 
-                                                ? `${subject.pivot.hourly_rate.toLocaleString()} FCFA/h`
-                                                : `${teacher.teacherProfile.hourly_rate.toLocaleString()} FCFA/h`
+                                                ? `${subject.pivot.hourly_rate.toLocaleString()} GNF/h`
+                                                : `${teacher.teacherProfile.hourly_rate.toLocaleString()} GNF/h`
                                             }
                                         </Badge>
                                     </div>

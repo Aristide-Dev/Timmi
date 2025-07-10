@@ -162,7 +162,7 @@
                 </div>
                 <div class="payout-row">
                     <span class="payout-label">Montant</span>
-                    <span class="payout-value">{{ number_format($payout->amount, 0, ',', ' ') }} FCFA</span>
+                    <span class="payout-value">{{ number_format($payout->amount, 0, ',', ' ') }} GNF</span>
                 </div>
                 <div class="payout-row">
                     <span class="payout-label">Mode de paiement</span>

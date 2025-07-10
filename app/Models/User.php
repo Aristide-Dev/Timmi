@@ -144,4 +144,40 @@ class User extends Authenticatable
     {
         return $this->hasMany(TeacherPayout::class, 'teacher_id');
     }
+
+    /**
+     * Scope pour les professeurs
+     */
+    public function scopeTeachers($query)
+    {
+        return $query->where('role', 'teacher');
+    }
+
+    /**
+     * Scope pour les utilisateurs actifs
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    /**
+     * Scope pour les professeurs vérifiés
+     */
+    public function scopeVerified($query)
+    {
+        return $query->whereHas('teacherProfile', function($q) {
+            $q->where('is_verified', true);
+        });
+    }
+
+    /**
+     * Scope pour les professeurs avec une note minimale
+     */
+    public function scopeWithMinRating($query, $rating = 4)
+    {
+        return $query->whereHas('teacherProfile', function($q) use ($rating) {
+            $q->where('rating', '>=', $rating);
+        });
+    }
 }

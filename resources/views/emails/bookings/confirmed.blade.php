@@ -22,7 +22,7 @@ Votre réservation de cours a été confirmée avec succès. Voici les détails 
 @endif
 
 **Montant payé**
-{{ number_format($amount, 0, ',', ' ') }} FCFA
+{{ number_format($amount, 0, ',', ' ') }} GNF
 
 @component('mail::button', ['url' => route('parent.booking.show', $booking->id)])
 Voir les détails de la réservation

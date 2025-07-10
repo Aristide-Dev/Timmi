@@ -109,7 +109,7 @@ class Notification extends Model
             'user_id' => $payment->parent_id,
             'type' => 'payment_received',
             'title' => 'Paiement confirmé',
-            'message' => "Votre paiement de {$payment->amount} FCFA a été confirmé.",
+            'message' => "Votre paiement de {$payment->amount} GNF a été confirmé.",
             'data' => ['payment_id' => $payment->id],
         ]);
     }

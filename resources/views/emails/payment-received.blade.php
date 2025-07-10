@@ -14,7 +14,7 @@
                     <strong>Montant payé :</strong>
                 </td>
                 <td style="text-align: right; color: #16a34a;">
-                    <strong>{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</strong>
+                    <strong>{{ number_format($payment->amount, 0, ',', ' ') }} GNF</strong>
                 </td>
             </tr>
             <tr>

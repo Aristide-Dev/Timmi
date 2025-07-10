@@ -52,7 +52,7 @@
         </tr>
         <tr>
             <th>Montant</th>
-            <td>{{ number_format($booking->amount, 0, ',', ' ') }} FCFA</td>
+            <td>{{ number_format($booking->amount, 0, ',', ' ') }} GNF</td>
         </tr>
     </table>
     

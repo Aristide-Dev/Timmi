@@ -119,7 +119,7 @@ class Setting extends Model
             // Email
             [
                 'key' => 'admin_email',
-                'value' => 'admin@timmi.com',
+                'value' => 'admin@timmi.gn',
                 'type' => 'string',
                 'group' => 'email',
                 'label' => 'Email administrateur',
