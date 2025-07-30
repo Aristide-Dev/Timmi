@@ -340,4 +340,12 @@ class PublicController extends Controller
 
         return back()->with('success', 'Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.');
     }
+
+    /**
+     * Page Documentation
+     */
+    public function docs()
+    {
+        return Inertia::render('docs');
+    }
 } 
