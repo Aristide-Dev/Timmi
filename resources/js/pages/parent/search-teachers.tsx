@@ -47,14 +47,34 @@ type Filters = {
 interface SearchTeachersProps extends PageProps {
     teachers: {
         data: Teacher[];
-        links: any;
-        meta: any;
+        links: any[];
+        meta: {
+            current_page: number;
+            last_page: number;
+            per_page: number;
+            total: number;
+            from: number;
+            to: number;
+        };
     };
     subjects: Subject[];
     filters: Filters;
 }
 
 export default function SearchTeachers({ auth, teachers, subjects, filters }: SearchTeachersProps) {
+    // Fallback pour éviter les erreurs si les données ne sont pas encore chargées
+    const safeTeachers = teachers || {
+        data: [],
+        links: [],
+        meta: {
+            current_page: 1,
+            last_page: 1,
+            per_page: 12,
+            total: 0,
+            from: 0,
+            to: 0
+        }
+    };
     const { data, setData } = useForm<Filters>({
         subject_id: filters.subject_id || '',
         level: filters.level || '',
@@ -190,10 +210,10 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                 {/* Results */}
                 <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                        {teachers.meta.total} professeur{teachers.meta.total > 1 ? 's' : ''} trouvé{teachers.meta.total > 1 ? 's' : ''}
+                        {safeTeachers.meta?.total || 0} professeur{(safeTeachers.meta?.total || 0) > 1 ? 's' : ''} trouvé{(safeTeachers.meta?.total || 0) > 1 ? 's' : ''}
                     </p>
 
-                    {teachers.data.length === 0 ? (
+                    {!safeTeachers.data || safeTeachers.data.length === 0 ? (
                         <Card className="text-center py-12">
                             <CardContent>
                                 <Search className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
@@ -205,7 +225,7 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                         </Card>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {teachers.data.map((teacher) => (
+                            {safeTeachers.data?.map((teacher) => (
                                 <Card key={teacher.id} className="hover:shadow-lg transition-shadow">
                                     <CardHeader>
                                         <div className="flex justify-between items-start">
@@ -214,11 +234,11 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                                                 <CardDescription>
                                                     <span className="flex items-center gap-1">
                                                         <MapPin className="h-3 w-3" />
-                                                        {teacher.city}
+                                                        {teacher.city || 'Ville non spécifiée'}
                                                     </span>
                                                 </CardDescription>
                                             </div>
-                                            {teacher.teacherProfile.is_verified && (
+                                            {teacher.teacherProfile?.is_verified && (
                                                 <Badge variant="default" className="bg-green-500">
                                                     Vérifié
                                                 </Badge>
@@ -227,12 +247,12 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                                     </CardHeader>
                                     <CardContent className="space-y-4">
                                         <p className="text-sm text-muted-foreground line-clamp-3">
-                                            {teacher.teacherProfile.bio}
+                                            {teacher.teacherProfile?.bio || 'Aucune description disponible'}
                                         </p>
 
                                         {/* Subjects */}
                                         <div className="flex flex-wrap gap-2">
-                                            {teacher.subjects.map((subject) => (
+                                            {teacher.subjects?.map((subject) => (
                                                 <Badge key={subject.id} variant="secondary">
                                                     {subject.name}
                                                 </Badge>
@@ -242,18 +262,18 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                                         {/* Stats */}
                                         <div className="grid grid-cols-3 gap-2 text-center">
                                             <div>
-                                                <p className="text-2xl font-bold">{teacher.teacherProfile.total_hours}</p>
+                                                <p className="text-2xl font-bold">{teacher.teacherProfile?.total_hours || 0}</p>
                                                 <p className="text-xs text-muted-foreground">Heures données</p>
                                             </div>
                                             <div>
                                                 <p className="text-2xl font-bold flex items-center justify-center gap-1">
-                                                    {teacher.teacherProfile.rating.toFixed(1)}
+                                                    {(teacher.teacherProfile?.rating || 0).toFixed(1)}
                                                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                                                 </p>
                                                 <p className="text-xs text-muted-foreground">Note moyenne</p>
                                             </div>
                                             <div>
-                                                <p className="text-2xl font-bold">{teacher.teacherProfile.total_reviews}</p>
+                                                <p className="text-2xl font-bold">{teacher.teacherProfile?.total_reviews || 0}</p>
                                                 <p className="text-xs text-muted-foreground">Avis</p>
                                             </div>
                                         </div>
@@ -262,14 +282,14 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                                         <div className="space-y-2 text-sm">
                                             <div className="flex items-center justify-between">
                                                 <span className="text-muted-foreground">Tarif horaire</span>
-                                                <span className="font-semibold">{teacher.teacherProfile.hourly_rate.toLocaleString()} GNF</span>
+                                                <span className="font-semibold">{(teacher.teacherProfile?.hourly_rate || 0).toLocaleString()} GNF</span>
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <span className="text-muted-foreground">Mode</span>
                                                 <Badge variant="outline">
-                                                    {teacher.teacherProfile.teaching_mode === 'both' 
+                                                    {teacher.teacherProfile?.teaching_mode === 'both' 
                                                         ? 'Présentiel & En ligne'
-                                                        : teacher.teacherProfile.teaching_mode === 'presentiel'
+                                                        : teacher.teacherProfile?.teaching_mode === 'presentiel'
                                                         ? 'Présentiel'
                                                         : 'En ligne'
                                                     }
@@ -279,7 +299,7 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
 
                                         {/* Levels */}
                                         <div className="flex flex-wrap gap-1">
-                                            {teacher.teacherProfile.levels.map((level) => (
+                                            {teacher.teacherProfile?.levels?.map((level) => (
                                                 <Badge key={level} variant="outline" className="text-xs">
                                                     {level}
                                                 </Badge>
@@ -296,9 +316,9 @@ export default function SearchTeachers({ auth, teachers, subjects, filters }: Se
                     )}
 
                     {/* Pagination */}
-                    {teachers.meta.last_page > 1 && (
+                    {safeTeachers.meta?.last_page > 1 && (
                         <div className="flex justify-center gap-2 mt-8">
-                            {teachers.links.map((link, index) => (
+                            {safeTeachers.links?.map((link, index) => (
                                 <Button
                                     key={index}
                                     variant={link.active ? 'default' : 'outline'}

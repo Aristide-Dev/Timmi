@@ -41,42 +41,45 @@ class TeacherController extends Controller
 
         // Statistiques du mois
         $monthStats = [
-            'total_hours' => $user->bookingsAsTeacher()
+            'total_hours' => (float) ($user->bookingsAsTeacher()
                 ->where('status', 'completed')
                 ->whereMonth('class_date', $thisMonth)
                 ->whereYear('class_date', $thisYear)
-                ->sum('duration') / 60,
-            'total_earnings' => $user->bookingsAsTeacher()
+                ->sum('duration') / 60),
+            'total_earnings' => (float) ($user->bookingsAsTeacher()
                 ->where('status', 'completed')
                 ->whereMonth('class_date', $thisMonth)
                 ->whereYear('class_date', $thisYear)
-                ->sum('teacher_amount'),
-            'completed_classes' => $user->bookingsAsTeacher()
+                ->sum('teacher_amount')),
+            'completed_classes' => (int) ($user->bookingsAsTeacher()
                 ->where('status', 'completed')
                 ->whereMonth('class_date', $thisMonth)
                 ->whereYear('class_date', $thisYear)
-                ->count(),
-            'pending_confirmations' => $user->bookingsAsTeacher()
+                ->count()),
+            'pending_confirmations' => (int) ($user->bookingsAsTeacher()
                 ->where('status', 'confirmed')
                 ->where('class_date', '<', $today)
                 ->where('teacher_confirmed', false)
-                ->count(),
+                ->count()),
         ];
 
         // Statistiques globales
         $globalStats = [
-            'total_hours_all_time' => $user->teacherProfile->total_hours ?? 0,
-            'total_students' => $user->teacherProfile->total_students ?? 0,
-            'average_rating' => $user->teacherProfile->rating ?? 0,
-            'total_reviews' => $user->teacherProfile->total_reviews ?? 0,
+            'total_hours_all_time' => (float) ($user->teacherProfile?->total_hours ?? 0),
+            'total_students' => (int) ($user->teacherProfile?->total_students ?? 0),
+            'average_rating' => (float) ($user->teacherProfile?->rating ?? 0),
+            'total_reviews' => (int) ($user->teacherProfile?->total_reviews ?? 0),
         ];
 
         return Inertia::render('teacher/dashboard', [
-            'todayClasses' => $todayClasses,
-            'upcomingClasses' => $upcomingClasses,
+            'todayClasses' => $todayClasses ?? [],
+            'upcomingClasses' => $upcomingClasses ?? [],
             'monthStats' => $monthStats,
             'globalStats' => $globalStats,
-            'profile' => $user->teacherProfile,
+            'profile' => $user->teacherProfile ?? (object) [
+                'is_verified' => false,
+                'bio' => null
+            ],
             'isProfileComplete' => $user->teacherProfile && 
                                  $user->teacherProfile->bio && 
                                  $user->subjects()->exists(),
@@ -182,6 +185,20 @@ class TeacherController extends Controller
         $request->user()->availabilities()->create($request->validated());
 
         return redirect()->back()->with('success', 'Disponibilité ajoutée avec succès.');
+    }
+
+    /**
+     * Supprimer une disponibilité
+     */
+    public function destroyAvailability(Availability $availability)
+    {
+        if ($availability->teacher_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $availability->delete();
+
+        return redirect()->back()->with('success', 'Disponibilité supprimée avec succès.');
     }
 
     /**

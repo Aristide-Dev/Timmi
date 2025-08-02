@@ -82,50 +82,50 @@ export default function TeacherDashboard({
     const monthStatsCards = [
         {
             title: 'Heures ce mois',
-            value: `${monthStats.total_hours}h`,
+            value: `${Number(monthStats.total_hours || 0)}h`,
             icon: Clock,
             description: 'Heures de cours données',
         },
         {
             title: 'Revenus du mois',
-            value: `${monthStats.total_earnings.toLocaleString()} GNF`,
+            value: `${Number(monthStats.total_earnings || 0).toLocaleString()} GNF`,
             icon: DollarSign,
             description: 'Gains de ce mois',
         },
         {
             title: 'Cours terminés',
-            value: monthStats.completed_classes,
+            value: Number(monthStats.completed_classes || 0),
             icon: CheckCircle,
             description: 'Ce mois-ci',
         },
         {
             title: 'À confirmer',
-            value: monthStats.pending_confirmations,
+            value: Number(monthStats.pending_confirmations || 0),
             icon: AlertCircle,
             description: 'En attente de confirmation',
-            alert: monthStats.pending_confirmations > 0,
+            alert: Number(monthStats.pending_confirmations || 0) > 0,
         },
     ];
 
     const globalStatsCards = [
         {
             label: 'Total d\'heures',
-            value: `${globalStats.total_hours_all_time}h`,
+            value: `${Number(globalStats.total_hours_all_time || 0)}h`,
             icon: Clock,
         },
         {
             label: 'Élèves',
-            value: globalStats.total_students,
+            value: Number(globalStats.total_students || 0),
             icon: Users,
         },
         {
             label: 'Note moyenne',
-            value: globalStats.average_rating.toFixed(1),
+            value: Number(globalStats.average_rating || 0).toFixed(1),
             icon: Star,
         },
         {
             label: 'Avis reçus',
-            value: globalStats.total_reviews,
+            value: Number(globalStats.total_reviews || 0),
             icon: Star,
         },
     ];
@@ -153,11 +153,11 @@ export default function TeacherDashboard({
                     </Alert>
                 )}
 
-                {monthStats.pending_confirmations > 0 && (
+                {Number(monthStats.pending_confirmations || 0) > 0 && (
                     <Alert>
                         <AlertCircle className="h-4 w-4" />
                         <AlertDescription>
-                            Vous avez {monthStats.pending_confirmations} cours à confirmer. <Link href={route('teacher.bookings')} className="font-medium underline">Voir les cours</Link>
+                            Vous avez {Number(monthStats.pending_confirmations || 0)} cours à confirmer. <Link href={route('teacher.bookings')} className="font-medium underline">Voir les cours</Link>
                         </AlertDescription>
                     </Alert>
                 )}
@@ -202,7 +202,7 @@ export default function TeacherDashboard({
                 </Card>
 
                 {/* Today's Classes */}
-                {todayClasses.length > 0 && (
+                {todayClasses && todayClasses.length > 0 && (
                     <Card>
                         <CardHeader>
                             <div className="flex items-center justify-between">
@@ -219,7 +219,7 @@ export default function TeacherDashboard({
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
-                                {todayClasses.map((booking) => (
+                                {todayClasses?.map((booking) => (
                                     <div key={booking.id} className="flex items-center justify-between p-4 border rounded-lg bg-blue-50/50">
                                         <div className="space-y-1">
                                             <div className="flex items-center gap-2">
@@ -277,14 +277,14 @@ export default function TeacherDashboard({
                         </div>
                     </CardHeader>
                     <CardContent>
-                        {upcomingClasses.length === 0 ? (
+                        {!upcomingClasses || upcomingClasses.length === 0 ? (
                             <div className="text-center py-8">
                                 <CalendarDays className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                                 <p className="text-muted-foreground">Aucun cours programmé</p>
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                {upcomingClasses.map((booking) => (
+                                {upcomingClasses?.map((booking) => (
                                     <div key={booking.id} className="flex items-center justify-between p-4 border rounded-lg">
                                         <div className="space-y-1">
                                             <div className="flex items-center gap-2">

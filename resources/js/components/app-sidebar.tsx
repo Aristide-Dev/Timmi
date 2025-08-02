@@ -92,7 +92,7 @@ export function AppSidebar({ className }: Props) {
             teacher: [
                 {
                     title: 'Mes disponibilités',
-                    href: '/teacher/availability',
+                    href: '/teacher/availabilities',
                     icon: Clock,
                 },
                 {

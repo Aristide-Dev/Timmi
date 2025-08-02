@@ -24,6 +24,9 @@ Route::get('/teachers', [PublicController::class, 'teachers'])->name('teachers')
 Route::get('/teachers/{teacher}', [PublicController::class, 'teacherShow'])->name('teacher.show');
 Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects');
 
+// Documentation
+Route::get('/docs', [PublicController::class, 'docs'])->name('docs');
+
 // Redirection du dashboard principal selon le rôle
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -43,6 +46,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 abort(403, 'Rôle non reconnu');
         }
     })->name('dashboard');
+
+    // Notifications (accessible à tous les utilisateurs authentifiés)
+    Route::get('/notifications', function () {
+        return Inertia::render('notifications');
+    })->name('notifications');
 });
 
 // Routes spécifiques par rôle
