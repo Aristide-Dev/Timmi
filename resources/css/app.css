@@ -5,7 +5,6 @@
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-@custom-variant dark (&:is(.dark *));
 
 @theme {
     --font-sans:
@@ -147,7 +146,7 @@
     --primary-700: #1e40af;
     --primary-800: #1e3a8a;
     --primary-900: #172554;
-    
+
     /* Déclinaisons Secondary */
     --secondary-50: #f5f3ff;
     --secondary-100: #ede9fe;
@@ -159,7 +158,7 @@
     --secondary-700: #5b21b6;
     --secondary-800: #4c1d95;
     --secondary-900: #2e1065;
-    
+
     /* Déclinaisons Accent */
     --accent-50: #ecfeff;
     --accent-100: #cffafe;
@@ -215,57 +214,6 @@
     --success: #16a34a;
     --warning: #f59e0b;
     --info: #3b82f6;
-}
-
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.985 0 0);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
-
-    /* Thème Timmi Dark */
-    --primary: #3b82f6;
-    --secondary: #8b5cf6;
-    --accent: #06b6d4;
-    --success: #22c55e;
-    --warning: #fbbf24;
-    --info: #60a5fa;
-
-    /* Couleurs Timmi en mode sombre */
-    --primary-soft: oklch(0.2 0.02 240);
-    --secondary-soft: oklch(0.2 0.025 280);
-    --accent-soft: oklch(0.2 0.02 200);
-    --success-soft: oklch(0.2 0.02 140);
-    --warning-soft: oklch(0.2 0.02 80);
-    --info-soft: oklch(0.2 0.02 220);
 }
 
 @layer base {
@@ -342,11 +290,11 @@
     .animate-slide-in {
         animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
+
     .animate-fade-in {
         animation: fadeIn 0.5s ease-out;
     }
-    
+
     .animate-shimmer {
         background: linear-gradient(
             90deg,
@@ -357,30 +305,30 @@
         background-size: 200% 100%;
         animation: shimmerLight 2s infinite linear;
     }
-    
+
     .animate-scale-in {
         animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
+
     .animate-pulse-effect {
         animation: pulseEffect 2s infinite;
     }
-    
+
     /* Transitions améliorées */
     .transition-smooth {
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
+
     /* Effet de hover pour les cartes */
     .hover-lift {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     .hover-lift:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     }
-    
+
     /* Skeleton loader */
     .skeleton {
         @apply animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%];
@@ -398,19 +346,19 @@
 
     /* Styles pour les catégories de matières */
     .category-sciences {
-        @apply bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-300 dark:border-blue-800;
+        @apply bg-blue-50 text-blue-700 border-blue-200;
     }
 
     .category-langues {
-        @apply bg-green-50 text-green-700 border-green-200 dark:bg-green-950/20 dark:text-green-300 dark:border-green-800;
+        @apply bg-green-50 text-green-700 border-green-200;
     }
 
     .category-humaines {
-        @apply bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/20 dark:text-purple-300 dark:border-purple-800;
+        @apply bg-purple-50 text-purple-700 border-purple-200;
     }
 
     .category-autres {
-        @apply bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950/20 dark:text-orange-300 dark:border-orange-800;
+        @apply bg-orange-50 text-orange-700 border-orange-200;
     }
 
     /* Nouvelles variantes de couleurs pour backgrounds */
@@ -424,12 +372,12 @@
     .bg-timmi-primary-700 { background-color: var(--primary-700); }
     .bg-timmi-primary-800 { background-color: var(--primary-800); }
     .bg-timmi-primary-900 { background-color: var(--primary-900); }
-    
+
     /* Text colors */
     .text-timmi-primary-700 { color: var(--primary-700); }
     .text-timmi-secondary-700 { color: var(--secondary-700); }
     .text-timmi-accent-700 { color: var(--accent-700); }
-    
+
     /* Border colors */
     .border-timmi-primary-200 { border-color: var(--primary-200); }
     .border-timmi-secondary-200 { border-color: var(--secondary-200); }
@@ -442,42 +390,42 @@
     @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[var(--primary-500)] hover:bg-[var(--primary-600)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-500)];
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .btn-secondary {
     @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--secondary-500)] hover:bg-[var(--secondary-600)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--secondary-500)];
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .btn-accent {
     @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--accent-500)] hover:bg-[var(--accent-600)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--accent-500)];
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .input-primary {
     @apply block w-full rounded-md border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-500)] focus-visible:ring-offset-2;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .card {
     @apply rounded-lg border bg-white text-foreground shadow-sm hover:shadow-md transition-shadow duration-200;
   }
-  
+
   .badge-primary {
     @apply inline-block px-2 py-1 rounded bg-[var(--primary-100)] text-[var(--primary-700)] border border-[var(--primary-200)];
   }
-  
+
   .badge-secondary {
     @apply inline-block px-2 py-1 rounded bg-[var(--secondary-100)] text-[var(--secondary-700)] border border-[var(--secondary-200)];
   }
-  
+
   .badge-accent {
     @apply inline-block px-2 py-1 rounded bg-[var(--accent-100)] text-[var(--accent-700)] border border-[var(--accent-200)];
   }
-  
+
   .section-title {
     @apply text-3xl font-extrabold text-foreground sm:text-4xl;
   }
-  
+
   .section-subtitle {
     @apply mt-4 text-xl text-muted-foreground;
   }
