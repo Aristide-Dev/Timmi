@@ -4,6 +4,7 @@ type Theme = 'light' | 'dark';
 
 export function useTheme() {
     const [theme, setTheme] = useState<Theme>(() => {
+        return 'light';
         // Récupérer le thème du localStorage ou utiliser la préférence système
         const storedTheme = localStorage.getItem('theme') as Theme;
         if (storedTheme) {
@@ -23,4 +24,4 @@ export function useTheme() {
     }, [theme]);
 
     return { theme, setTheme };
-} 
+}
