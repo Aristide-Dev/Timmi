@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('refund_amount', 10, 2)->nullable();
             $table->text('refund_reason')->nullable();
             $table->timestamps();
-            
+
             $table->index(['booking_id', 'status']);
             $table->index(['parent_id', 'status']);
         });

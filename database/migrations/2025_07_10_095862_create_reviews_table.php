@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('comment')->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
-            
+
             $table->unique('booking_id'); // Une seule review par booking
             $table->index(['teacher_id', 'is_visible']);
         });
