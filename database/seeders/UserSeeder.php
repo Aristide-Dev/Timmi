@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         // Villes principales de Guinée
         $cities = ['Conakry', 'Kankan', 'Labé', 'Kindia', 'Boké', 'Mamou', 'Faranah', 'Siguiri', 'Guéckédou', 'Kissidougou'];
-        
+
         // Quartiers de Conakry
         $conakyQuarters = ['Kaloum', 'Dixinn', 'Matam', 'Ratoma', 'Matoto', 'Lambandji', 'Kipé', 'Sonfonia', 'Hamdallaye', 'Bambeto'];
 
@@ -72,8 +72,8 @@ class UserSeeder extends Seeder
                 $childFirstName = $faker->randomElement($guineanNames[$childGender]);
                 $grades = ['CP', 'CE1', 'CE2', 'CM1', 'CM2', '6ème', '5ème', '4ème', '3ème', '2nde', '1ère', 'Terminale'];
                 $grade = $faker->randomElement($grades);
-                
-                $level = in_array($grade, ['CP', 'CE1', 'CE2', 'CM1', 'CM2']) ? 'Primaire' : 
+
+                $level = in_array($grade, ['CP', 'CE1', 'CE2', 'CM1', 'CM2']) ? 'Primaire' :
                         (in_array($grade, ['6ème', '5ème', '4ème', '3ème']) ? 'Collège' : 'Lycée');
 
         Child::create([
@@ -195,7 +195,7 @@ class UserSeeder extends Seeder
             // Créer le profil professeur
             $isVerified = $teacher->status === 'active';
             $bio = $this->generateTeacherBio($data['name'], $data['subject'], $data['specialties']);
-            
+
             $profile = TeacherProfile::create([
                 'user_id' => $teacher->id,
                 'bio' => $bio,

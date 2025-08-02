@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('child_id')->constrained('children')->onDelete('cascade');
             $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
-            $table->foreignId('payout_id')->nullable()->constrained('teacher_payouts')->onDelete('set null');
+            $table->unsignedBigInteger('payout_id')->nullable(); // Créer la colonne sans contrainte
             $table->date('class_date');
             $table->time('start_time');
             $table->time('end_time');
@@ -39,11 +39,18 @@ return new class extends Migration
             $table->text('cancellation_reason')->nullable();
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
-            
+
             $table->index(['parent_id', 'status']);
             $table->index(['teacher_id', 'status']);
             $table->index(['class_date', 'status']);
         });
+
+        // Ajouter la contrainte de clé étrangère seulement si la table teacher_payouts existe
+        if (Schema::hasTable('teacher_payouts')) {
+            Schema::table('bookings', function (Blueprint $table) {
+                $table->foreign('payout_id')->references('id')->on('teacher_payouts')->onDelete('set null');
+            });
+        }
     }
 
     /**
