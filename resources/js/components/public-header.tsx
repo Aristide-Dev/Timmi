@@ -91,24 +91,24 @@ export default function PublicHeader({ auth }: PublicHeaderProps) {
                                             <div className="bg-gradient-to-r from-[var(--primary-700)] via-[var(--primary-900)] to-[var(--primary-700)] text-white">
                         <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                             {/* Left Section: Contact Info */}
-                            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-white/90 text-sm">
+                            <div className="flex flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-white/90 text-sm gap-3">
                                 <div className="flex items-center space-x-2 group hover:text-white transition-colors duration-300">
                                     <div className="p-1.5 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors duration-300">
-                                        <Phone size={14} className="text-white" />
+                                        <Phone size={8} className="text-white" />
                                     </div>
-                                    <span className="font-medium">+224 620 00 00 00</span>
+                                    <span className="font-medium text-xs">+224 620 00 00 00</span>
                                 </div>
                                 <div className="flex items-center space-x-2 group hover:text-white transition-colors duration-300">
                                     <div className="p-1.5 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors duration-300">
-                                        <Mail size={14} className="text-white" />
+                                        <Mail size={8} className="text-white" />
                                     </div>
-                                    <span className="font-medium">contact@timmi.gn</span>
+                                    <span className="font-medium text-xs">contact@timmi.gn</span>
                                 </div>
                                 <div className="flex items-center space-x-2 group hover:text-white transition-colors duration-300">
                                     <div className="p-1.5 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors duration-300">
-                                        <MapPin size={14} className="text-white" />
+                                        <MapPin size={8} className="text-white" />
                                     </div>
-                                    <span className="font-medium">Conakry, Guinée</span>
+                                    <span className="font-medium text-xs">Conakry, Guinée</span>
                                 </div>
                             </div>
 

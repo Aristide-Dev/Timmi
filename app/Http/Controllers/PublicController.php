@@ -23,7 +23,7 @@ class PublicController extends Controller
             ->inRandomOrder()
             ->limit(6)
             ->get();
-        
+
         return Inertia::render('welcome', [
             'subjects' => $subjects,
             'featuredTeachers' => $featuredTeachers,
@@ -124,7 +124,7 @@ class PublicController extends Controller
     public function teachers(Request $request)
     {
         $subjects = Subject::active()->ordered()->get();
-        
+
         $teachersQuery = User::teachers()
             ->active()
             ->verified()
@@ -175,7 +175,7 @@ class PublicController extends Controller
 
         // Récupérer les professeurs avec leurs profils
         $teachers = $teachersQuery->get();
-        
+
         // Vérifier que les relations sont bien chargées
         $teachers = $teachers->map(function($teacher) {
             // S'assurer que le professeur a un profil
@@ -183,26 +183,26 @@ class PublicController extends Controller
                 // Charger le profil s'il existe mais n'a pas été chargé
                 $teacher->load('teacherProfile');
             }
-            
+
             // S'assurer que le professeur a des matières
             if (!$teacher->subjects || $teacher->subjects->isEmpty()) {
                 // Charger les matières si elles existent mais n'ont pas été chargées
                 $teacher->load('subjects');
             }
-            
+
             return $teacher;
         });
-        
+
         // Filtrer pour ne garder que les professeurs avec un profil et des matières
         $teachers = $teachers->filter(function($teacher) {
             return $teacher->teacherProfile && $teacher->subjects && $teacher->subjects->isNotEmpty();
         })->values();
-        
+
         // Trier côté PHP pour éviter les problèmes de JOIN
         $sort = $request->get('sort', 'rating');
         $teachers = $teachers->sort(function($a, $b) use ($sort) {
             if (!$a->teacherProfile || !$b->teacherProfile) return 0;
-            
+
             switch($sort) {
                 case 'price_asc':
                     return $a->teacherProfile->hourly_rate <=> $b->teacherProfile->hourly_rate;
@@ -220,7 +220,7 @@ class PublicController extends Controller
                     return $b->teacherProfile->rating <=> $a->teacherProfile->rating;
             }
         })->values();
-        
+
         return Inertia::render('teachers', [
             'teachers' => $teachers,
             'subjects' => $subjects,
@@ -241,20 +241,20 @@ class PublicController extends Controller
      */
     public function teacherShow(User $teacher)
     {
-            
+
         if (!$teacher || !$teacher->isTeacher()) {
             abort(404, 'Professeur non trouvé');
         }
-        
+
         $teacher->load([
-                'teacherProfile', 
+                'teacherProfile',
                 'subjects',
                 'reviewsReceived' => function($q) {
                     $q->with('booking')->latest()->limit(10);
                 },
                 'availabilities'
             ]);
-        
+
         // S'assurer que le professeur a un profil
         if (!$teacher->teacherProfile) {
             // Créer un profil par défaut
@@ -272,22 +272,22 @@ class PublicController extends Controller
                 'languages' => ["Français"]
             ];
         }
-        
+
         // S'assurer que le professeur a des matières
         if (!$teacher->subjects || $teacher->subjects->isEmpty()) {
             $teacher->subjects = collect([]);
         }
-        
+
         // S'assurer que le professeur a des avis
         if (!$teacher->reviewsReceived) {
             $teacher->reviewsReceived = collect([]);
         }
-        
+
         // S'assurer que le professeur a des disponibilités
         if (!$teacher->availabilities) {
             $teacher->availabilities = collect([]);
         }
-        
+
         return Inertia::render('teacher-detail', [
             'teacher' => $teacher
         ]);
@@ -315,7 +315,7 @@ class PublicController extends Controller
                     'teacher_count' => $subject->teachers_count ?? 0
                 ];
             });
-        
+
         return Inertia::render('subjects', [
             'subjects' => $subjects
         ]);
@@ -348,4 +348,4 @@ class PublicController extends Controller
     {
         return Inertia::render('docs');
     }
-} 
+}
