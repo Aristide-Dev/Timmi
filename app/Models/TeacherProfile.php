@@ -25,6 +25,9 @@ class TeacherProfile extends Model
         'total_reviews',
         'is_verified',
         'verified_at',
+        'city_id',
+        'commune_id',
+        'neighborhood_id',
     ];
 
     protected $casts = [
@@ -47,6 +50,30 @@ class TeacherProfile extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Ville du professeur
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    /**
+     * Commune du professeur
+     */
+    public function commune()
+    {
+        return $this->belongsTo(Commune::class);
+    }
+
+    /**
+     * Quartier du professeur
+     */
+    public function neighborhood()
+    {
+        return $this->belongsTo(Neighborhood::class);
     }
 
     /**

@@ -16,7 +16,8 @@ import {
     CreditCard,
     Settings,
     Bell,
-    ChartBar
+    ChartBar,
+    Building
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -40,6 +41,11 @@ export function AppSidebar({ className }: Props) {
                 title: 'Notifications',
                 href: '/notifications',
                 icon: Bell,
+            },
+            {
+                title: 'Localités',
+                href: '/admin/locations',
+                icon: Building,
             },
         ];
 
@@ -130,7 +136,7 @@ export function AppSidebar({ className }: Props) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={`/${role}/dashboard`} prefetch>
+                            <Link href='/' prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

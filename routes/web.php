@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
+use Inertia\Inertia;
 
 Route::get('/', [PublicController::class, 'home'])->name('home');
 
@@ -26,6 +27,11 @@ Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects')
 
 // Documentation
 Route::get('/docs', [PublicController::class, 'docs'])->name('docs');
+
+// Page d'onboarding
+Route::get('/onboarding', function () {
+    return Inertia::render('auth/onboarding');
+})->name('onboarding');
 
 // Redirection du dashboard principal selon le rôle
 Route::middleware(['auth', 'verified'])->group(function () {

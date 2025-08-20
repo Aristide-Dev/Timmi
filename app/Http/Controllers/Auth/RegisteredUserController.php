@@ -19,9 +19,13 @@ class RegisteredUserController extends Controller
     /**
      * Show the registration page.
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        return Inertia::render('auth/register');
+        $type = $request->route('type', '');
+        
+        return Inertia::render('auth/register', [
+            'defaultRole' => $type,
+        ]);
     }
 
     /**
@@ -31,31 +35,43 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validationRules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => 'required|in:parent,teacher',
+            'role' => 'required|in:parent,teacher,student',
             'phone' => 'required|string|max:20',
-            'city' => 'required|string|max:100',
-        ]);
+        ];
 
-        $user = User::create([
+        // Ajouter les validations spécifiques pour les professeurs
+        if ($request->role === 'teacher') {
+            $validationRules['city_id'] = 'required|exists:cities,id';
+            $validationRules['commune_id'] = 'required|exists:communes,id';
+            $validationRules['neighborhood_id'] = 'required|exists:neighborhoods,id';
+        }
+
+        $request->validate($validationRules);
+
+        $userData = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'phone' => $request->phone,
-            'city' => $request->city,
             'status' => $request->role === 'teacher' ? 'pending' : 'active',
-        ]);
+        ];
 
-        // Si c'est un professeur, créer un profil vide
+        $user = User::create($userData);
+
+        // Si c'est un professeur, créer un profil avec les informations de localisation
         if ($user->role === 'teacher') {
             TeacherProfile::create([
                 'user_id' => $user->id,
                 'hourly_rate' => 0,
                 'teaching_mode' => 'both',
+                'city_id' => $request->city_id,
+                'commune_id' => $request->commune_id,
+                'neighborhood_id' => $request->neighborhood_id,
             ]);
         }
 
@@ -72,6 +88,8 @@ class RegisteredUserController extends Controller
                     return redirect()->route('teacher.pending');
                 }
                 return redirect()->route('teacher.dashboard');
+            case 'student':
+                return redirect()->route('dashboard');
             default:
                 return redirect()->route('dashboard');
         }

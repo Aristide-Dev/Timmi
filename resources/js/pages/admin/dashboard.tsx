@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Users, GraduationCap, BookOpen, DollarSign, TrendingUp, AlertCircle } from 'lucide-react';
+import { Users, GraduationCap, BookOpen, DollarSign, TrendingUp, AlertCircle, Building } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -341,6 +341,12 @@ export default function AdminDashboard({
                                 <Button variant="outline" className="w-full justify-start">
                                     <TrendingUp className="mr-2 h-4 w-4" />
                                     Rapports détaillés
+                                </Button>
+                            </Link>
+                            <Link href={route('admin.locations.index')} className="block">
+                                <Button variant="outline" className="w-full justify-start">
+                                    <Building className="mr-2 h-4 w-4" />
+                                    Gérer les localités
                                 </Button>
                             </Link>
                         </CardContent>
