@@ -7693,7 +7693,7 @@
             "authors": [
                 {
                     "name": "Mike van Riel",
-                    "email": "me@mikevanriel.com"
+                    "email": "me@mikTIMMInriel.com"
                 },
                 {
                     "name": "Jaap van Otterdijk",
@@ -7755,7 +7755,7 @@
             "authors": [
                 {
                     "name": "Mike van Riel",
-                    "email": "me@mikevanriel.com"
+                    "email": "me@mikTIMMInriel.com"
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",

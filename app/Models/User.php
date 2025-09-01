@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\Auth\MustVerifyPhone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyPhone
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -21,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -43,6 +45,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'phone_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -113,5 +116,66 @@ class User extends Authenticatable
         if ($role) {
             $this->roles()->detach($role->id);
         }
+    }
+
+    /**
+     * Vérifie si le numéro de téléphone de l'utilisateur est vérifié.
+     */
+    public function hasVerifiedPhone(): bool
+    {
+        return ! is_null($this->phone_verified_at);
+    }
+
+    /**
+     * Marque le numéro de téléphone de l'utilisateur comme vérifié.
+     */
+    public function markPhoneAsVerified(): bool
+    {
+        return $this->forceFill([
+            'phone_verified_at' => $this->freshTimestamp(),
+        ])->save();
+    }
+
+    /**
+     * Envoie la notification de vérification du téléphone.
+     */
+    public function sendPhoneVerificationNotification(): void
+    {
+        if (!$this->phone) {
+            return;
+        }
+        
+        $smsService = new \App\Services\SmsService();
+        
+        // Générer et stocker le code
+        $code = $smsService->generateCode();
+        $smsService->storeCode($this->phone, $code);
+        
+        // Envoyer le SMS
+        $smsService->sendVerificationCode($this->phone, $code);
+    }
+
+    /**
+     * Vérifie si l'utilisateur peut s'authentifier par téléphone.
+     */
+    public function canAuthenticateWithPhone(): bool
+    {
+        return ! empty($this->phone) && $this->hasVerifiedPhone();
+    }
+
+    /**
+     * Vérifie si l'utilisateur peut s'authentifier par email.
+     */
+    public function canAuthenticateWithEmail(): bool
+    {
+        return ! empty($this->email) && ! is_null($this->email_verified_at);
+    }
+
+    /**
+     * Détermine si l'identifiant fourni est un email ou un téléphone.
+     */
+    public static function isEmail(string $identifier): bool
+    {
+        return filter_var($identifier, FILTER_VALIDATE_EMAIL) !== false;
     }
 }

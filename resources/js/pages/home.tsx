@@ -39,7 +39,7 @@ const useOptimizedAnimations = () => {
     },
     
     // Animations subtiles pour les éléments décoratifs
-    particleVariants: prefersReducedMotion ? {} : {
+    particlTIMMIriants: prefersReducedMotion ? {} : {
       animate: {
         opacity: [0.3, 0.8, 0.3],
         scale: [1, 1.2, 1],
@@ -110,12 +110,13 @@ export default function HomePage() {
         </script>
         
         {/* Preload des ressources critiques */}
-        <link rel="preload" as="image" href="/images/heros/black-pregnant-woman-posing.jpg" />
+        <link rel="preload" as="image" href="/images/heros/hero-02.jpg" />
       </Head>
       
-      <div className="min-h-screen bg-background overflow-hidden">
         {/* Hero Section optimisée */}
-        <div className="bg-[url('/images/heros/black-pregnant-woman-posing.jpg')] bg-cover bg-center absolute h-full w-full"></div>
+        <div className="absolute min-h-screen h-full w-full bg-[url('/images/heros/hero-02.jpg')] bg-contain md:bg-cover bg-no-repeat bg-fixed"></div>
+
+      <div className="min-h-screen bg-background overflow-hidden">
         <section className="relative min-h-screen flex items-center justify-center py-12 lg:py-20">
           {/* Fond sophistiqué avec dégradé optimisé */}
           <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-900)]/70 via-[color:var(--primary-800)]/70 to-[color:var(--primary-700)]/70 shadow-2xl border-b border-white/10 opacity-95" />
@@ -139,9 +140,9 @@ export default function HomePage() {
                     width: `${4 + Math.random() * 6}px`,
                     height: `${4 + Math.random() * 6}px`,
                   }}
-                  {...animations.particleVariants}
+                  {...animations.particlTIMMIriants}
                 transition={{
-                    ...animations.particleVariants.transition,
+                    ...animations.particlTIMMIriants.transition,
                     delay: i * 0.8,
                 }}
               />
@@ -354,103 +355,6 @@ export default function HomePage() {
                 </motion.div>
               </motion.div>
               
-              {/* Carte interactive améliorée */}
-              <motion.div 
-                className="lg:col-span-5"
-                variants={animations.itemVariants}
-              >
-                <motion.div 
-                  className="relative bg-white/10 rounded-3xl backdrop-blur-md border border-white/20 p-8 shadow-2xl hover:bg-white/15 transition-all duration-500 overflow-hidden"
-                  whileHover={{ scale: 1.02, y: -5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Effet de brillance dynamique */}
-                  {!prefersReducedMotion && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0"
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  )}
-                  
-                  {/* Grille de fonctionnalités */}
-                  <div className="grid grid-cols-2 gap-6 h-full min-h-[400px]">
-                    {[
-                      { 
-                        Icon: FileText, 
-                        title: "Documentation", 
-                        subtitle: "Guides complets",
-                        color: "from-blue-400 to-blue-600",
-                        delay: 0 
-                      },
-                      { 
-                        Icon: Users, 
-                        title: "Communauté", 
-                        subtitle: "Support 24/7",
-                        color: "from-green-400 to-green-600",
-                        delay: 0.1 
-                      },
-                      { 
-                        Icon: MessageCircle, 
-                        title: "Assistance", 
-                        subtitle: "Chat en direct",
-                        color: "from-purple-400 to-purple-600",
-                        delay: 0.2 
-                      },
-                      { 
-                        Icon: Globe, 
-                        title: "Ressources", 
-                        subtitle: "API & Outils",
-                        color: "from-orange-400 to-orange-600",
-                        delay: 0.3 
-                      }
-                    ].map(({ Icon, title, subtitle, color, delay }, index) => (
-                      <motion.div
-                        key={index}
-                        className="bg-white/15 rounded-2xl p-6 backdrop-blur-sm border border-white/25 hover:bg-white/25 transition-all duration-300 group relative overflow-hidden flex flex-col justify-center items-center text-center cursor-pointer"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 + delay, duration: 0.5 }}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                      >
-                        {/* Gradient de fond au hover */}
-                        <motion.div
-                          className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-                        />
-                        
-                        {/* Icône avec animation */}
-                        <motion.div
-                          className="flex items-center justify-center bg-white/20 p-4 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors"
-                          animate={prefersReducedMotion ? {} : { 
-                            rotate: [0, 5, -5, 0],
-                          }}
-                          transition={{ 
-                            duration: 4,
-                            repeat: Infinity,
-                            delay: index * 0.5,
-                            ease: "easeInOut"
-                          }}
-                        >
-                          <Icon className="h-8 w-8 text-white" />
-                        </motion.div>
-                        
-                        <div className="space-y-1 relative z-10">
-                          <h3 className="text-white font-semibold text-lg">{title}</h3>
-                          <p className="text-white/70 text-sm">{subtitle}</p>
-                        </div>
-                        
-                        {/* Indicateur d'interaction */}
-                        <motion.div
-                          className="absolute bottom-3 right-3 bg-white/20 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <ChevronRight className="h-4 w-4 text-white" />
-                        </motion.div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
             </div>
           </motion.div>
 

@@ -56,7 +56,7 @@ export default function ErrorTestIndex({ errors }: PagePropsWithData<ErrorTestIn
               const statusCode = parseInt(code)
               
               // Déterminer la couleur du badge selon le type d'erreur
-              const getBadgeVariant = (code: number) => {
+              const getBadgTIMMIriant = (code: number) => {
                 if (code >= 500) return 'destructive' // Erreurs serveur
                 if (code >= 400) return 'secondary'   // Erreurs client
                 return 'default'
@@ -77,7 +77,7 @@ export default function ErrorTestIndex({ errors }: PagePropsWithData<ErrorTestIn
                 <Card key={code} className="group hover:shadow-lg transition-all duration-200">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between mb-2">
-                      <Badge variant={getBadgeVariant(statusCode)}>
+                      <Badge variant={getBadgTIMMIriant(statusCode)}>
                         {code}
                       </Badge>
                       <span className="text-2xl">{getErrorIcon(statusCode)}</span>

@@ -34,7 +34,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   }
 
   // Fonction pour supprimer la valeur
-  const removeValue = () => {
+  const removTIMMIlue = () => {
     try {
       setStoredValue(initialValue)
       if (typeof window !== 'undefined') {
@@ -45,5 +45,5 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   }
 
-  return [storedValue, setValue, removeValue] as const
+  return [storedValue, setValue, removTIMMIlue] as const
 } 

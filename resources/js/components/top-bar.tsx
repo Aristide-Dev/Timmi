@@ -91,25 +91,6 @@ export const TopBar = () => {
                 {/* Left Section: Logos et branding sophistiqué */}
                 <div className="flex flex-col lg:flex-row items-center justify-center space-y-4 lg:space-y-0 lg:space-x-8 w-full lg:w-auto">
                     <div className="flex items-center space-x-6">
-                        {/* Logo principal avec effet glassmorphism avancé */}
-                        <motion.div 
-                            className="relative group"
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <div className="absolute -inset-3 bg-gradient-to-br from-white/15 to-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur-sm" />
-                            <div className="relative bg-white/10 backdrop-blur-sm p-0 rounded-xl border border-white/20 group-hover:border-white/40 transition-all duration-300 shadow-lg">
-                                <div className="w-16 h-16 bg-gradient-to-br from-white/30 to-white/10 rounded-lg flex items-center justify-center relative overflow-hidden">
-                                    <img src="/logo.jpg" className="size-full object-cover"/>
-                                    {/* Effet de brillance interne */}
-                                    <motion.div
-                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                        animate={{ x: ['-100%', '100%'] }}
-                                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                                    />
-                                </div>
-                            </div>
-                        </motion.div>
 
                         {/* Branding text avec hiérarchie sophistiquée */}
                         <motion.div 
@@ -120,7 +101,7 @@ export const TopBar = () => {
                             <div className="absolute -inset-2 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             <div className="relative">
                                 <h1 className="text-xl font-bold tracking-wide text-white flex items-center gap-2">
-                                    EVA Platform
+                                    TIMMI Platform
                                     <motion.div
                                         animate={{ rotate: [0, 360] }}
                                         transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
@@ -164,7 +145,7 @@ export const TopBar = () => {
                         </motion.a>
                         
                         <motion.a
-                            href="mailto:contact@EVA.fr"
+                            href="mailto:contact@TIMMI.fr"
                             className="flex items-center space-x-3 group hover:text-white transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-white/10 relative overflow-hidden"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.2 }}
@@ -174,7 +155,7 @@ export const TopBar = () => {
                                 <Mail size={16} className="text-white" />
                             </div>
                             <span className="text-sm font-medium tracking-wide relative z-10">
-                                contact@EVA.fr
+                                contact@TIMMI.fr
                             </span>
                         </motion.a>
                     </div>

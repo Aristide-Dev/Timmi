@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'identifier' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -40,7 +40,7 @@ class LoginRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'email' => 'adresse email',
+            'identifier' => 'email ou numéro de téléphone',
             'password' => 'mot de passe',
         ];
     }
@@ -53,8 +53,7 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'L\'adresse email est obligatoire.',
-            'email.email' => 'L\'adresse email doit être valide.',
+            'identifier.required' => 'L\'email ou le numéro de téléphone est obligatoire.',
             'password.required' => 'Le mot de passe est obligatoire.',
         ];
     }
@@ -68,15 +67,41 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        $identifier = $this->identifier;
+        $password = $this->password;
 
-            throw ValidationException::withMessages([
-                'email' => 'Ces identifiants ne correspondent à aucun de nos enregistrements.',
-            ]);
+        // Déterminer si l'identifiant est un email ou un téléphone
+        $isEmail = filter_var($identifier, FILTER_VALIDATE_EMAIL);
+        
+        if ($isEmail) {
+            // Tentative d'authentification par email
+            if (Auth::attempt(['email' => $identifier, 'password' => $password], $this->boolean('remember'))) {
+                RateLimiter::clear($this->throttleKey());
+                return;
+            }
+        } else {
+            // Tentative d'authentification par téléphone
+            if (Auth::attempt(['phone' => $identifier, 'password' => $password], $this->boolean('remember'))) {
+                $user = Auth::user();
+                
+                // Vérifier si le téléphone est vérifié
+                if (!$user->hasVerifiedPhone()) {
+                    Auth::logout();
+                    throw ValidationException::withMessages([
+                        'identifier' => 'Votre numéro de téléphone n\'est pas vérifié. Veuillez le vérifier d\'abord.',
+                    ]);
+                }
+                
+                RateLimiter::clear($this->throttleKey());
+                return;
+            }
         }
 
-        RateLimiter::clear($this->throttleKey());
+        RateLimiter::hit($this->throttleKey());
+
+        throw ValidationException::withMessages([
+            'identifier' => 'Ces identifiants ne correspondent à aucun de nos enregistrements.',
+        ]);
     }
 
     /**
@@ -95,7 +120,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => "Trop de tentatives de connexion. Veuillez réessayer dans {$seconds} secondes.",
+            'identifier' => "Trop de tentatives de connexion. Veuillez réessayer dans {$seconds} secondes.",
         ]);
     }
 
@@ -104,6 +129,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('identifier')).'|'.$this->ip());
     }
 }

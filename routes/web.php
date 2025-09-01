@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Routes pour l'administration
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'admin', 'verified.phone'])->prefix('admin')->name('admin.')->group(function () {
     // Routes pour les rôles
     Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
     

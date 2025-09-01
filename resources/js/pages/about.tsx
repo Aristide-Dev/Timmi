@@ -18,7 +18,7 @@ export default function AboutPage({ title }: PagePropsWithData<AboutPageProps>) 
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              À propos de <span className="text-primary">EVA</span>
+              À propos de <span className="text-primary">TIMMI</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Nous créons des solutions modernes et innovantes pour améliorer 
@@ -97,7 +97,7 @@ export default function AboutPage({ title }: PagePropsWithData<AboutPageProps>) 
                   Notre Histoire
                 </h2>
                 <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                  Fondée en 2024, EVA est née de la volonté de créer des outils 
+                  Fondée en 2024, TIMMI est née de la volonté de créer des outils 
                   numériques qui mettent vraiment l'utilisateur au centre. Nous croyons 
                   qu'une bonne technologie doit être invisible et permettre à chacun 
                   de se concentrer sur ce qui compte vraiment.

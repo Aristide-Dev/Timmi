@@ -6,8 +6,12 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+
+use App\Http\Controllers\Auth\PhoneVerificationNotificationController;
+use App\Http\Controllers\Auth\PhoneVerificationPromptController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\VerifyPhoneController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -20,6 +24,8 @@ Route::middleware('guest')->group(function () {
         ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -45,6 +51,22 @@ Route::middleware('auth')->group(function () {
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
+
+    // Routes pour la vérification du téléphone
+    Route::get('verify-phone', PhoneVerificationPromptController::class)
+        ->name('verification.phone.notice');
+
+    Route::get('verify-phone-code', function () {
+        return Inertia::render('auth/verify-phone-code');
+    })->name('verification.phone.code');
+
+    Route::post('verify-phone', VerifyPhoneController::class)
+        ->middleware('throttle:6,1')
+        ->name('verification.phone.verify');
+
+    Route::post('phone/verification-notification', [PhoneVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.phone.send');
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');

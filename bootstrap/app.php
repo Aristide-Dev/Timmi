@@ -24,8 +24,14 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
+        // $middleware->append([
+        //     'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        //     'verified.phone' => \App\Http\Middleware\MustVerifyPhone::class,
+        // ]);
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'verified.phone' => \App\Http\Middleware\MustVerifyPhone::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

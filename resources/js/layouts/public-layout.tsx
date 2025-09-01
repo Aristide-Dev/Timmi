@@ -11,13 +11,13 @@ import { PageLoading } from '@/components/ui/loading-spinner';
 
 export default function PublicLayout({ 
   children,
-  title = "EVA - Votre Plateforme Moderne",
-  description = "EVA est une plateforme moderne offrant une expérience utilisateur optimale avec les dernières technologies web. Laravel 12, React 19, TypeScript, Tailwind CSS 4.",
-  keywords = "EVA, plateforme moderne, Laravel 12, React 19, TypeScript, Tailwind CSS 4, application web, services numériques, technologie avancée, France, Paris",
+  title = "TIMMI - Votre Plateforme Moderne",
+  description = "TIMMI est une plateforme moderne offrant une expérience utilisateur optimale avec les dernières technologies web. Laravel 12, React 19, TypeScript, Tailwind CSS 4.",
+  keywords = "TIMMI, plateforme moderne, Laravel 12, React 19, TypeScript, Tailwind CSS 4, application web, services numériques, technologie avancée, France, Paris",
   ogImage = "/logo.jpg",
   canonicalUrl,
   ogType = "website",
-  twitterCreator = "@EVA",
+  twitterCreator = "@TIMMI",
   datePublished,
   dateModified,
   articleSection,
@@ -37,7 +37,7 @@ export default function PublicLayout({
   });
 
   // Sécurisation de l'URL pour éviter les erreurs
-  const safeUrl = url || (typeof window !== 'undefined' ? window.location.origin : 'https://EVA.fr');
+  const safeUrl = url || (typeof window !== 'undefined' ? window.location.origin : 'https://TIMMI.fr');
   const currentUrl = safeUrl;
   
   // Merge des props SEO avec les valeurs par défaut
@@ -105,7 +105,7 @@ export default function PublicLayout({
         <title>{seoConfig.title}</title>
         <meta name="description" content={seoConfig.description} />
         <meta name="keywords" content={seoConfig.keywords} />
-        <meta name="author" content="EVA" />
+        <meta name="author" content="TIMMI" />
         <meta charSet="UTF-8" />
         
         {/* Directives pour les robots et les navigateurs */}
@@ -121,11 +121,11 @@ export default function PublicLayout({
         <meta name="ICBM" content="48.8566, 2.3522" />
         
         {/* Métadonnées pour applications mobiles */}
-        <meta name="application-name" content="EVA" />
+        <meta name="application-name" content="TIMMI" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="EVA" />
+        <meta name="apple-mobile-web-app-title" content="TIMMI" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: dark)" />
@@ -144,8 +144,8 @@ export default function PublicLayout({
         <meta property="og:image" content={absoluteImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Logo EVA - Votre Plateforme Moderne" />
-        <meta property="og:site_name" content="EVA" />
+        <meta property="og:image:alt" content="Logo TIMMI - Votre Plateforme Moderne" />
+        <meta property="og:site_name" content="TIMMI" />
         <meta property="og:locale" content="fr_FR" />
         
         {/* Article metadata pour les pages de contenu */}
@@ -153,8 +153,8 @@ export default function PublicLayout({
           <>
             <meta property="article:published_time" content={seoConfig.datePublished} />
             <meta property="article:modified_time" content={seoConfig.dateModified} />
-            <meta property="article:author" content="EVA" />
-            <meta property="article:publisher" content="EVA" />
+            <meta property="article:author" content="TIMMI" />
+            <meta property="article:publisher" content="TIMMI" />
             {seoConfig.articleSection && <meta property="article:section" content={seoConfig.articleSection} />}
             <meta property="article:tag" content="technologie, web, application, Laravel, React" />
           </>
@@ -166,9 +166,9 @@ export default function PublicLayout({
         <meta name="twitter:title" content={seoConfig.title} />
         <meta name="twitter:description" content={seoConfig.description} />
         <meta name="twitter:image" content={absoluteImageUrl} />
-        <meta name="twitter:image:alt" content="Logo EVA - Votre Plateforme Moderne" />
+        <meta name="twitter:image:alt" content="Logo TIMMI - Votre Plateforme Moderne" />
         <meta name="twitter:creator" content={seoConfig.twitterCreator} />
-        <meta name="twitter:site" content="@EVA" />
+        <meta name="twitter:site" content="@TIMMI" />
         
         {/* Canonical et langues alternatives */}
         <link rel="canonical" href={seoConfig.canonicalUrl || currentUrl} />
@@ -181,7 +181,7 @@ export default function PublicLayout({
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="EVA" />
+        <meta name="apple-mobile-web-app-title" content="TIMMI" />
         <link rel="manifest" href="/site.webmanifest" />
         
         {/* Métadonnées Safari */}
@@ -207,15 +207,15 @@ export default function PublicLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "EVA - Votre Plateforme Moderne",
-            "alternateName": ["EVA", "EVA Platform"],
+            "name": "TIMMI - Votre Plateforme Moderne",
+            "alternateName": ["TIMMI", "TIMMI Platform"],
             "url": safeUrl,
             "logo": {
               "@type": "ImageObject",
               "url": `${safeUrl}/logo.jpg`,
               "width": 1200,
               "height": 630,
-              "caption": "Logo EVA"
+              "caption": "Logo TIMMI"
             },
             "description": seoConfig.description,
             "image": absoluteImageUrl,
@@ -231,7 +231,7 @@ export default function PublicLayout({
               "@type": "ContactPoint",
               "telephone": "+33 1 23 45 67 89",
               "contactType": "customer service",
-              "email": "contact@EVA.fr",
+              "email": "contact@TIMMI.fr",
               "availableLanguage": ["French"],
               "hoursAvailable": {
                 "@type": "OpeningHoursSpecification",
@@ -250,10 +250,10 @@ export default function PublicLayout({
             "foundingDate": "2024",
             "keywords": seoConfig.keywords,
             "sameAs": [
-              "https://www.facebook.com/EVA",
-              "https://twitter.com/EVA",
-              "https://www.linkedin.com/company/EVA",
-              "https://www.youtube.com/channel/EVA"
+              "https://www.facebook.com/TIMMI",
+              "https://twitter.com/TIMMI",
+              "https://www.linkedin.com/company/TIMMI",
+              "https://www.youtube.com/channel/TIMMI"
             ],
             "mainEntityOfPage": {
               "@type": "WebPage",
@@ -273,7 +273,7 @@ export default function PublicLayout({
             "image": absoluteImageUrl,
             "publisher": {
               "@type": "Organization",
-              "name": "EVA",
+              "name": "TIMMI",
               "logo": {
                 "@type": "ImageObject",
                 "url": `${safeUrl}/logo.jpg`
@@ -284,7 +284,7 @@ export default function PublicLayout({
             "inLanguage": "fr-FR",
             "isPartOf": {
               "@type": "WebSite",
-              "name": "EVA",
+              "name": "TIMMI",
               "url": safeUrl
             }
           })}
@@ -295,12 +295,12 @@ export default function PublicLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "EVA - Votre Plateforme Moderne",
+            "name": "TIMMI - Votre Plateforme Moderne",
             "url": safeUrl,
             "description": seoConfig.description,
             "publisher": {
               "@type": "Organization",
-              "name": "EVA"
+              "name": "TIMMI"
             },
             "potentialAction": {
               "@type": "SearchAction",

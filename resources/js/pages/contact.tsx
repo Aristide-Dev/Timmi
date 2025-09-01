@@ -53,7 +53,7 @@ export default function ContactPage({ title }: PagePropsWithData<ContactPageProp
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">contact@EVA.fr</p>
+                  <p className="text-gray-600">contact@TIMMI.fr</p>
                   <p className="text-sm text-gray-500 mt-1">
                     Réponse sous 24h
                   </p>

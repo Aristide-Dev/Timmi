@@ -38,6 +38,7 @@ export type ThemeColor =
     | 'makity_purple'
     | 'makity_yellow'
     | 'makity_purple'
+    | 'timmi_dark_blue'
     ;
 
 export interface ThemeConfig {
@@ -90,6 +91,13 @@ export const THEME_PRESETS: Record<string, ThemeConfig> = {
         accent: 'teal',
         name: 'Brise Océanique',
         category: 'nature',
+    },
+    timmi_theme: {
+        primary: 'timmi_dark_blue',
+        accent: 'cyan',
+        name: 'Timmi Theme',
+        category: 'nature',
+        gradient: true,
     },
     sunset_glow: {
         primary: 'orange',
@@ -573,6 +581,20 @@ const COLOR_PALETTES: Record<ThemeColor, Record<string, string>> = {
         '900': 'oklch(0.3 0.1 80)',
         '950': 'oklch(0.2 0.08 80)',
     },
+    timmi_dark_blue: {
+        '50':  'oklch(0.90 0.02 220)',
+        '100': 'oklch(0.85 0.04 220)',
+        '200': 'oklch(0.75 0.07 220)',
+        '300': 'oklch(0.65 0.10 220)',
+        '400': 'oklch(0.55 0.12 220)',
+        '500': 'oklch(0.45 0.14 220)',
+        '600': 'oklch(0.35 0.13 220)',
+        '700': 'oklch(0.25 0.11 220)',
+        '800': 'oklch(0.15 0.09 220)',
+        '900': 'oklch(0.08 0.07 220)',
+        '950': 'oklch(0.04 0.05 220)',
+    },
+
 };
 
 // Catégories de couleurs étendues
@@ -589,8 +611,8 @@ export const THEME_CATEGORIES = {
     Makity_Jaune: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'makity_yellow'),   
 };
 
-const STORAGE_KEY = 'EVA-theme';
-const RECENT_THEMES_KEY = 'EVA-recent-themes';
+const STORAGE_KEY = 'TIMMI-theme';
+const RECENT_THEMES_KEY = 'TIMMI-recent-themes';
 
 export function useTheme() {
     // Utiliser le thème par défaut défini dans .env ou fallback sur 'default'
@@ -611,6 +633,7 @@ export function useTheme() {
         Spéciales: ['cyan', 'emerald', 'violet', 'lime'] as ThemeColor[],
         '7MAKITY': ['makity_purple', 'makity_yellow', 'makity_white'] as ThemeColor[],
         'ocean_breeze': ['cyan', 'teal'] as ThemeColor[],
+        'timmi_theme': ['blue', 'cyan'] as ThemeColor[],
     });
 
     // Charger le thème et les thèmes récents depuis localStorage au démarrage

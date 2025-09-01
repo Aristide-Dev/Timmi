@@ -20,6 +20,7 @@ class ProfileController extends Controller
     {
         return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'mustVerifyPhone' => $request->user() instanceof \App\Contracts\Auth\MustVerifyPhone,
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -29,13 +30,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Si l'email a changé, réinitialiser la vérification
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Si le téléphone a changé, réinitialiser la vérification
+        if ($user->isDirty('phone')) {
+            $user->phone_verified_at = null;
+        }
+
+        $user->save();
 
         return to_route('profile.edit');
     }

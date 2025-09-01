@@ -22,14 +22,16 @@ const breadcrumbs: BreadcrumbItem[] = [
 type ProfileForm = {
     name: string;
     email: string;
+    phone?: string;
 };
 
-export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
+export default function Profile({ mustVerifyEmail, mustVerifyPhone, status }: { mustVerifyEmail: boolean; mustVerifyPhone: boolean; status?: string }) {
     const { auth } = usePage<SharedData>().props;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<ProfileForm>({
         name: auth.user.name,
         email: auth.user.email,
+        phone: (auth.user.phone as string) || '',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -82,6 +84,22 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <InputError className="mt-2" message={errors.email} />
                         </div>
 
+                        <div className="grid gap-2">
+                            <Label htmlFor="phone">Numéro de téléphone</Label>
+
+                            <Input
+                                id="phone"
+                                type="tel"
+                                className="mt-1 block w-full"
+                                value={data.phone || ''}
+                                onChange={(e) => setData('phone', e.target.value)}
+                                autoComplete="tel"
+                                placeholder="+33 6 12 34 56 78"
+                            />
+
+                            <InputError className="mt-2" message={errors.phone} />
+                        </div>
+
                         {mustVerifyEmail && auth.user.email_verified_at === null && (
                             <div>
                                 <p className="-mt-4 text-sm text-muted-foreground">
@@ -99,6 +117,26 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                                 {status === 'verification-link-sent' && (
                                     <div className="mt-2 text-sm font-medium text-green-600">
                                         A new verification link has been sent to your email address.
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {mustVerifyPhone && auth.user.phone && !auth.user.phone_verified_at && (
+                            <div>
+                                <p className="-mt-4 text-sm text-muted-foreground">
+                                    Votre numéro de téléphone n'est pas vérifié.{' '}
+                                    <Link
+                                        href={route('verification.phone.notice')}
+                                        className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                    >
+                                        Cliquez ici pour vérifier votre numéro de téléphone.
+                                    </Link>
+                                </p>
+
+                                {status === 'phone-verification-sent' && (
+                                    <div className="mt-2 text-sm font-medium text-green-600">
+                                        Un nouveau code de vérification a été envoyé par SMS.
                                     </div>
                                 )}
                             </div>

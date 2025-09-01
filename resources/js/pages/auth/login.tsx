@@ -15,7 +15,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
 type LoginForm = {
-    email: string;
+    identifier: string;
     password: string;
     remember: boolean;
 };
@@ -28,7 +28,7 @@ interface LoginProps {
 export default function Login({ status, canResetPassword }: LoginProps) {
     const [showPassword, setShowPassword] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
+        identifier: '',
         password: '',
         remember: false,
     });
@@ -86,21 +86,21 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                     >
-                        <Label htmlFor="email" className="text-[color:var(--foreground)] flex items-center gap-2">
+                        <Label htmlFor="identifier" className="text-[color:var(--foreground)] flex items-center gap-2">
                             <Mail className="w-4 h-4 text-[color:var(--primary-500)]" />
-                            Adresse email
+                            Email ou numéro de téléphone
                         </Label>
                         <div className="relative group">
                             <Input
-                                id="email"
-                                type="email"
+                                id="identifier"
+                                type="text"
                                 required
                                 autoFocus
                                 tabIndex={1}
-                                autoComplete="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
-                                placeholder="email@exemple.com"
+                                autoComplete="username"
+                                value={data.identifier}
+                                onChange={(e) => setData('identifier', e.target.value)}
+                                placeholder="email@exemple.com ou +33 6 12 34 56 78"
                                 className="pl-10 pr-4 h-12 bg-white/50 dark:bg-gray-900/50 border-[color:var(--primary-300)] dark:border-[color:var(--primary-700)] focus:border-[color:var(--primary-500)] dark:focus:border-[color:var(--primary-400)] transition-all duration-300"
                             />
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[color:var(--primary-400)] pointer-events-none" />
@@ -110,7 +110,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 transition={{ duration: 3, repeat: Infinity }}
                             />
                         </div>
-                        <InputError message={errors.email} />
+                        <InputError message={errors.identifier} />
                     </motion.div>
 
                     <motion.div 
@@ -206,15 +206,19 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 </div>
 
                 <motion.div 
-                    className="text-center text-sm text-muted-foreground"
+                    className="text-center text-sm text-muted-foreground space-y-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                 >
-                    Vous n'avez pas de compte ?{' '}
-                    <TextLink href={route('register')} tabIndex={5} className="font-semibold text-[color:var(--primary-600)] hover:text-[color:var(--primary-700)] transition-colors">
-                        S'inscrire
-                    </TextLink>
+                    <div>
+                        Vous n'avez pas de compte ?{' '}
+                        <TextLink href={route('register')} tabIndex={5} className="font-semibold text-[color:var(--primary-600)] hover:text-[color:var(--primary-700)] transition-colors">
+                            S'inscrire
+                        </TextLink>
+                    </div>
+                    
+
                 </motion.div>
             </motion.form>
 
@@ -233,7 +237,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 )}
                 
                 {/* Messages d'erreur généraux */}
-                {(errors.email || errors.password) && (
+                {(errors.identifier || errors.password) && (
                     <motion.div 
                         className="mb-4 text-center text-sm font-medium text-red-600 bg-red-50 dark:bg-red-900/20 px-4 py-3 rounded-lg border border-red-200 dark:border-red-800"
                         initial={{ opacity: 0, scale: 0.9, y: -10 }}
@@ -241,7 +245,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         exit={{ opacity: 0, scale: 0.9, y: -10 }}
                         transition={{ duration: 0.3 }}
                     >
-                        {errors.email && <div>Erreur email : {errors.email}</div>}
+                        {errors.identifier && <div>Erreur identifiant : {errors.identifier}</div>}
                         {errors.password && <div>Erreur mot de passe : {errors.password}</div>}
                     </motion.div>
                 )}
