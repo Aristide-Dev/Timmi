@@ -9,6 +9,73 @@ export interface User {
     updated_at: string
 }
 
+// Interfaces pour la localisation
+export interface City {
+    id: number
+    name: string
+    slug: string
+    code?: string
+    description?: string
+    is_active: boolean
+    sort_order: number
+    created_at: string
+    updated_at: string
+}
+
+export interface Neighborhood {
+    id: number
+    city_id: number
+    name: string
+    slug: string
+    description?: string
+    is_active: boolean
+    sort_order: number
+    city?: City
+    created_at: string
+    updated_at: string
+}
+
+// Interfaces pour l'éducation
+export interface Cycle {
+    id: number
+    name: string
+    slug: string
+    description?: string
+    min_age?: number
+    max_age?: number
+    is_active: boolean
+    sort_order: number
+    created_at: string
+    updated_at: string
+}
+
+export interface Level {
+    id: number
+    cycle_id: number
+    name: string
+    slug: string
+    description?: string
+    grade_level?: number
+    is_active: boolean
+    sort_order: number
+    cycle?: Cycle
+    created_at: string
+    updated_at: string
+}
+
+export interface Subject {
+    id: number
+    name: string
+    slug: string
+    description?: string
+    icon?: string
+    color?: string
+    is_active: boolean
+    sort_order: number
+    created_at: string
+    updated_at: string
+}
+
 export interface PaginatedData<T> {
     data: T[]
     current_page: number

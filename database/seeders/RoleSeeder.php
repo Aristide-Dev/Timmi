@@ -18,62 +18,107 @@ class RoleSeeder extends Seeder
         Role::create([
             'name' => 'Super Admin',
             'slug' => 'super-admin',
-            'description' => 'Rôle avec tous les privilèges',
+            'description' => 'Rôle avec tous les privilèges sur la plateforme Timmi',
             'is_default' => false,
             'is_admin' => true,
-            'permissions' => null, // Les admins ont toutes les permissions
+            'permissions' => null, // Les super admins ont toutes les permissions
         ]);
 
         // Rôle Admin
         Role::create([
             'name' => 'Admin',
             'slug' => 'admin',
-            'description' => 'Rôle administrateur avec accès à la plupart des fonctionnalités',
+            'description' => 'Rôle administrateur pour la gestion de la plateforme Timmi',
             'is_default' => false,
             'is_admin' => true,
-            'permissions' => null,
-        ]);
-
-        // Rôle Modérateur
-        Role::create([
-            'name' => 'Modérateur',
-            'slug' => 'moderator',
-            'description' => 'Rôle pour la modération du contenu',
-            'is_default' => false,
-            'is_admin' => false,
             'permissions' => json_encode([
                 'users.view',
-                'content.create',
-                'content.edit',
-                'content.delete',
-                'comments.moderate',
+                'users.edit',
+                'users.delete',
+                'professors.validate',
+                'professors.manage',
+                'parents.manage',
+                'students.manage',
+                'reservations.manage',
+                'payments.manage',
+                'disputes.resolve',
+                'content.manage',
+                'statistics.view',
+                'reports.generate',
+                'advertisements.manage',
             ]),
         ]);
 
-        // Rôle Éditeur
+        // Rôle Parent
         Role::create([
-            'name' => 'Éditeur',
-            'slug' => 'editor',
-            'description' => 'Rôle pour la gestion du contenu',
+            'name' => 'Parent',
+            'slug' => 'parent',
+            'description' => 'Rôle pour les parents d\'élèves utilisant la plateforme',
             'is_default' => false,
             'is_admin' => false,
             'permissions' => json_encode([
-                'content.create',
-                'content.edit',
-                'content.delete',
+                'profile.edit',
+                'children.manage',
+                'professors.search',
+                'professors.view',
+                'reservations.create',
+                'reservations.view',
+                'reservations.cancel',
+                'payments.make',
+                'payments.view',
+                'reviews.create',
+                'disputes.create',
+                'notifications.receive',
             ]),
         ]);
 
-        // Rôle Utilisateur
+        // Rôle Professeur
+        Role::create([
+            'name' => 'Professeur',
+            'slug' => 'professor',
+            'description' => 'Rôle pour les professeurs particuliers',
+            'is_default' => false,
+            'is_admin' => false,
+            'permissions' => json_encode([
+                'profile.edit',
+                'profile.complete',
+                'subjects.manage',
+                'levels.manage',
+                'zones.manage',
+                'schedule.manage',
+                'reservations.view',
+                'reservations.confirm',
+                'reservations.mark-completed',
+                'payments.view',
+                'earnings.view',
+                'notifications.receive',
+            ]),
+        ]);
+
+        // Rôle Élève/Étudiant
+        Role::create([
+            'name' => 'Élève/Étudiant',
+            'slug' => 'student',
+            'description' => 'Rôle pour les élèves/étudiants (peut être lié à un compte parent)',
+            'is_default' => false,
+            'is_admin' => false,
+            'permissions' => json_encode([
+                'profile.view',
+                'courses.view',
+                'reviews.view',
+            ]),
+        ]);
+
+        // Rôle Utilisateur (par défaut)
         Role::create([
             'name' => 'Utilisateur',
             'slug' => 'user',
-            'description' => 'Rôle par défaut pour les nouveaux utilisateurs',
+            'description' => 'Rôle par défaut pour les nouveaux utilisateurs non assignés',
             'is_default' => true,
             'is_admin' => false,
             'permissions' => json_encode([
                 'profile.edit',
-                'comments.create',
+                'profile.view',
             ]),
         ]);
     }

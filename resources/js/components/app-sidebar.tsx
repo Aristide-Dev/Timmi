@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, ShieldCheck, Users } from 'lucide-react';
+import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -26,6 +26,43 @@ const mainNavItems: NavItem[] = [
                 title: 'Rôles utilisateurs',
                 href: route('admin.user-roles.index'),
                 icon: Users,
+            },
+        ],
+    },
+    // Section Localisation
+    {
+        title: 'Localisation',
+        items: [
+            {
+                title: 'Gestion des villes',
+                href: route('admin.locations.cities.index'),
+                icon: MapPin,
+            },
+            {
+                title: 'Gestion des quartiers',
+                href: route('admin.locations.neighborhoods.index'),
+                icon: MapPin,
+            },
+        ],
+    },
+    // Section Éducation
+    {
+        title: 'Éducation',
+        items: [
+            {
+                title: 'Gestion des cycles',
+                href: route('admin.education.cycles.index'),
+                icon: BookOpen,
+            },
+            {
+                title: 'Gestion des niveaux',
+                href: route('admin.education.levels.index'),
+                icon: GraduationCap,
+            },
+            {
+                title: 'Gestion des matières',
+                href: route('admin.education.subjects.index'),
+                icon: BookOpen,
             },
         ],
     },

@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('levels', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('cycle_id')->constrained()->onDelete('cascade');
+            $table->string('name'); // CP, CE1, CE2, CM1, CM2, 6e, 5e, 4e, 3e, 2nde, 1ère, Terminale, etc.
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->integer('grade_level')->nullable(); // Niveau numérique (1, 2, 3, etc.)
+            $table->boolean('is_active')->default(true);
+            $table->integer('sort_order')->default(0);
+            $table->timestamps();
+            
+            $table->index(['cycle_id', 'is_active', 'sort_order']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('levels');
+    }
+};
