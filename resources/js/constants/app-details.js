@@ -2,15 +2,15 @@ import { Facebook, Globe, Instagram, Twitter, Youtube, Linkedin } from "lucide-r
 
 
 export const appDetails = {
-    name: "MyApp",
-    description: "MyApp is a web application that allows you to manage your business.",
+    name: "EVA",
+    description: "EVA is a web application that allows you to manage your business.",
     version: "1.0.0",
-    author: "MyApp",
-    authorEmail: "contact@myapp.fr",
-    authorWebsite: "https://myapp.fr",
+    author: "EVA",
+    authorEmail: "contact@EVA.fr",
+    authorWebsite: "https://EVA.fr",
     contact: {
         phones: ["+33 1 23 45 67 89", "+33 6 98 76 54 32"],
-        emails: ["contact@myapp.fr", "support@myapp.fr"],
+        emails: ["contact@EVA.fr", "support@EVA.fr"],
         address: "123 Rue de la Technologie, 75001 Paris, France",
         hours: {
             weekdays: "Lundi - Vendredi",
@@ -29,15 +29,15 @@ export const appDetails = {
     ],
     social: [
         {
-            href: "https://www.facebook.com/myapp",
+            href: "https://www.facebook.com/EVA",
             icon: Facebook,
         },
         {
-            href: "https://www.instagram.com/myapp",
+            href: "https://www.instagram.com/EVA",
             icon: Instagram,
         },
         {
-            href: "https://www.twitter.com/myapp",
+            href: "https://www.twitter.com/EVA",
             icon: Twitter,
         },
         {
@@ -45,14 +45,14 @@ export const appDetails = {
             icon: Youtube,
         },
         {
-            href: "https://www.linkedin.com/company/myapp",
+            href: "https://www.linkedin.com/company/EVA",
             icon: Linkedin,
         },
     ],
     legal: {
-        privacyPolicy: "https://myapp.fr/privacy-policy",
-        termsOfService: "https://myapp.fr/terms-of-service",
-        cookiePolicy: "https://myapp.fr/cookie-policy",
+        privacyPolicy: "https://EVA.fr/privacy-policy",
+        termsOfService: "https://EVA.fr/terms-of-service",
+        cookiePolicy: "https://EVA.fr/cookie-policy",
     },
     usefulLinks:[
         { 

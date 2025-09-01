@@ -115,7 +115,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                       repeat: Infinity,
                     }}
                   />
-                  <img src="/images/aristech-brand.png" className="size-full object-cover rounded-xl"/>
+                  <img src="/logo.jpg" className="size-full object-cover rounded-xl"/>
 
                   <Sparkles className="absolute -top-1 -right-1 w-3 h-3 text-yellow-300" />
                 </motion.div>

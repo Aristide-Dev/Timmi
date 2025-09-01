@@ -110,14 +110,15 @@ export default function HomePage() {
         </script>
         
         {/* Preload des ressources critiques */}
-        <link rel="preload" as="image" href="/hero-background.webp" />
+        <link rel="preload" as="image" href="/images/heros/black-pregnant-woman-posing.jpg" />
       </Head>
       
       <div className="min-h-screen bg-background overflow-hidden">
         {/* Hero Section optimisée */}
+        <div className="bg-[url('/images/heros/black-pregnant-woman-posing.jpg')] bg-cover bg-center absolute h-full w-full"></div>
         <section className="relative min-h-screen flex items-center justify-center py-12 lg:py-20">
           {/* Fond sophistiqué avec dégradé optimisé */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-900)]/95 via-[color:var(--primary-800)]/95 to-[color:var(--primary-700)]/95 shadow-2xl border-b border-white/10 opacity-95" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-900)]/70 via-[color:var(--primary-800)]/70 to-[color:var(--primary-700)]/70 shadow-2xl border-b border-white/10 opacity-95" />
           
           {/* Texture subtile conditionnelle */}
           {!prefersReducedMotion && (

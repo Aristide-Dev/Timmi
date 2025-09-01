@@ -99,7 +99,7 @@ Le lien "🎨 Thème Demo" apparaît automatiquement dans le menu de navigation 
 ```
 
 ### **Persistance**
-- **Stockage** : localStorage avec clé `myapp-theme`
+- **Stockage** : localStorage avec clé `EVA-theme`
 - **Format** : JSON avec métadonnées (timestamp, version)
 - **Restauration** : Automatique au chargement de la page
 

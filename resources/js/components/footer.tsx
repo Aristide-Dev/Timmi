@@ -167,7 +167,7 @@ const Footer: React.FC = () => {
                             <div className="relative w-full flex items-center space-x-3">
                                 <div className="bg-white/20 p-0 rounded-xl backdrop-blur-sm">
                                     <div className="w-16 h-16 bg-gradient-to-br from-white/30 to-white/10 rounded-xl flex items-center justify-center">
-                                        <img src="/images/aristech-brand.png" className="size-full object-cover rounded-xl"/>
+                                        <img src="/logo.jpg" className="size-full object-cover rounded-xl"/>
                                     </div>
                                 </div>
                                 <div className="flex flex-col">

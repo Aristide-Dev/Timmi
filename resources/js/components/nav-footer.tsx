@@ -1,7 +1,7 @@
 import { Icon } from '@/components/icon';
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import ThemeSelector from '@/components/ui/theme-selector';
-import ThemeSwitcher from '@/components/ui/theme-switcher';
+// import ThemeSwitcher from '@/components/ui/theme-switcher';
 import { type NavItem } from '@/types';
 import { motion } from 'framer-motion';
 import { Palette, Sparkles } from 'lucide-react';
@@ -18,7 +18,7 @@ export function NavFooter({
     const ALLOW_THEME_CHANGE  = import.meta.env.VITE_THEME_ALLOW_CHANGE !== false;
 
     return (
-        <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 ${className || ''}`}>
+        <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 hidden ${className || ''} ${ALLOW_THEME_CHANGE ? '': ''}`}>
             <SidebarGroupContent>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -94,7 +94,7 @@ export function NavFooter({
                                     </motion.div>
                                 </motion.button>
 
-                                <ThemeSwitcher variant="minimal" size="sm" />
+                                {/* <ThemeSwitcher variant="minimal" size="sm" /> */}
                             </div>
 
                             {/* Panneau de sélection de thème */}

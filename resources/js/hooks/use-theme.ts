@@ -589,8 +589,8 @@ export const THEME_CATEGORIES = {
     Makity_Jaune: Object.keys(THEME_PRESETS).filter((key) => THEME_PRESETS[key].category === 'makity_yellow'),   
 };
 
-const STORAGE_KEY = 'myapp-theme';
-const RECENT_THEMES_KEY = 'myapp-recent-themes';
+const STORAGE_KEY = 'EVA-theme';
+const RECENT_THEMES_KEY = 'EVA-recent-themes';
 
 export function useTheme() {
     // Utiliser le thème par défaut défini dans .env ou fallback sur 'default'
@@ -610,6 +610,7 @@ export function useTheme() {
         Neutres: ['slate', 'gray', 'zinc', 'stone'] as ThemeColor[],
         Spéciales: ['cyan', 'emerald', 'violet', 'lime'] as ThemeColor[],
         '7MAKITY': ['makity_purple', 'makity_yellow', 'makity_white'] as ThemeColor[],
+        'ocean_breeze': ['cyan', 'teal'] as ThemeColor[],
     });
 
     // Charger le thème et les thèmes récents depuis localStorage au démarrage
@@ -859,7 +860,8 @@ export function useTheme() {
 
         const newTheme = {
             ...currentTheme,
-            isDark: !currentTheme.isDark,
+            isDark: false,
+            // isDark: !currentTheme.isDark,
         };
         changeTheme(newTheme);
     }, [currentTheme, changeTheme]);

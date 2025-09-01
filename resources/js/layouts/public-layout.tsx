@@ -11,13 +11,13 @@ import { PageLoading } from '@/components/ui/loading-spinner';
 
 export default function PublicLayout({ 
   children,
-  title = "MyApp - Votre Plateforme Moderne",
-  description = "MyApp est une plateforme moderne offrant une expérience utilisateur optimale avec les dernières technologies web. Laravel 12, React 19, TypeScript, Tailwind CSS 4.",
-  keywords = "MyApp, plateforme moderne, Laravel 12, React 19, TypeScript, Tailwind CSS 4, application web, services numériques, technologie avancée, France, Paris",
-  ogImage = "/images/og-image.jpg",
+  title = "EVA - Votre Plateforme Moderne",
+  description = "EVA est une plateforme moderne offrant une expérience utilisateur optimale avec les dernières technologies web. Laravel 12, React 19, TypeScript, Tailwind CSS 4.",
+  keywords = "EVA, plateforme moderne, Laravel 12, React 19, TypeScript, Tailwind CSS 4, application web, services numériques, technologie avancée, France, Paris",
+  ogImage = "/logo.jpg",
   canonicalUrl,
   ogType = "website",
-  twitterCreator = "@myapp",
+  twitterCreator = "@EVA",
   datePublished,
   dateModified,
   articleSection,
@@ -37,7 +37,7 @@ export default function PublicLayout({
   });
 
   // Sécurisation de l'URL pour éviter les erreurs
-  const safeUrl = url || (typeof window !== 'undefined' ? window.location.origin : 'https://myapp.fr');
+  const safeUrl = url || (typeof window !== 'undefined' ? window.location.origin : 'https://EVA.fr');
   const currentUrl = safeUrl;
   
   // Merge des props SEO avec les valeurs par défaut
@@ -105,7 +105,7 @@ export default function PublicLayout({
         <title>{seoConfig.title}</title>
         <meta name="description" content={seoConfig.description} />
         <meta name="keywords" content={seoConfig.keywords} />
-        <meta name="author" content="MyApp" />
+        <meta name="author" content="EVA" />
         <meta charSet="UTF-8" />
         
         {/* Directives pour les robots et les navigateurs */}
@@ -121,11 +121,11 @@ export default function PublicLayout({
         <meta name="ICBM" content="48.8566, 2.3522" />
         
         {/* Métadonnées pour applications mobiles */}
-        <meta name="application-name" content="MyApp" />
+        <meta name="application-name" content="EVA" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="MyApp" />
+        <meta name="apple-mobile-web-app-title" content="EVA" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: dark)" />
@@ -144,8 +144,8 @@ export default function PublicLayout({
         <meta property="og:image" content={absoluteImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Logo MyApp - Votre Plateforme Moderne" />
-        <meta property="og:site_name" content="MyApp" />
+        <meta property="og:image:alt" content="Logo EVA - Votre Plateforme Moderne" />
+        <meta property="og:site_name" content="EVA" />
         <meta property="og:locale" content="fr_FR" />
         
         {/* Article metadata pour les pages de contenu */}
@@ -153,8 +153,8 @@ export default function PublicLayout({
           <>
             <meta property="article:published_time" content={seoConfig.datePublished} />
             <meta property="article:modified_time" content={seoConfig.dateModified} />
-            <meta property="article:author" content="MyApp" />
-            <meta property="article:publisher" content="MyApp" />
+            <meta property="article:author" content="EVA" />
+            <meta property="article:publisher" content="EVA" />
             {seoConfig.articleSection && <meta property="article:section" content={seoConfig.articleSection} />}
             <meta property="article:tag" content="technologie, web, application, Laravel, React" />
           </>
@@ -166,9 +166,9 @@ export default function PublicLayout({
         <meta name="twitter:title" content={seoConfig.title} />
         <meta name="twitter:description" content={seoConfig.description} />
         <meta name="twitter:image" content={absoluteImageUrl} />
-        <meta name="twitter:image:alt" content="Logo MyApp - Votre Plateforme Moderne" />
+        <meta name="twitter:image:alt" content="Logo EVA - Votre Plateforme Moderne" />
         <meta name="twitter:creator" content={seoConfig.twitterCreator} />
-        <meta name="twitter:site" content="@myapp" />
+        <meta name="twitter:site" content="@EVA" />
         
         {/* Canonical et langues alternatives */}
         <link rel="canonical" href={seoConfig.canonicalUrl || currentUrl} />
@@ -177,22 +177,12 @@ export default function PublicLayout({
         ))}
         <link rel="alternate" hrefLang="x-default" href={safeUrl} />
         
-        {/* PWA Manifest et icônes */}
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+        <meta name="apple-mobile-web-app-title" content="EVA" />
+        <link rel="manifest" href="/site.webmanifest" />
         
         {/* Métadonnées Safari */}
         <meta name="apple-touch-fullscreen" content="yes" />
@@ -200,10 +190,6 @@ export default function PublicLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3b82f6" />
         
-        {/* Métadonnées Windows */}
-        <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
-        <meta name="msapplication-TileColor" content="#3b82f6" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
         
         {/* Préconnexion aux origines externes */}
         <link rel="preconnect" href="https://fonts.bunny.net" />
@@ -213,7 +199,7 @@ export default function PublicLayout({
         
         {/* Préchargement conditionnel uniquement pour la page d'accueil */}
         {currentUrl.endsWith('/') && (
-          <link rel="preload" href="/images/og-image.jpg" as="image" fetchPriority="high" />
+          <link rel="preload" href="/logo.jpg" as="image" fetchPriority="high" />
         )}
         
         {/* Schema.org JSON-LD amélioré pour l'organisation */}
@@ -221,15 +207,15 @@ export default function PublicLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "MyApp - Votre Plateforme Moderne",
-            "alternateName": ["MyApp", "MyApp Platform"],
+            "name": "EVA - Votre Plateforme Moderne",
+            "alternateName": ["EVA", "EVA Platform"],
             "url": safeUrl,
             "logo": {
               "@type": "ImageObject",
-              "url": `${safeUrl}/images/og-image.jpg`,
+              "url": `${safeUrl}/logo.jpg`,
               "width": 1200,
               "height": 630,
-              "caption": "Logo MyApp"
+              "caption": "Logo EVA"
             },
             "description": seoConfig.description,
             "image": absoluteImageUrl,
@@ -245,7 +231,7 @@ export default function PublicLayout({
               "@type": "ContactPoint",
               "telephone": "+33 1 23 45 67 89",
               "contactType": "customer service",
-              "email": "contact@myapp.fr",
+              "email": "contact@EVA.fr",
               "availableLanguage": ["French"],
               "hoursAvailable": {
                 "@type": "OpeningHoursSpecification",
@@ -264,10 +250,10 @@ export default function PublicLayout({
             "foundingDate": "2024",
             "keywords": seoConfig.keywords,
             "sameAs": [
-              "https://www.facebook.com/myapp",
-              "https://twitter.com/myapp",
-              "https://www.linkedin.com/company/myapp",
-              "https://www.youtube.com/channel/myapp"
+              "https://www.facebook.com/EVA",
+              "https://twitter.com/EVA",
+              "https://www.linkedin.com/company/EVA",
+              "https://www.youtube.com/channel/EVA"
             ],
             "mainEntityOfPage": {
               "@type": "WebPage",
@@ -287,10 +273,10 @@ export default function PublicLayout({
             "image": absoluteImageUrl,
             "publisher": {
               "@type": "Organization",
-              "name": "MyApp",
+              "name": "EVA",
               "logo": {
                 "@type": "ImageObject",
-                "url": `${safeUrl}/images/og-image.jpg`
+                "url": `${safeUrl}/logo.jpg`
               }
             },
             "datePublished": seoConfig.datePublished,
@@ -298,7 +284,7 @@ export default function PublicLayout({
             "inLanguage": "fr-FR",
             "isPartOf": {
               "@type": "WebSite",
-              "name": "MyApp",
+              "name": "EVA",
               "url": safeUrl
             }
           })}
@@ -309,12 +295,12 @@ export default function PublicLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "MyApp - Votre Plateforme Moderne",
+            "name": "EVA - Votre Plateforme Moderne",
             "url": safeUrl,
             "description": seoConfig.description,
             "publisher": {
               "@type": "Organization",
-              "name": "MyApp"
+              "name": "EVA"
             },
             "potentialAction": {
               "@type": "SearchAction",
