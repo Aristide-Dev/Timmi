@@ -287,7 +287,7 @@ export default function ParentFeedback({ sessions, feedbacks }: Props) {
                                             <div className="text-sm text-gray-600">
                                                 <p><strong>Professeur :</strong> {feedback.session.booking.professor.name}</p>
                                                 <p><strong>Enfant :</strong> {feedback.session.booking.child.name}</p>
-                                                <p><strong>Date :</strong> {formatDate(feedback.session.date)}</p>
+                                                {/* <p><strong>Date :</strong> {formatDate(feedback.session.date)}</p> */}
                                             </div>
 
                                             <div>
