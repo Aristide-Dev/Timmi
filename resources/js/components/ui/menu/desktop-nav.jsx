@@ -72,15 +72,12 @@ const DesktopNav = () => {
 
   return (
     <motion.nav 
-      className="hidden md:flex items-center space-x-2 whitespace-nowrap m-0 px-6 py-2 bg-white/5 backdrop-blur-sm rounded-xl"
+      className="hidden md:flex items-center space-x-2 whitespace-nowrap m-0 px-6 py-0 rounded-xl"
       role="navigation"
       aria-label="Menu principal"
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
     >
       {/* Effet de brillance décoratif en arrière-plan */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-30 rounded-xl" />
+      {/* <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-30 rounded-xl" /> */}
       
       {/* Particules décoratives sophistiquées */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -146,25 +143,6 @@ const DesktopNav = () => {
       </div>
 
       
-      {/* Logo principal avec effet glassmorphism avancé */}
-      <motion.div 
-          className="relative group"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
-      >
-          <div className="absolute -inset-3 bg-gradient-to-br from-white/15 to-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur-sm" />
-          <div className="relative bg-white/10 backdrop-blur-sm p-0 rounded-xl border border-white/20 group-hover:border-white/40 transition-all duration-300 shadow-lg">
-              <div className="w-16 h-16 bg-gradient-to-br from-white/30 to-white/10 rounded-lg flex items-center justify-center relative overflow-hidden">
-                  <img src="/logo.jpg" className="size-full object-cover"/>
-                  {/* Effet de brillance interne */}
-                  <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      animate={{ x: ['-100%', '100%'] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                  />
-              </div>
-          </div>
-      </motion.div>
 
       {menuItems.map((item) => {
         const isActive = item.href && item.href !== '#' && isActiveRoute(item);

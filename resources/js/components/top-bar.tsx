@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Phone, Mail, Search, X, Globe, Sparkles } from 'lucide-react';
+import { Phone, Search, X, } from 'lucide-react';
 import { router } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -87,48 +87,13 @@ export const TopBar = () => {
                 />
             </div>
 
-            <div className="container mx-auto px-4 py-4 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0 relative z-10">
+            <div className="container mx-auto px-4 py-2 flex justify-between items-center space-y-2 relative z-10">
                 {/* Left Section: Logos et branding sophistiqué */}
-                <div className="flex flex-col lg:flex-row items-center justify-center space-y-4 lg:space-y-0 lg:space-x-8 w-full lg:w-auto">
-                    <div className="flex items-center space-x-6">
+                <div className="flex items-center justify-center space-y-4 lg:space-y-0 lg:space-x-8 w-full lg:w-auto">
 
-                        {/* Branding text avec hiérarchie sophistiquée */}
-                        <motion.div 
-                            className="relative group"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <div className="absolute -inset-2 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            <div className="relative">
-                                <h1 className="text-xl font-bold tracking-wide text-white flex items-center gap-2">
-                                    TIMMI Platform
-                                    <motion.div
-                                        animate={{ rotate: [0, 360] }}
-                                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                                    >
-                                        <Sparkles size={16} className="text-yellow-300" />
-                                    </motion.div>
-                                </h1>
-                                <p className="text-xs text-white/70 tracking-wider uppercase font-medium">
-                                    Solutions Technologiques Modernes
-                                </p>
-                            </div>
-                        </motion.div>
-
-                        {/* Badge technologique avec animations */}
-                        <motion.div 
-                            className="hidden xl:flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20 group relative overflow-hidden"
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 transform -skew-x-12" />
-                            <Globe size={14} className="text-emerald-300 relative z-10" />
-                            <span className="text-xs font-medium text-white/90 relative z-10">Laravel 12 • React 19 • TypeScript</span>
-                        </motion.div>
-                    </div>
 
                     {/* Section contact avec effets sophistiqués */}
-                    <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-white/90">
+                    <div className="flex items-center space-y-0 sm:space-x-6 text-white/90">
                         <motion.a
                             href="tel:+33123456789"
                             className="flex items-center space-x-3 group hover:text-white transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-white/10 relative overflow-hidden"
@@ -141,21 +106,6 @@ export const TopBar = () => {
                             </div>
                             <span className="text-sm font-medium tracking-wide relative z-10">
                                 +33 1 23 45 67 89
-                            </span>
-                        </motion.a>
-                        
-                        <motion.a
-                            href="mailto:contact@TIMMI.fr"
-                            className="flex items-center space-x-3 group hover:text-white transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-white/10 relative overflow-hidden"
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-500)]/10 to-[color:var(--accent-500)]/10 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                            <div className="p-2 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors duration-300 group-hover:shadow-lg relative z-10">
-                                <Mail size={16} className="text-white" />
-                            </div>
-                            <span className="text-sm font-medium tracking-wide relative z-10">
-                                contact@TIMMI.fr
                             </span>
                         </motion.a>
                     </div>

@@ -1,13 +1,15 @@
-export interface User {
-    id: number
-    name: string
-    email: string
-    email_verified_at?: string
-    avatar?: string
-    role: 'admin' | 'user' | 'vendor'
-    created_at: string
-    updated_at: string
-}
+// export interface User {
+//     id: number
+//     name: string
+//     email: string
+//     phone?: string
+//     email_verified_at?: string
+//     phone_verified_at?: string
+//     avatar?: string
+//     role: 'admin' | 'user' | 'vendor'
+//     created_at: string
+//     updated_at: string
+// }
 
 // Interfaces pour la localisation
 export interface City {
@@ -187,4 +189,238 @@ export interface ThemeConfig {
     colors: {
         [key: string]: string;
     };
+}
+
+// Interfaces pour les Parents
+export interface ParentDashboard {
+    total_children: number;
+    active_bookings: number;
+    completed_sessions: number;
+    total_spent: number;
+    upcoming_sessions: Session[];
+    recent_bookings: Booking[];
+    children: Child[];
+}
+
+export interface Child {
+    id: number;
+    name: string;
+    age: number;
+    grade_level: string;
+    subjects: string[];
+    avatar?: string;
+    is_active: boolean;
+}
+
+export interface Professor {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    avatar?: string;
+    bio: string;
+    experience_years: number;
+    education: string;
+    subjects: Subject[];
+    levels: Level[];
+    cities: City[];
+    hourly_rate: number;
+    rating: number;
+    total_reviews: number;
+    is_verified: boolean;
+    is_available: boolean;
+    languages: string[];
+    specializations: string[];
+    certificates: Certificate[];
+    availability: Availability[];
+    reviews: Review[];
+}
+
+export interface Certificate {
+    id: number;
+    name: string;
+    issuer: string;
+    date_obtained: string;
+    file_url?: string;
+}
+
+export interface Availability {
+    id: number;
+    day_of_week: number;
+    start_time: string;
+    end_time: string;
+    is_available: boolean;
+}
+
+export interface Review {
+    id: number;
+    parent_name: string;
+    rating: number;
+    comment: string;
+    date: string;
+    subject: string;
+}
+
+export interface ProfessorSearchFilters {
+    subjects?: number[];
+    levels?: number[];
+    cities?: number[];
+    price_min?: number;
+    price_max?: number;
+    rating_min?: number;
+    availability?: string;
+    languages?: string[];
+    verified_only?: boolean;
+}
+
+export interface ProfessorSearchResult {
+    professors: Professor[];
+    total: number;
+    current_page: number;
+    last_page: number;
+    filters: ProfessorSearchFilters;
+}
+
+export interface Booking {
+    id: number;
+    professor: Professor;
+    child: Child;
+    subject: Subject;
+    level: Level;
+    duration: number;
+    total_price: number;
+    status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+    payment_status: 'pending' | 'paid' | 'refunded';
+    payment_method?: string;
+    meeting_link?: string;
+    notes?: string;
+    created_at: string;
+}
+
+export interface Session {
+    id: number;
+    booking: Booking;
+    status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
+    notes?: string;
+    created_at: string;
+    feedback?: Feedback;
+}
+
+export interface Feedback {
+    id: number;
+    session: Session;
+    rating: number;
+    comment: string;
+    categories: {
+        teaching_quality: number;
+        punctuality: number;
+        communication: number;
+        patience: number;
+    };
+    created_at: string;
+}
+
+export interface PaymentMethod {
+    id: number;
+    type: 'card' | 'mobile_money' | 'bank_transfer';
+    name: string;
+    is_default: boolean;
+    last_four?: string;
+    expiry_date?: string;
+}
+
+export interface Payment {
+    id: number;
+    booking: Booking;
+    amount: number;
+    method: PaymentMethod;
+    status: 'pending' | 'completed' | 'failed' | 'refunded';
+    transaction_id?: string;
+    created_at: string;
+}
+
+// Nouvelles interfaces pour les relations many-to-many
+export interface Certificate {
+    id: number;
+    user_id: number;
+    name: string;
+    issuer: string;
+    date_obtained: string;
+    file_url?: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Availability {
+    id: number;
+    user_id: number;
+    day_of_week: number; // 0 = dimanche, 1 = lundi, etc.
+    start_time: string;
+    end_time: string;
+    is_available: boolean;
+    day_name?: string; // Attribut calculé côté backend
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Review {
+    id: number;
+    professor_id: number;
+    parent_id: number;
+    parent_name: string;
+    subject: string;
+    rating: number; // 1-5 étoiles
+    comment: string;
+    date: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    slug: string;
+    description?: string;
+    is_default: boolean;
+    is_admin: boolean;
+    permissions?: string[];
+    created_at: string;
+    updated_at: string;
+}
+
+// Mise à jour de l'interface User pour inclure les nouvelles relations
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    phone?: string;
+    phone_verified_at?: string;
+    email_verified_at?: string;
+    created_at: string;
+    updated_at: string;
+    
+    // Champs spécifiques aux professeurs
+    bio?: string;
+    hourly_rate?: number;
+    experience_years?: number;
+    education?: string;
+    specializations?: string[];
+    languages?: string[];
+    is_verified?: boolean;
+    is_available?: boolean;
+    rating?: number;
+    total_reviews?: number;
+    avatar?: string;
+    
+    // Relations
+    roles?: Role[];
+    subjects?: Subject[];
+    levels?: Level[];
+    cities?: City[];
+    certificates?: Certificate[];
+    availabilities?: Availability[];
+    reviews?: Review[];
+    children?: Child[];
+    bookings?: Booking[];
+    professor_bookings?: Booking[];
 }

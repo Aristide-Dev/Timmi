@@ -2,12 +2,11 @@ import { TopBar } from '@/components/top-bar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DesktopNav, MobileNav } from '@/components/ui/menu';
-import ThemeSwitcher from '@/components/ui/theme-switcher';
 import { useFavorites } from '@/hooks/use-favorites';
 import { ExtendedPageProps } from '@/types/global';
 import { Link, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Heart, Menu, User, X } from 'lucide-react';
+import { Heart, Menu, CircleUser, X } from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
@@ -157,7 +156,7 @@ const Header: React.FC = () => {
 
                             <div className="relative overflow-hidden rounded-xl">
                                 <motion.div
-                                    className={`flex items-center justify-center rounded-lg bg-white/20 ${state.isScrolled && !state.isMenuOpen ? 'h-10 w-10' : 'h-12 w-12'} `}
+                                    className={`flex items-center justify-center rounded-lg bg-white/20 ${state.isScrolled && !state.isMenuOpen ? 'h-10 w-full' : 'h-12 w-full'} `}
                                     style={{
                                         filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3)) brightness(1.05)',
                                     }}
@@ -165,27 +164,17 @@ const Header: React.FC = () => {
                                     whileTap={{ scale: 0.95 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <motion.span
-                                        className={`font-bold text-white ${state.isScrolled && !state.isMenuOpen ? 'text-lg' : 'text-xl'}`}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.5, delay: 0.2 }}
-                                    >
-                                        M
-                                    </motion.span>
+                                    <img src="/logo.jpg" className="size-full object-cover"/>
                                 </motion.div>
                             </div>
                         </Link>
 
                         {/* Navigation desktop avec composant sophistiqué */}
-                        <motion.div
+                        <div
                             className="relative hidden md:block w-full"
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
                         >
                             <DesktopNav />
-                        </motion.div>
+                        </div>
 
                         {/* Actions avec animations Framer Motion */}
                         <motion.div
@@ -194,10 +183,6 @@ const Header: React.FC = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.5 }}
                         >
-                            {/* Theme Switcher */}
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.2 }}>
-                                <ThemeSwitcher variant="outline" size="sm" className="border-white/20 hover:border-white/40" />
-                            </motion.div>
 
                             {/* Favorites avec animation sophistiquée */}
                             <Link href="/favorites" className="relative">
@@ -230,9 +215,9 @@ const Header: React.FC = () => {
                             {auth.user ? (
                                 <Link href="/dashboard">
                                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }}>
-                                        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
+                                        <Button variant="ghost" size="icon" className="text-white hover:bg-white/70">
                                             <motion.div whileHover={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 0.3 }}>
-                                                <User className="h-5 w-5" />
+                                                <CircleUser className="h-10 w-10 hover:text-[color:var(--accent-700)]" />
                                             </motion.div>
                                         </Button>
                                     </motion.div>

@@ -2,14 +2,12 @@ import {
   Home,
   FileText,
   Users,
-  User,
   Heart,
-  Settings,
   Newspaper,
   Briefcase,
   Phone,
-  AlertTriangle,
-  Palette
+  // AlertTriangle,
+  // Palette
 } from 'lucide-react';
 
 const baseMenuItems = [
@@ -39,16 +37,6 @@ const baseMenuItems = [
     ]
   },
   {
-    label: 'Espace Utilisateur',
-    icon: User,
-    actif: '',
-    children: [
-      { label: 'Mes favoris', href: 'favorites', icon: Heart },
-      { label: 'Mon tableau de bord', href: 'dashboard', icon: Settings },
-      { label: 'Se connecter', href: 'login', icon: User },
-    ]
-  },
-  {
     label: 'Contact',
     href: 'contact',
     icon: Phone,
@@ -59,15 +47,15 @@ const baseMenuItems = [
 const isDevelopment = import.meta.env.DEV;
 export const menuItems = isDevelopment 
   ? [...baseMenuItems, 
-      { 
-        label: '🎨 Thème Demo', 
-        href: 'theme.demo', 
-        icon: Palette 
-      },
-      { 
-        label: '🚨 Test Erreurs', 
-        href: 'errors.test.index', 
-        icon: AlertTriangle 
-      }
+      // { 
+      //   label: '🎨 Thème Demo', 
+      //   href: 'theme.demo', 
+      //   icon: Palette 
+      // },
+      // { 
+      //   label: '🚨 Test Erreurs', 
+      //   href: 'errors.test.index', 
+      //   icon: AlertTriangle 
+      // }
     ]
   : baseMenuItems;

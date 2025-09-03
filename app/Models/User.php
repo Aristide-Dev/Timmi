@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Contracts\Auth\MustVerifyPhone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -24,6 +25,16 @@ class User extends Authenticatable implements MustVerifyPhone
         'email',
         'phone',
         'password',
+        'bio',
+        'hourly_rate',
+        'experience_years',
+        'education',
+        'specializations',
+        'languages',
+        'is_verified',
+        'is_available',
+        'rating',
+        'total_reviews',
     ];
 
     /**
@@ -47,6 +58,14 @@ class User extends Authenticatable implements MustVerifyPhone
             'email_verified_at' => 'datetime',
             'phone_verified_at' => 'datetime',
             'password' => 'hashed',
+            'hourly_rate' => 'decimal:2',
+            'experience_years' => 'integer',
+            'specializations' => 'array',
+            'languages' => 'array',
+            'is_verified' => 'boolean',
+            'is_available' => 'boolean',
+            'rating' => 'decimal:1',
+            'total_reviews' => 'integer',
         ];
     }
 
@@ -177,5 +196,52 @@ class User extends Authenticatable implements MustVerifyPhone
     public static function isEmail(string $identifier): bool
     {
         return filter_var($identifier, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
+    // Relations pour les professeurs
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class, 'user_subject');
+    }
+
+    public function levels(): BelongsToMany
+    {
+        return $this->belongsToMany(Level::class, 'user_level');
+    }
+
+    public function cities(): BelongsToMany
+    {
+        return $this->belongsToMany(City::class, 'user_city');
+    }
+
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
+    public function availabilities(): HasMany
+    {
+        return $this->hasMany(Availability::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'professor_id');
+    }
+
+    // Relations pour les parents
+    public function children(): HasMany
+    {
+        return $this->hasMany(Child::class, 'parent_id');
+    }
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'parent_id');
+    }
+
+    public function professorBookings(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'professor_id');
     }
 }

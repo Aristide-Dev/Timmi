@@ -3,86 +3,139 @@ import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap, Search, Calendar, Home, User, FileText } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-    // Section Administration
-    {
-        title: 'Administration',
-        items: [
-            {
-                title: 'Gestion des rôles',
-                href: route('admin.roles.index'),
-                icon: ShieldCheck,
-            },
-            {
-                title: 'Rôles utilisateurs',
-                href: route('admin.user-roles.index'),
-                icon: Users,
-            },
-        ],
-    },
-    // Section Localisation
-    {
-        title: 'Localisation',
-        items: [
-            {
-                title: 'Gestion des villes',
-                href: route('admin.locations.cities.index'),
-                icon: MapPin,
-            },
-            {
-                title: 'Gestion des quartiers',
-                href: route('admin.locations.neighborhoods.index'),
-                icon: MapPin,
-            },
-        ],
-    },
-    // Section Éducation
-    {
-        title: 'Éducation',
-        items: [
-            {
-                title: 'Gestion des cycles',
-                href: route('admin.education.cycles.index'),
-                icon: BookOpen,
-            },
-            {
-                title: 'Gestion des niveaux',
-                href: route('admin.education.levels.index'),
-                icon: GraduationCap,
-            },
-            {
-                title: 'Gestion des matières',
-                href: route('admin.education.subjects.index'),
-                icon: BookOpen,
-            },
-        ],
-    },
-    // Autres éléments de navigation simplifiés
-];
-
-const footerNavItems: NavItem[] = [
-    // {
-    //     title: 'Repository',
-    //     href: 'https://github.com/laravel/react-starter-kit',
-    //     icon: Folder,
-    // },
-    // {
-    //     title: 'Documentation',
-    //     href: 'https://laravel.com/docs/starter-kits#react',
-    //     icon: BookOpen,
-    // },
-];
-
 export function AppSidebar() {
+    const { auth } = usePage().props as unknown as { auth: { user: { roles: string[] } } };
+    const userRoles = auth?.user?.roles || [];
+
+    const getMainNavItems = (): NavItem[] => {
+        const items: NavItem[] = [];
+
+        // Dashboard commun
+        // items.push({
+        //     title: 'Dashboard',
+        //     href: '/dashboard',
+        //     icon: LayoutGrid,
+        // });
+        
+
+        // Menu pour les Parents
+        if (userRoles.includes('parent')) {
+            items.push(
+                {
+                    title: 'Tableau de bord',
+                    href: route('parent.dashboard'),
+                    icon: Home,
+                },
+                {
+                    title: 'Rechercher un professeur',
+                    href: route('parent.search.professors'),
+                    icon: Search,
+                },
+                {
+                    title: 'Mes réservations',
+                    href: route('parent.bookings.index'),
+                    icon: Calendar,
+                },
+                {
+                    title: 'Mes enfants',
+                    href: route('parent.children.index'),
+                    icon: User,
+                },
+                {
+                    title: 'Mon profil',
+                    href: route('parent.profile.index'),
+                    icon: Users,
+                },
+                {
+                    title: 'Feedback',
+                    href: route('parent.feedback.index'),
+                    icon: FileText,
+                }
+            );
+        }
+
+        // Menu pour les Admins
+        if (userRoles.includes('admin') || userRoles.includes('super-admin')) {
+            items.push(
+                {
+                    title: 'Tableau de bord',
+                    href: route('dashboard'),
+                    icon: LayoutGrid,
+                },
+                {
+                    title: 'Administration',
+                    items: [
+                        {
+                            title: 'Gestion des rôles',
+                            href: route('admin.roles.index'),
+                            icon: ShieldCheck,
+                        },
+                        {
+                            title: 'Rôles utilisateurs',
+                            href: route('admin.user-roles.index'),
+                            icon: Users,
+                        },
+                    ],
+                },
+                {
+                    title: 'Localisation',
+                    items: [
+                        {
+                            title: 'Gestion des villes',
+                            href: route('admin.locations.cities.index'),
+                            icon: MapPin,
+                        },
+                        {
+                            title: 'Gestion des quartiers',
+                            href: route('admin.locations.neighborhoods.index'),
+                            icon: MapPin,
+                        },
+                    ],
+                },
+                {
+                    title: 'Éducation',
+                    items: [
+                        {
+                            title: 'Gestion des cycles',
+                            href: route('admin.education.cycles.index'),
+                            icon: BookOpen,
+                        },
+                        {
+                            title: 'Gestion des niveaux',
+                            href: route('admin.education.levels.index'),
+                            icon: GraduationCap,
+                        },
+                        {
+                            title: 'Gestion des matières',
+                            href: route('admin.education.subjects.index'),
+                            icon: BookOpen,
+                        },
+                    ],
+                }
+            );
+        }
+
+        return items;
+    };
+
+    const mainNavItems = getMainNavItems();
+
+    const footerNavItems: NavItem[] = [
+        // {
+        //     title: 'Repository',
+        //     href: 'https://github.com/laravel/react-starter-kit',
+        //     icon: Folder,
+        // },
+        // {
+        //     title: 'Documentation',
+        //     href: 'https://laravel.com/docs/starter-kits#react',
+        //     icon: BookOpen,
+        // },
+    ];
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader className="shrink-0">
@@ -98,6 +151,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent className="flex-1 overflow-y-auto">
+                
                 <NavMain items={mainNavItems} />
             </SidebarContent>
 

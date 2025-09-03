@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ErrorTestController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ErrorTestController;
-use App\Http\Controllers\PagesController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -35,9 +37,7 @@ if (app()->environment(['local', 'testing'])) {
 }
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 // Routes pour l'administration
@@ -103,6 +103,48 @@ Route::middleware(['auth', 'verified', 'admin', 'verified.phone'])->prefix('admi
         // API routes
         Route::get('levels-by-cycle', [\App\Http\Controllers\Admin\EducationController::class, 'getLevelsByCycle'])->name('levels.by-cycle');
     });
+});
+
+// Routes pour les Parents
+Route::middleware(['auth', 'role:parent'])->prefix('parent')->name('parent.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Parent\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Recherche de professeurs
+    Route::get('/search/professors', [App\Http\Controllers\Parent\SearchController::class, 'professors'])->name('search.professors');
+    
+    // Profils des professeurs
+    Route::get('/professors/{professor}', [App\Http\Controllers\Parent\ProfessorController::class, 'show'])->name('professors.show');
+    
+    // Réservations
+    Route::get('/bookings', [App\Http\Controllers\Parent\BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/booking/create', [App\Http\Controllers\Parent\BookingController::class, 'create'])->name('booking.create');
+    Route::post('/booking', [App\Http\Controllers\Parent\BookingController::class, 'store'])->name('booking.store');
+    Route::get('/bookings/{booking}', [App\Http\Controllers\Parent\BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking}/edit', [App\Http\Controllers\Parent\BookingController::class, 'edit'])->name('bookings.edit');
+    Route::put('/bookings/{booking}', [App\Http\Controllers\Parent\BookingController::class, 'update'])->name('bookings.update');
+    Route::post('/bookings/{booking}/cancel', [App\Http\Controllers\Parent\BookingController::class, 'cancel'])->name('bookings.cancel');
+    
+    // Gestion des enfants
+    Route::get('/children', [App\Http\Controllers\Parent\ChildController::class, 'index'])->name('children.index');
+    Route::get('/children/create', [App\Http\Controllers\Parent\ChildController::class, 'create'])->name('children.create');
+    Route::post('/children', [App\Http\Controllers\Parent\ChildController::class, 'store'])->name('children.store');
+    Route::get('/children/{child}/edit', [App\Http\Controllers\Parent\ChildController::class, 'edit'])->name('children.edit');
+    Route::put('/children/{child}', [App\Http\Controllers\Parent\ChildController::class, 'update'])->name('children.update');
+    Route::delete('/children/{child}', [App\Http\Controllers\Parent\ChildController::class, 'destroy'])->name('children.destroy');
+    
+    // Profil parent
+    Route::get('/profile', [App\Http\Controllers\Parent\ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [App\Http\Controllers\Parent\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [App\Http\Controllers\Parent\ProfileController::class, 'update'])->name('profile.update');
+    
+    // Sessions
+    Route::get('/sessions/{session}/join', [App\Http\Controllers\Parent\SessionController::class, 'join'])->name('sessions.join');
+    Route::post('/sessions/{session}/cancel', [App\Http\Controllers\Parent\SessionController::class, 'cancel'])->name('sessions.cancel');
+    
+    // Feedback
+    Route::get('/feedback', [App\Http\Controllers\Parent\FeedbackController::class, 'index'])->name('feedback.index');
+    Route::post('/feedback', [App\Http\Controllers\Parent\FeedbackController::class, 'store'])->name('feedback.store');
 });
 
 require __DIR__.'/settings.php';
