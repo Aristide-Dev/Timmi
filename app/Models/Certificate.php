@@ -13,13 +13,15 @@ class Certificate extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'issuer',
-        'date_obtained',
-        'file_url',
+        'issuing_organization',
+        'issued_date',
+        'expiry_date',
+        'file_path',
     ];
 
     protected $casts = [
-        'date_obtained' => 'date',
+        'issued_date' => 'date',
+        'expiry_date' => 'date',
     ];
 
     public function user(): BelongsTo

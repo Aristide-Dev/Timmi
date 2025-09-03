@@ -147,5 +147,56 @@ Route::middleware(['auth', 'role:parent'])->prefix('parent')->name('parent.')->g
     Route::post('/feedback', [App\Http\Controllers\Parent\FeedbackController::class, 'store'])->name('feedback.store');
 });
 
+// Routes pour les Professeurs
+Route::middleware(['auth', 'role:professor'])->prefix('professor')->name('professor.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Professor\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Profil professeur
+    Route::get('/profile', [App\Http\Controllers\Professor\ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [App\Http\Controllers\Professor\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [App\Http\Controllers\Professor\ProfileController::class, 'update'])->name('profile.update');
+    
+    // Gestion des matières et niveaux
+    Route::get('/subjects', [App\Http\Controllers\Professor\SubjectController::class, 'index'])->name('subjects.index');
+    Route::post('/subjects', [App\Http\Controllers\Professor\SubjectController::class, 'store'])->name('subjects.store');
+    Route::delete('/subjects/{subject}', [App\Http\Controllers\Professor\SubjectController::class, 'destroy'])->name('subjects.destroy');
+    
+    Route::get('/levels', [App\Http\Controllers\Professor\LevelController::class, 'index'])->name('levels.index');
+    Route::post('/levels', [App\Http\Controllers\Professor\LevelController::class, 'store'])->name('levels.store');
+    Route::delete('/levels/{level}', [App\Http\Controllers\Professor\LevelController::class, 'destroy'])->name('levels.destroy');
+    
+    // Gestion des zones géographiques
+    Route::get('/zones', [App\Http\Controllers\Professor\ZoneController::class, 'index'])->name('zones.index');
+    Route::post('/zones', [App\Http\Controllers\Professor\ZoneController::class, 'store'])->name('zones.store');
+    Route::delete('/zones/{city}', [App\Http\Controllers\Professor\ZoneController::class, 'destroy'])->name('zones.destroy');
+    
+    // Gestion de l'agenda et disponibilités
+    Route::get('/schedule', [App\Http\Controllers\Professor\ScheduleController::class, 'index'])->name('schedule.index');
+    Route::post('/schedule', [App\Http\Controllers\Professor\ScheduleController::class, 'store'])->name('schedule.store');
+    Route::put('/schedule/{availability}', [App\Http\Controllers\Professor\ScheduleController::class, 'update'])->name('schedule.update');
+    Route::delete('/schedule/{availability}', [App\Http\Controllers\Professor\ScheduleController::class, 'destroy'])->name('schedule.destroy');
+    
+    // Gestion des réservations
+    Route::get('/bookings', [App\Http\Controllers\Professor\BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{booking}', [App\Http\Controllers\Professor\BookingController::class, 'show'])->name('bookings.show');
+    Route::post('/bookings/{booking}/confirm', [App\Http\Controllers\Professor\BookingController::class, 'confirm'])->name('bookings.confirm');
+    Route::post('/bookings/{booking}/mark-completed', [App\Http\Controllers\Professor\BookingController::class, 'markCompleted'])->name('bookings.mark-completed');
+    Route::post('/bookings/{booking}/cancel', [App\Http\Controllers\Professor\BookingController::class, 'cancel'])->name('bookings.cancel');
+    
+    // Gestion des revenus
+    Route::get('/earnings', [App\Http\Controllers\Professor\EarningController::class, 'index'])->name('earnings.index');
+    Route::get('/earnings/statistics', [App\Http\Controllers\Professor\EarningController::class, 'statistics'])->name('earnings.statistics');
+    
+    // Gestion des certificats
+    Route::get('/certificates', [App\Http\Controllers\Professor\CertificateController::class, 'index'])->name('certificates.index');
+    Route::post('/certificates', [App\Http\Controllers\Professor\CertificateController::class, 'store'])->name('certificates.store');
+    Route::delete('/certificates/{certificate}', [App\Http\Controllers\Professor\CertificateController::class, 'destroy'])->name('certificates.destroy');
+    
+    // Sessions
+    Route::get('/sessions/{session}/join', [App\Http\Controllers\Professor\SessionController::class, 'join'])->name('sessions.join');
+    Route::post('/sessions/{session}/cancel', [App\Http\Controllers\Professor\SessionController::class, 'cancel'])->name('sessions.cancel');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

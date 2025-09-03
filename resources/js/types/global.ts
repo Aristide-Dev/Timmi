@@ -236,13 +236,7 @@ export interface Professor {
     reviews: Review[];
 }
 
-export interface Certificate {
-    id: number;
-    name: string;
-    issuer: string;
-    date_obtained: string;
-    file_url?: string;
-}
+
 
 export interface Availability {
     id: number;
@@ -344,9 +338,10 @@ export interface Certificate {
     id: number;
     user_id: number;
     name: string;
-    issuer: string;
-    date_obtained: string;
-    file_url?: string;
+    issuing_organization: string;
+    issued_date: string;
+    expiry_date?: string;
+    file_path?: string;
     created_at: string;
     updated_at: string;
 }
@@ -354,10 +349,11 @@ export interface Certificate {
 export interface Availability {
     id: number;
     user_id: number;
-    day_of_week: number; // 0 = dimanche, 1 = lundi, etc.
+    day_of_week: number; // 1 = lundi, 7 = dimanche
     start_time: string;
     end_time: string;
     is_available: boolean;
+    is_online?: boolean; // Alias pour compatibilité
     day_name?: string; // Attribut calculé côté backend
     created_at: string;
     updated_at: string;

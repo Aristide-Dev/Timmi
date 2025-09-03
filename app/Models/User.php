@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyPhone
         'is_available',
         'rating',
         'total_reviews',
+        'profile_photo',
     ];
 
     /**

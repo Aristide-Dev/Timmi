@@ -58,6 +58,57 @@ export function AppSidebar() {
             );
         }
 
+        // Menu pour les Professeurs
+        if (userRoles.includes('professor')) {
+            items.push(
+                {
+                    title: 'Tableau de bord',
+                    href: route('professor.dashboard'),
+                    icon: Home,
+                },
+                {
+                    title: 'Mon profil',
+                    href: route('professor.profile.index'),
+                    icon: User,
+                },
+                {
+                    title: 'Mes matières',
+                    href: route('professor.subjects.index'),
+                    icon: BookOpen,
+                },
+                {
+                    title: 'Mes niveaux',
+                    href: route('professor.levels.index'),
+                    icon: GraduationCap,
+                },
+                {
+                    title: 'Mes zones',
+                    href: route('professor.zones.index'),
+                    icon: MapPin,
+                },
+                {
+                    title: 'Mon agenda',
+                    href: route('professor.schedule.index'),
+                    icon: Calendar,
+                },
+                {
+                    title: 'Mes réservations',
+                    href: route('professor.bookings.index'),
+                    icon: FileText,
+                },
+                {
+                    title: 'Mes revenus',
+                    href: route('professor.earnings.index'),
+                    icon: Users,
+                },
+                {
+                    title: 'Mes certificats',
+                    href: route('professor.certificates.index'),
+                    icon: ShieldCheck,
+                }
+            );
+        }
+
         // Menu pour les Admins
         if (userRoles.includes('admin') || userRoles.includes('super-admin')) {
             items.push(
