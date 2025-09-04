@@ -37,6 +37,11 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/articles', [PagesController::class, 'articles'])->name('articles');
 Route::get('/services', [PagesController::class, 'services'])->name('services');
 
+// Route pour la recherche de professeurs
+Route::get('/search/teachers', function () {
+    return Inertia::render('TeacherSearch');
+})->name('search.teachers');
+
 // Routes de test pour les pages d'erreur (uniquement en développement)
 if (app()->environment(['local', 'testing'])) {
     Route::prefix('test-errors')->group(function () {
