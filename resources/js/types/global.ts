@@ -384,6 +384,207 @@ export interface Role {
     updated_at: string;
 }
 
+// Interfaces pour l'administration
+export interface AdminDashboard {
+    total_users: number;
+    total_professors: number;
+    total_parents: number;
+    total_bookings: number;
+    total_revenue: number;
+    pending_bookings: number;
+    active_sessions: number;
+    recent_users: User[];
+    recent_bookings: Booking[];
+    monthly_revenue: Array<{
+        month: string;
+        revenue: number;
+    }>;
+    user_growth: Array<{
+        month: string;
+        users: number;
+    }>;
+}
+
+export interface AdminUser extends User {
+    roles: Role[];
+    total_bookings?: number;
+    total_spent?: number;
+    last_activity?: string;
+    is_verified: boolean;
+    is_active: boolean;
+}
+
+export interface AdminProfessor extends Professor {
+    total_sessions: number;
+    total_earnings: number;
+    average_rating: number;
+    total_reviews: number;
+    verification_status: 'pending' | 'verified' | 'rejected';
+    documents_uploaded: number;
+    last_activity: string;
+}
+
+export interface AdminParent extends User {
+    total_children: number;
+    total_bookings: number;
+    total_spent: number;
+    children: Child[];
+    last_booking?: string;
+}
+
+export interface AdminBooking extends Booking {
+    professor: AdminProfessor;
+    parent: AdminParent;
+    child: Child;
+    subject: Subject;
+    level: Level;
+    status_history: Array<{
+        status: string;
+        changed_at: string;
+        changed_by: string;
+    }>;
+    payment_details?: {
+        method: string;
+        transaction_id: string;
+        processed_at: string;
+    };
+}
+
+export interface AdminSession extends Session {
+    booking: AdminBooking;
+    professor: AdminProfessor;
+    parent: AdminParent;
+    child: Child;
+    duration_minutes: number;
+    start_time: string;
+    end_time: string;
+    meeting_link?: string;
+    notes?: string;
+    feedback?: Feedback;
+}
+
+export interface AdminPayment {
+    id: number;
+    booking_id: number;
+    user_id: number;
+    amount: number;
+    method: string;
+    status: 'pending' | 'completed' | 'failed' | 'refunded';
+    transaction_id?: string;
+    processed_at?: string;
+    refunded_at?: string;
+    refund_reason?: string;
+    created_at: string;
+    updated_at: string;
+    booking?: AdminBooking;
+    user?: AdminUser;
+}
+
+export interface AdminEarning {
+    id: number;
+    professor_id: number;
+    booking_id: number;
+    amount: number;
+    commission_rate: number;
+    commission_amount: number;
+    net_amount: number;
+    status: 'pending' | 'paid' | 'cancelled';
+    paid_at?: string;
+    created_at: string;
+    updated_at: string;
+    professor?: AdminProfessor;
+    booking?: AdminBooking;
+}
+
+export interface AdminReview extends Review {
+    professor: AdminProfessor;
+    parent: AdminParent;
+    booking: AdminBooking;
+    is_verified: boolean;
+    is_featured: boolean;
+    admin_notes?: string;
+    moderation_status: 'pending' | 'approved' | 'rejected';
+    moderated_by?: string;
+    moderated_at?: string;
+}
+
+export interface AdminFeedback extends Feedback {
+    session: AdminSession;
+    parent: AdminParent;
+    professor: AdminProfessor;
+    is_resolved: boolean;
+    admin_response?: string;
+    resolved_by?: string;
+    resolved_at?: string;
+}
+
+export interface AdminCertificate extends Certificate {
+    user: AdminUser;
+    verification_status: 'pending' | 'verified' | 'rejected';
+    verified_by?: string;
+    verified_at?: string;
+    admin_notes?: string;
+}
+
+export interface AdminAnalytics {
+    period: string;
+    total_users: number;
+    new_users: number;
+    active_users: number;
+    total_bookings: number;
+    completed_bookings: number;
+    cancelled_bookings: number;
+    total_revenue: number;
+    average_booking_value: number;
+    top_subjects: Array<{
+        subject: Subject;
+        bookings_count: number;
+        revenue: number;
+    }>;
+    top_cities: Array<{
+        city: City;
+        users_count: number;
+        bookings_count: number;
+    }>;
+    user_retention: number;
+    conversion_rate: number;
+}
+
+export interface AdminReport {
+    id: number;
+    title: string;
+    type: 'users' | 'bookings' | 'revenue' | 'performance';
+    period: string;
+    filters: Record<string, any>;
+    data: any;
+    generated_by: string;
+    generated_at: string;
+    file_path?: string;
+}
+
+export interface AdminSettings {
+    id: number;
+    key: string;
+    value: any;
+    type: 'string' | 'number' | 'boolean' | 'json';
+    description?: string;
+    is_public: boolean;
+    updated_at: string;
+}
+
+export interface AdminDatabaseStats {
+    tables: Array<{
+        name: string;
+        rows: number;
+        size: string;
+        last_updated: string;
+    }>;
+    total_size: string;
+    backup_status: 'success' | 'failed' | 'in_progress';
+    last_backup: string;
+    next_backup: string;
+}
+
 // Mise à jour de l'interface User pour inclure les nouvelles relations
 export interface User {
     id: number;

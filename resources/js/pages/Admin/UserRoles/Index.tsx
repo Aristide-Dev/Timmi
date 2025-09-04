@@ -5,7 +5,7 @@ import { Pagination } from '@/components/ui/pagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { Head, Link } from '@inertiajs/react';
-import { AlertCircle, Edit, User } from 'lucide-react';
+import { AlertCircle, Edit } from 'lucide-react';
 
 interface Role {
     id: number;

@@ -191,7 +191,7 @@ export default function ProfessorProfileEdit({ user, subjects, levels, cities }:
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="hourly_rate">Tarif horaire (FCFA) *</Label>
+                                    <Label htmlFor="hourly_rate">Tarif horaire (GNF) *</Label>
                                     <Input
                                         id="hourly_rate"
                                         type="number"

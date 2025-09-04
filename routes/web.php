@@ -4,6 +4,26 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorTestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\Parent\DashboardController as ParentDashboardController;
+use App\Http\Controllers\Professor\DashboardController as ProfessorDashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProfessorController;
+use App\Http\Controllers\Admin\ParentController;
+use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\SessionController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\EarningController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\FeedbackController;
+use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Admin\AnalyticsController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\DatabaseController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserRoleController;
+use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\EducationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -42,73 +62,184 @@ Route::middleware('auth')->group(function () {
 
 // Routes pour l'administration
 Route::middleware(['auth', 'verified', 'admin', 'verified.phone'])->prefix('admin')->name('admin.')->group(function () {
+    // Routes pour les utilisateurs
+    Route::resource('users', UserController::class);
+    Route::post('users/{user}/toggle-verification', [UserController::class, 'toggleVerification'])->name('users.toggle-verification');
+    Route::post('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+    Route::post('users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+
+    // Routes pour les professeurs
+    Route::get('professors', [ProfessorController::class, 'index'])->name('professors.index');
+    Route::get('professors/{professor}', [ProfessorController::class, 'show'])->name('professors.show');
+    Route::post('professors/{professor}/approve', [ProfessorController::class, 'approve'])->name('professors.approve');
+    Route::post('professors/{professor}/reject', [ProfessorController::class, 'reject'])->name('professors.reject');
+    Route::post('professors/{professor}/toggle-status', [ProfessorController::class, 'toggleStatus'])->name('professors.toggle-status');
+    Route::post('professors/{professor}/update-subjects', [ProfessorController::class, 'updateSubjects'])->name('professors.update-subjects');
+    Route::post('professors/{professor}/update-levels', [ProfessorController::class, 'updateLevels'])->name('professors.update-levels');
+    Route::post('professors/{professor}/update-cities', [ProfessorController::class, 'updateCities'])->name('professors.update-cities');
+    Route::post('professors/{professor}/update-hourly-rate', [ProfessorController::class, 'updateHourlyRate'])->name('professors.update-hourly-rate');
+
+    // Routes pour les parents
+    Route::get('parents', [ParentController::class, 'index'])->name('parents.index');
+    Route::get('parents/{parent}', [ParentController::class, 'show'])->name('parents.show');
+    Route::get('parents/{parent}/children', [ParentController::class, 'children'])->name('parents.children');
+    Route::get('parents/{parent}/bookings', [ParentController::class, 'bookings'])->name('parents.bookings');
+    Route::post('parents/{parent}/toggle-status', [ParentController::class, 'toggleStatus'])->name('parents.toggle-status');
+    Route::delete('parents/{parent}', [ParentController::class, 'destroy'])->name('parents.destroy');
+
+    // Routes pour les réservations
+    Route::get('bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::post('bookings/{booking}/update-status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
+    Route::post('bookings/{booking}/update-payment-status', [BookingController::class, 'updatePaymentStatus'])->name('bookings.update-payment-status');
+    Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    Route::get('bookings-stats', [BookingController::class, 'stats'])->name('bookings.stats');
+    Route::get('bookings-export', [BookingController::class, 'export'])->name('bookings.export');
+
+    // Routes pour les sessions
+    Route::get('sessions', [SessionController::class, 'index'])->name('sessions.index');
+    Route::get('sessions/{session}', [SessionController::class, 'show'])->name('sessions.show');
+    Route::post('sessions/{session}/update-status', [SessionController::class, 'updateStatus'])->name('sessions.update-status');
+    Route::post('sessions/{session}/add-notes', [SessionController::class, 'addNotes'])->name('sessions.add-notes');
+    Route::delete('sessions/{session}', [SessionController::class, 'destroy'])->name('sessions.destroy');
+    Route::get('sessions-stats', [SessionController::class, 'stats'])->name('sessions.stats');
+
+    // Routes pour les paiements
+    Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::get('payments/{payment}', [PaymentController::class, 'show'])->name('payments.show');
+    Route::post('payments/{payment}/update-status', [PaymentController::class, 'updateStatus'])->name('payments.update-status');
+    Route::post('payments/{payment}/refund', [PaymentController::class, 'refund'])->name('payments.refund');
+    Route::post('payments/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
+    Route::delete('payments/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
+    Route::get('payments-stats', [PaymentController::class, 'stats'])->name('payments.stats');
+    Route::get('payments-export', [PaymentController::class, 'export'])->name('payments.export');
+
+    // Routes pour les revenus
+    Route::get('earnings', [EarningController::class, 'index'])->name('earnings.index');
+    Route::get('earnings/professor/{professor}', [EarningController::class, 'professor'])->name('earnings.professor');
+    Route::get('earnings/period', [EarningController::class, 'period'])->name('earnings.period');
+    Route::get('earnings-export', [EarningController::class, 'export'])->name('earnings.export');
+
+    // Routes pour les avis
+    Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::get('reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
+    Route::post('reviews/{review}/moderate', [ReviewController::class, 'moderate'])->name('reviews.moderate');
+    Route::post('reviews/{review}/toggle-verification', [ReviewController::class, 'toggleVerification'])->name('reviews.toggle-verification');
+    Route::post('reviews/{review}/toggle-featured', [ReviewController::class, 'toggleFeatured'])->name('reviews.toggle-featured');
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::get('reviews-stats', [ReviewController::class, 'stats'])->name('reviews.stats');
+
+    // Routes pour les feedbacks
+    Route::get('feedback', [FeedbackController::class, 'index'])->name('feedback.index');
+    Route::get('feedback/{feedback}', [FeedbackController::class, 'show'])->name('feedback.show');
+    Route::post('feedback/{feedback}/respond', [FeedbackController::class, 'respond'])->name('feedback.respond');
+    Route::post('feedback/{feedback}/resolve', [FeedbackController::class, 'resolve'])->name('feedback.resolve');
+    Route::post('feedback/{feedback}/unresolve', [FeedbackController::class, 'unresolve'])->name('feedback.unresolve');
+    Route::delete('feedback/{feedback}', [FeedbackController::class, 'destroy'])->name('feedback.destroy');
+    Route::get('feedback-stats', [FeedbackController::class, 'stats'])->name('feedback.stats');
+
+    // Routes pour les certificats
+    Route::get('certificates', [CertificateController::class, 'index'])->name('certificates.index');
+    Route::get('certificates/{certificate}', [CertificateController::class, 'show'])->name('certificates.show');
+    Route::post('certificates/{certificate}/verify', [CertificateController::class, 'verify'])->name('certificates.verify');
+    Route::get('certificates/{certificate}/download', [CertificateController::class, 'download'])->name('certificates.download');
+    Route::delete('certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
+    Route::get('certificates-stats', [CertificateController::class, 'stats'])->name('certificates.stats');
+
+    // Routes pour les analytics
+    Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::get('analytics/detailed', [AnalyticsController::class, 'detailed'])->name('analytics.detailed');
+
+    // Routes pour les rapports
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::post('reports/generate', [ReportController::class, 'generate'])->name('reports.generate');
+
+    // Routes pour les paramètres
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('settings/general', [SettingsController::class, 'updateGeneral'])->name('settings.update-general');
+    Route::post('settings/email', [SettingsController::class, 'updateEmail'])->name('settings.update-email');
+    Route::post('settings/sms', [SettingsController::class, 'updateSms'])->name('settings.update-sms');
+    Route::post('settings/payment', [SettingsController::class, 'updatePayment'])->name('settings.update-payment');
+    Route::post('settings/features', [SettingsController::class, 'updateFeatures'])->name('settings.update-features');
+    Route::post('settings/limits', [SettingsController::class, 'updateLimits'])->name('settings.update-limits');
+    Route::post('settings/test-email', [SettingsController::class, 'testEmail'])->name('settings.test-email');
+    Route::post('settings/test-sms', [SettingsController::class, 'testSms'])->name('settings.test-sms');
+    Route::post('settings/clear-cache', [SettingsController::class, 'clearCache'])->name('settings.clear-cache');
+
+    // Routes pour la base de données
+    Route::get('database', [DatabaseController::class, 'index'])->name('database.index');
+    Route::post('database/backup', [DatabaseController::class, 'createBackup'])->name('database.backup');
+    Route::post('database/restore', [DatabaseController::class, 'restoreBackup'])->name('database.restore');
+    Route::post('database/optimize', [DatabaseController::class, 'optimize'])->name('database.optimize');
+    Route::post('database/cleanup', [DatabaseController::class, 'cleanup'])->name('database.cleanup');
+
     // Routes pour les rôles
-    Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('roles', RoleController::class);
     
     // Routes pour la gestion des rôles utilisateur
-    Route::get('user-roles', [\App\Http\Controllers\Admin\UserRoleController::class, 'index'])->name('user-roles.index');
-    Route::get('user-roles/{user}/edit', [\App\Http\Controllers\Admin\UserRoleController::class, 'edit'])->name('user-roles.edit');
-    Route::put('user-roles/{user}', [\App\Http\Controllers\Admin\UserRoleController::class, 'update'])->name('user-roles.update');
-    Route::post('user-roles/{user}/add-role', [\App\Http\Controllers\Admin\UserRoleController::class, 'addRole'])->name('user-roles.add-role');
-    Route::delete('user-roles/{user}/remove-role', [\App\Http\Controllers\Admin\UserRoleController::class, 'removeRole'])->name('user-roles.remove-role');
+    Route::get('user-roles', [UserRoleController::class, 'index'])->name('user-roles.index');
+    Route::get('user-roles/{user}/edit', [UserRoleController::class, 'edit'])->name('user-roles.edit');
+    Route::put('user-roles/{user}', [UserRoleController::class, 'update'])->name('user-roles.update');
+    Route::post('user-roles/{user}/add-role', [UserRoleController::class, 'addRole'])->name('user-roles.add-role');
+    Route::delete('user-roles/{user}/remove-role', [UserRoleController::class, 'removeRole'])->name('user-roles.remove-role');
 
     // Routes pour la localisation
     Route::prefix('locations')->name('locations.')->group(function () {
         // Routes pour les villes
-        Route::get('cities', [\App\Http\Controllers\Admin\LocationController::class, 'cities'])->name('cities.index');
-        Route::get('cities/create', [\App\Http\Controllers\Admin\LocationController::class, 'createCity'])->name('cities.create');
-        Route::post('cities', [\App\Http\Controllers\Admin\LocationController::class, 'storeCity'])->name('cities.store');
-        Route::get('cities/{city}/edit', [\App\Http\Controllers\Admin\LocationController::class, 'editCity'])->name('cities.edit');
-        Route::put('cities/{city}', [\App\Http\Controllers\Admin\LocationController::class, 'updateCity'])->name('cities.update');
-        Route::delete('cities/{city}', [\App\Http\Controllers\Admin\LocationController::class, 'destroyCity'])->name('cities.destroy');
+        Route::get('cities', [LocationController::class, 'cities'])->name('cities.index');
+        Route::get('cities/create', [LocationController::class, 'createCity'])->name('cities.create');
+        Route::post('cities', [LocationController::class, 'storeCity'])->name('cities.store');
+        Route::get('cities/{city}/edit', [LocationController::class, 'editCity'])->name('cities.edit');
+        Route::put('cities/{city}', [LocationController::class, 'updateCity'])->name('cities.update');
+        Route::delete('cities/{city}', [LocationController::class, 'destroyCity'])->name('cities.destroy');
 
         // Routes pour les quartiers
-        Route::get('neighborhoods', [\App\Http\Controllers\Admin\LocationController::class, 'neighborhoods'])->name('neighborhoods.index');
-        Route::get('neighborhoods/create', [\App\Http\Controllers\Admin\LocationController::class, 'createNeighborhood'])->name('neighborhoods.create');
-        Route::post('neighborhoods', [\App\Http\Controllers\Admin\LocationController::class, 'storeNeighborhood'])->name('neighborhoods.store');
-        Route::get('neighborhoods/{neighborhood}/edit', [\App\Http\Controllers\Admin\LocationController::class, 'editNeighborhood'])->name('neighborhoods.edit');
-        Route::put('neighborhoods/{neighborhood}', [\App\Http\Controllers\Admin\LocationController::class, 'updateNeighborhood'])->name('neighborhoods.update');
-        Route::delete('neighborhoods/{neighborhood}', [\App\Http\Controllers\Admin\LocationController::class, 'destroyNeighborhood'])->name('neighborhoods.destroy');
+        Route::get('neighborhoods', [LocationController::class, 'neighborhoods'])->name('neighborhoods.index');
+        Route::get('neighborhoods/create', [LocationController::class, 'createNeighborhood'])->name('neighborhoods.create');
+        Route::post('neighborhoods', [LocationController::class, 'storeNeighborhood'])->name('neighborhoods.store');
+        Route::get('neighborhoods/{neighborhood}/edit', [LocationController::class, 'editNeighborhood'])->name('neighborhoods.edit');
+        Route::put('neighborhoods/{neighborhood}', [LocationController::class, 'updateNeighborhood'])->name('neighborhoods.update');
+        Route::delete('neighborhoods/{neighborhood}', [LocationController::class, 'destroyNeighborhood'])->name('neighborhoods.destroy');
 
         // API routes
-        Route::get('neighborhoods-by-city', [\App\Http\Controllers\Admin\LocationController::class, 'getNeighborhoodsByCity'])->name('neighborhoods.by-city');
+        Route::get('neighborhoods-by-city', [LocationController::class, 'getNeighborhoodsByCity'])->name('neighborhoods.by-city');
     });
 
     // Routes pour l'éducation
     Route::prefix('education')->name('education.')->group(function () {
         // Routes pour les cycles
-        Route::get('cycles', [\App\Http\Controllers\Admin\EducationController::class, 'cycles'])->name('cycles.index');
-        Route::get('cycles/create', [\App\Http\Controllers\Admin\EducationController::class, 'createCycle'])->name('cycles.create');
-        Route::post('cycles', [\App\Http\Controllers\Admin\EducationController::class, 'storeCycle'])->name('cycles.store');
-        Route::get('cycles/{cycle}/edit', [\App\Http\Controllers\Admin\EducationController::class, 'editCycle'])->name('cycles.edit');
-        Route::put('cycles/{cycle}', [\App\Http\Controllers\Admin\EducationController::class, 'updateCycle'])->name('cycles.update');
-        Route::delete('cycles/{cycle}', [\App\Http\Controllers\Admin\EducationController::class, 'destroyCycle'])->name('cycles.destroy');
+        Route::get('cycles', [EducationController::class, 'cycles'])->name('cycles.index');
+        Route::get('cycles/create', [EducationController::class, 'createCycle'])->name('cycles.create');
+        Route::post('cycles', [EducationController::class, 'storeCycle'])->name('cycles.store');
+        Route::get('cycles/{cycle}/edit', [EducationController::class, 'editCycle'])->name('cycles.edit');
+        Route::put('cycles/{cycle}', [EducationController::class, 'updateCycle'])->name('cycles.update');
+        Route::delete('cycles/{cycle}', [EducationController::class, 'destroyCycle'])->name('cycles.destroy');
 
         // Routes pour les niveaux
-        Route::get('levels', [\App\Http\Controllers\Admin\EducationController::class, 'levels'])->name('levels.index');
-        Route::get('levels/create', [\App\Http\Controllers\Admin\EducationController::class, 'createLevel'])->name('levels.create');
-        Route::post('levels', [\App\Http\Controllers\Admin\EducationController::class, 'storeLevel'])->name('levels.store');
-        Route::get('levels/{level}/edit', [\App\Http\Controllers\Admin\EducationController::class, 'editLevel'])->name('levels.edit');
-        Route::put('levels/{level}', [\App\Http\Controllers\Admin\EducationController::class, 'updateLevel'])->name('levels.update');
-        Route::delete('levels/{level}', [\App\Http\Controllers\Admin\EducationController::class, 'destroyLevel'])->name('levels.destroy');
+        Route::get('levels', [EducationController::class, 'levels'])->name('levels.index');
+        Route::get('levels/create', [EducationController::class, 'createLevel'])->name('levels.create');
+        Route::post('levels', [EducationController::class, 'storeLevel'])->name('levels.store');
+        Route::get('levels/{level}/edit', [EducationController::class, 'editLevel'])->name('levels.edit');
+        Route::put('levels/{level}', [EducationController::class, 'updateLevel'])->name('levels.update');
+        Route::delete('levels/{level}', [EducationController::class, 'destroyLevel'])->name('levels.destroy');
 
         // Routes pour les matières
-        Route::get('subjects', [\App\Http\Controllers\Admin\EducationController::class, 'subjects'])->name('subjects.index');
-        Route::get('subjects/create', [\App\Http\Controllers\Admin\EducationController::class, 'createSubject'])->name('subjects.create');
-        Route::post('subjects', [\App\Http\Controllers\Admin\EducationController::class, 'storeSubject'])->name('subjects.store');
-        Route::get('subjects/{subject}/edit', [\App\Http\Controllers\Admin\EducationController::class, 'editSubject'])->name('subjects.edit');
-        Route::put('subjects/{subject}', [\App\Http\Controllers\Admin\EducationController::class, 'updateSubject'])->name('subjects.update');
-        Route::delete('subjects/{subject}', [\App\Http\Controllers\Admin\EducationController::class, 'destroySubject'])->name('subjects.destroy');
+        Route::get('subjects', [EducationController::class, 'subjects'])->name('subjects.index');
+        Route::get('subjects/create', [EducationController::class, 'createSubject'])->name('subjects.create');
+        Route::post('subjects', [EducationController::class, 'storeSubject'])->name('subjects.store');
+        Route::get('subjects/{subject}/edit', [EducationController::class, 'editSubject'])->name('subjects.edit');
+        Route::put('subjects/{subject}', [EducationController::class, 'updateSubject'])->name('subjects.update');
+        Route::delete('subjects/{subject}', [EducationController::class, 'destroySubject'])->name('subjects.destroy');
 
         // API routes
-        Route::get('levels-by-cycle', [\App\Http\Controllers\Admin\EducationController::class, 'getLevelsByCycle'])->name('levels.by-cycle');
+        Route::get('levels-by-cycle', [EducationController::class, 'getLevelsByCycle'])->name('levels.by-cycle');
     });
 });
 
 // Routes pour les Parents
 Route::middleware(['auth', 'role:parent'])->prefix('parent')->name('parent.')->group(function () {
     // Dashboard
-    Route::get('/dashboard', [App\Http\Controllers\Parent\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [ParentDashboardController::class, 'index'])->name('dashboard');
     
     // Recherche de professeurs
     Route::get('/search/professors', [App\Http\Controllers\Parent\SearchController::class, 'professors'])->name('search.professors');
@@ -150,7 +281,7 @@ Route::middleware(['auth', 'role:parent'])->prefix('parent')->name('parent.')->g
 // Routes pour les Professeurs
 Route::middleware(['auth', 'role:professor'])->prefix('professor')->name('professor.')->group(function () {
     // Dashboard
-    Route::get('/dashboard', [App\Http\Controllers\Professor\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [ProfessorDashboardController::class, 'index'])->name('dashboard');
     
     // Profil professeur
     Route::get('/profile', [App\Http\Controllers\Professor\ProfileController::class, 'index'])->name('profile.index');

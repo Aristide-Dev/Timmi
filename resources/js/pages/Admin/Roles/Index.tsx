@@ -1,136 +1,225 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Head, Link, router } from '@inertiajs/react';
-import { AlertCircle, Edit, Plus, Trash } from 'lucide-react';
+import { MoreHorizontal, Search, Eye, Edit, Trash2, Plus, Shield, Users } from 'lucide-react';
 import { useState } from 'react';
 
 interface Role {
     id: number;
     name: string;
     slug: string;
-    description: string | null;
-    is_default: boolean;
-    is_admin: boolean;
-    permissions: string[] | null;
+    description?: string;
+    permissions: string[];
+    users_count: number;
+    created_at: string;
 }
 
-interface Props {
+interface RolesIndexProps {
     roles: Role[];
+    filters: {
+        search?: string;
+    };
 }
 
-export default function Index({ roles }: Props) {
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-    const [roleToDelete, setRoleToDelete] = useState<Role | null>(null);
+export default function RolesIndex({ roles, filters }: RolesIndexProps) {
+    const [search, setSearch] = useState(filters.search || '');
 
-    const confirmDelete = (role: Role) => {
-        setRoleToDelete(role);
-        setIsDeleteDialogOpen(true);
+    const handleSearch = () => {
+        router.get(route('admin.roles.index'), {
+            search: search || undefined,
+        }, {
+            preserveState: true,
+            replace: true,
+        });
     };
 
-    const handleDelete = () => {
-        if (roleToDelete) {
-            router.delete(route('admin.roles.destroy', roleToDelete.id));
-            setIsDeleteDialogOpen(false);
+    const getRoleBadgeVariant = (slug: string) => {
+        switch (slug) {
+            case 'super-admin':
+                return 'destructive';
+            case 'admin':
+                return 'default';
+            case 'professor':
+                return 'secondary';
+            case 'parent':
+                return 'outline';
+            default:
+                return 'outline';
         }
     };
 
+    const getRoleLabel = (slug: string) => {
+        switch (slug) {
+            case 'super-admin':
+                return 'Super Admin';
+            case 'admin':
+                return 'Admin';
+            case 'professor':
+                return 'Professeur';
+            case 'parent':
+                return 'Parent';
+            default:
+                return slug;
+        }
+    };
+
+    const filteredRoles = roles.filter(role =>
+        role.name.toLowerCase().includes(search.toLowerCase()) ||
+        role.slug.toLowerCase().includes(search.toLowerCase()) ||
+        (role.description && role.description.toLowerCase().includes(search.toLowerCase()))
+    );
+
     return (
-        <AppLayout>
+        <AppLayout
+            breadcrumbs={[
+                { title: 'Administration', href: route('dashboard') },
+                { title: 'Rôles', href: route('admin.roles.index') },
+            ]}
+        >
             <Head title="Gestion des rôles" />
 
-            <div className="container py-8">
-                <div className="mb-6 flex items-center justify-between">
-                    <h1 className="text-3xl font-bold">Gestion des rôles</h1>
-                    <Link href={route('admin.roles.create')}>
-                        <Button>
-                            <Plus className="mr-2 h-4 w-4" /> Nouveau rôle
+            <div className="space-y-6">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight">Rôles</h1>
+                        <p className="text-muted-foreground">
+                            Gérez les rôles et permissions des utilisateurs
+                        </p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Button asChild>
+                            <Link href={route('admin.roles.create')}>
+                                <Plus className="mr-2 h-4 w-4" />
+                                Nouveau rôle
+                            </Link>
                         </Button>
-                    </Link>
+                    </div>
                 </div>
 
+                {/* Filters */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Liste des rôles</CardTitle>
+                        <CardTitle>Filtres</CardTitle>
+                        <CardDescription>Recherchez et filtrez les rôles</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Nom</TableHead>
-                                    <TableHead>Slug</TableHead>
-                                    <TableHead>Description</TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead>Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {roles.map((role) => (
-                                    <TableRow key={role.id}>
-                                        <TableCell className="font-medium">{role.name}</TableCell>
-                                        <TableCell>{role.slug}</TableCell>
-                                        <TableCell>{role.description || '-'}</TableCell>
-                                        <TableCell>
-                                            {role.is_admin && (
-                                                <Badge variant="destructive" className="mr-1">
-                                                    Admin
+                        <div className="flex space-x-4">
+                            <Input
+                                placeholder="Rechercher un rôle..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                                className="flex-1"
+                            />
+                            <Button onClick={handleSearch}>
+                                <Search className="mr-2 h-4 w-4" />
+                                Rechercher
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Roles List */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Liste des rôles ({filteredRoles.length})</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {filteredRoles.map((role) => (
+                                <div
+                                    key={role.id}
+                                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                                >
+                                    <div className="flex items-center space-x-4">
+                                        <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center">
+                                            <Shield className="h-6 w-6 text-purple-500" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <div className="flex items-center space-x-2">
+                                                <p className="font-medium">{role.name}</p>
+                                                <Badge variant={getRoleBadgeVariant(role.slug)}>
+                                                    {getRoleLabel(role.slug)}
                                                 </Badge>
-                                            )}
-                                            {role.is_default && <Badge variant="secondary">Par défaut</Badge>}
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex space-x-2">
-                                                <Link href={route('admin.roles.edit', role.id)}>
-                                                    <Button variant="outline" size="icon">
-                                                        <Edit className="h-4 w-4" />
-                                                    </Button>
-                                                </Link>
-                                                {!role.is_default && (
-                                                    <Button variant="outline" size="icon" onClick={() => confirmDelete(role)}>
-                                                        <Trash className="h-4 w-4" />
-                                                    </Button>
+                                            </div>
+                                            <p className="text-sm text-muted-foreground">
+                                                {role.description || 'Aucune description'}
+                                            </p>
+                                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                                <div className="flex items-center space-x-1">
+                                                    <Users className="h-4 w-4" />
+                                                    <span>{role.users_count} utilisateur(s)</span>
+                                                </div>
+                                                <div className="flex items-center space-x-1">
+                                                    <Shield className="h-4 w-4" />
+                                                    <span>{role.permissions.length} permission(s)</span>
+                                                </div>
+                                            </div>
+                                            <p className="text-xs text-muted-foreground">
+                                                Créé le {new Date(role.created_at).toLocaleDateString('fr-FR')}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                                <Button variant="ghost" size="sm">
+                                                    <MoreHorizontal className="h-4 w-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end">
+                                                <DropdownMenuItem asChild>
+                                                    <Link href={route('admin.roles.show', role.id)}>
+                                                        <Eye className="mr-2 h-4 w-4" />
+                                                        Voir
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem asChild>
+                                                    <Link href={route('admin.roles.edit', role.id)}>
+                                                        <Edit className="mr-2 h-4 w-4" />
+                                                        Modifier
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem asChild>
+                                                    <Link href={route('admin.roles.permissions', role.id)}>
+                                                        <Shield className="mr-2 h-4 w-4" />
+                                                        Permissions
+                                                    </Link>
+                                                </DropdownMenuItem>
+                                                {role.slug !== 'super-admin' && (
+                                                    <DropdownMenuItem
+                                                        onClick={() => {
+                                                            if (confirm('Êtes-vous sûr de vouloir supprimer ce rôle ?')) {
+                                                                router.delete(route('admin.roles.destroy', role.id));
+                                                            }
+                                                        }}
+                                                        className="text-red-600"
+                                                    >
+                                                        <Trash2 className="mr-2 h-4 w-4" />
+                                                        Supprimer
+                                                    </DropdownMenuItem>
                                                 )}
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {roles.length === 0 && (
-                                    <TableRow>
-                                        <TableCell colSpan={5} className="py-8 text-center">
-                                            <div className="flex flex-col items-center justify-center text-muted-foreground">
-                                                <AlertCircle className="mb-2 h-12 w-12" />
-                                                <p>Aucun rôle trouvé</p>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {filteredRoles.length === 0 && (
+                            <div className="text-center py-8">
+                                <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                                <p className="text-muted-foreground">Aucun rôle trouvé</p>
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
-
-            <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Confirmer la suppression</DialogTitle>
-                        <DialogDescription>
-                            Êtes-vous sûr de vouloir supprimer le rôle "{roleToDelete?.name}" ? Cette action est irréversible.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
-                            Annuler
-                        </Button>
-                        <Button variant="destructive" onClick={handleDelete}>
-                            Supprimer
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
         </AppLayout>
     );
 }

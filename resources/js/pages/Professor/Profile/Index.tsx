@@ -32,7 +32,7 @@ export default function ProfessorProfile({ user, stats }: Props) {
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('fr-FR', {
             style: 'currency',
-            currency: 'XOF',
+            currency: 'GNF',
         }).format(amount);
     };
 

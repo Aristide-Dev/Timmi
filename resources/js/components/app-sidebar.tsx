@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap, Search, Calendar, Home, User, FileText } from 'lucide-react';
+import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap, Search, Calendar, Home, User, FileText, DollarSign, BarChart3, Settings, MessageSquare, CreditCard, UserCheck, UserX, TrendingUp, Database } from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
@@ -118,8 +118,23 @@ export function AppSidebar() {
                     icon: LayoutGrid,
                 },
                 {
-                    title: 'Administration',
+                    title: 'Utilisateurs',
                     items: [
+                        {
+                            title: 'Tous les utilisateurs',
+                            href: route('admin.users.index'),
+                            icon: Users,
+                        },
+                        {
+                            title: 'Professeurs',
+                            href: route('admin.professors.index'),
+                            icon: UserCheck,
+                        },
+                        {
+                            title: 'Parents',
+                            href: route('admin.parents.index'),
+                            icon: User,
+                        },
                         {
                             title: 'Gestion des rôles',
                             href: route('admin.roles.index'),
@@ -129,6 +144,51 @@ export function AppSidebar() {
                             title: 'Rôles utilisateurs',
                             href: route('admin.user-roles.index'),
                             icon: Users,
+                        },
+                    ],
+                },
+                {
+                    title: 'Réservations & Sessions',
+                    items: [
+                        {
+                            title: 'Toutes les réservations',
+                            href: route('admin.bookings.index'),
+                            icon: Calendar,
+                        },
+                        {
+                            title: 'Sessions en cours',
+                            href: route('admin.sessions.index'),
+                            icon: BookOpen,
+                        },
+                        {
+                            title: 'Paiements',
+                            href: route('admin.payments.index'),
+                            icon: CreditCard,
+                        },
+                        {
+                            title: 'Revenus',
+                            href: route('admin.earnings.index'),
+                            icon: DollarSign,
+                        },
+                    ],
+                },
+                {
+                    title: 'Contenu & Feedback',
+                    items: [
+                        {
+                            title: 'Avis & Commentaires',
+                            href: route('admin.reviews.index'),
+                            icon: MessageSquare,
+                        },
+                        {
+                            title: 'Feedback',
+                            href: route('admin.feedback.index'),
+                            icon: FileText,
+                        },
+                        {
+                            title: 'Certificats',
+                            href: route('admin.certificates.index'),
+                            icon: ShieldCheck,
                         },
                     ],
                 },
@@ -164,6 +224,36 @@ export function AppSidebar() {
                             title: 'Gestion des matières',
                             href: route('admin.education.subjects.index'),
                             icon: BookOpen,
+                        },
+                    ],
+                },
+                {
+                    title: 'Statistiques & Rapports',
+                    items: [
+                        {
+                            title: 'Analytics',
+                            href: route('admin.analytics.index'),
+                            icon: BarChart3,
+                        },
+                        {
+                            title: 'Rapports',
+                            href: route('admin.reports.index'),
+                            icon: TrendingUp,
+                        },
+                    ],
+                },
+                {
+                    title: 'Système',
+                    items: [
+                        {
+                            title: 'Paramètres',
+                            href: route('admin.settings.index'),
+                            icon: Settings,
+                        },
+                        {
+                            title: 'Base de données',
+                            href: route('admin.database.index'),
+                            icon: Database,
                         },
                     ],
                 }
