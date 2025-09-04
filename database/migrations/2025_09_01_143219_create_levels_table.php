@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name'); // CP, CE1, CE2, CM1, CM2, 6e, 5e, 4e, 3e, 2nde, 1ère, Terminale, etc.
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->integer('grade_level')->nullable(); // Niveau numérique (1, 2, 3, etc.)
+            $table->string('grade_level')->nullable(); // Code du niveau (PS, MS, GS, CP, CE1, etc.)
             $table->boolean('is_active')->default(true);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
