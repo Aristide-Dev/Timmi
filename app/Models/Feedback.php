@@ -11,128 +11,91 @@ class Feedback extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'type',
-        'subject',
-        'message',
+        'booking_id',
+        'professor_id',
+        'student_id',
+        'rating',
+        'comment',
+        'would_recommend',
         'status',
-        'priority',
-        'admin_response',
-        'responded_at',
-        'responded_by',
-        'attachments',
-        'category',
-        'tags',
+        'categories',
     ];
 
     protected $casts = [
-        'responded_at' => 'datetime',
-        'attachments' => 'array',
-        'tags' => 'array',
+        'would_recommend' => 'boolean',
+        'categories' => 'array',
     ];
 
     /**
-     * Relation avec l'utilisateur
+     * Relation avec la réservation
      */
-    public function user(): BelongsTo
+    public function booking(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Booking::class);
     }
 
     /**
-     * Relation avec l'admin qui a répondu
+     * Relation avec le professeur
      */
-    public function responder(): BelongsTo
+    public function professor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'responded_by');
+        return $this->belongsTo(User::class, 'professor_id');
     }
 
     /**
-     * Scope pour les feedbacks ouverts
+     * Relation avec l'étudiant
      */
-    public function scopeOpen($query)
+    public function student(): BelongsTo
     {
-        return $query->where('status', 'open');
+        return $this->belongsTo(User::class, 'student_id');
     }
 
     /**
-     * Scope pour les feedbacks en cours
+     * Scope pour les feedbacks en attente
      */
-    public function scopeInProgress($query)
+    public function scopePending($query)
     {
-        return $query->where('status', 'in_progress');
+        return $query->where('status', 'pending');
     }
 
     /**
-     * Scope pour les feedbacks résolus
+     * Scope pour les feedbacks approuvés
      */
-    public function scopeResolved($query)
+    public function scopeApproved($query)
     {
-        return $query->where('status', 'resolved');
+        return $query->where('status', 'approved');
     }
 
     /**
-     * Scope pour les feedbacks fermés
+     * Scope pour les feedbacks rejetés
      */
-    public function scopeClosed($query)
+    public function scopeRejected($query)
     {
-        return $query->where('status', 'closed');
+        return $query->where('status', 'rejected');
     }
 
     /**
-     * Scope pour un type donné
+     * Vérifier si le feedback est en attente
      */
-    public function scopeOfType($query, $type)
+    public function isPending(): bool
     {
-        return $query->where('type', $type);
+        return $this->status === 'pending';
     }
 
     /**
-     * Scope pour une priorité donnée
+     * Vérifier si le feedback est approuvé
      */
-    public function scopeWithPriority($query, $priority)
+    public function isApproved(): bool
     {
-        return $query->where('priority', $priority);
+        return $this->status === 'approved';
     }
 
     /**
-     * Vérifier si le feedback est ouvert
+     * Vérifier si le feedback est rejeté
      */
-    public function isOpen(): bool
+    public function isRejected(): bool
     {
-        return $this->status === 'open';
-    }
-
-    /**
-     * Vérifier si le feedback est en cours
-     */
-    public function isInProgress(): bool
-    {
-        return $this->status === 'in_progress';
-    }
-
-    /**
-     * Vérifier si le feedback est résolu
-     */
-    public function isResolved(): bool
-    {
-        return $this->status === 'resolved';
-    }
-
-    /**
-     * Vérifier si le feedback est fermé
-     */
-    public function isClosed(): bool
-    {
-        return $this->status === 'closed';
-    }
-
-    /**
-     * Vérifier si le feedback a une réponse
-     */
-    public function hasResponse(): bool
-    {
-        return !empty($this->admin_response);
+        return $this->status === 'rejected';
     }
 
     /**
@@ -141,40 +104,10 @@ class Feedback extends Model
     public function getFormattedStatusAttribute(): string
     {
         return match ($this->status) {
-            'open' => 'Ouvert',
-            'in_progress' => 'En cours',
-            'resolved' => 'Résolu',
-            'closed' => 'Fermé',
+            'pending' => 'En attente',
+            'approved' => 'Approuvé',
+            'rejected' => 'Rejeté',
             default => $this->status,
-        };
-    }
-
-    /**
-     * Obtenir la priorité formatée
-     */
-    public function getFormattedPriorityAttribute(): string
-    {
-        return match ($this->priority) {
-            'low' => 'Faible',
-            'medium' => 'Moyenne',
-            'high' => 'Élevée',
-            'urgent' => 'Urgente',
-            default => $this->priority,
-        };
-    }
-
-    /**
-     * Obtenir le type formaté
-     */
-    public function getFormattedTypeAttribute(): string
-    {
-        return match ($this->type) {
-            'bug' => 'Bug',
-            'feature' => 'Fonctionnalité',
-            'improvement' => 'Amélioration',
-            'complaint' => 'Plainte',
-            'compliment' => 'Compliment',
-            default => $this->type,
         };
     }
 }

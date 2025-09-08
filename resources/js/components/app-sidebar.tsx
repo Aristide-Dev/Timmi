@@ -58,6 +58,52 @@ export function AppSidebar() {
             );
         }
 
+        // Menu pour les Étudiants
+        if (userRoles.includes('student')) {
+            items.push(
+                {
+                    title: 'Tableau de bord',
+                    href: route('student.dashboard'),
+                    icon: Home,
+                },
+                {
+                    title: 'Rechercher un professeur',
+                    href: route('student.search.professors'),
+                    icon: Search,
+                },
+                {
+                    title: 'Mes réservations',
+                    href: route('student.bookings.index'),
+                    icon: Calendar,
+                },
+                {
+                    title: 'Mon profil',
+                    href: route('student.profile.index'),
+                    icon: User,
+                },
+                {
+                    title: 'Mes matières',
+                    href: route('student.subjects.index'),
+                    icon: BookOpen,
+                },
+                {
+                    title: 'Mes niveaux',
+                    href: route('student.levels.index'),
+                    icon: GraduationCap,
+                },
+                {
+                    title: 'Mes villes',
+                    href: route('student.cities.index'),
+                    icon: MapPin,
+                },
+                {
+                    title: 'Feedback',
+                    href: route('student.feedback.index'),
+                    icon: FileText,
+                }
+            );
+        }
+
         // Menu pour les Professeurs
         if (userRoles.includes('professor')) {
             items.push(

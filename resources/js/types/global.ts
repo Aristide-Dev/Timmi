@@ -215,6 +215,8 @@ export interface Child {
 export interface Professor {
     id: number;
     name: string;
+    first_name: string;
+    last_name: string;
     email: string;
     phone: string;
     avatar?: string;
@@ -248,11 +250,20 @@ export interface Availability {
 
 export interface Review {
     id: number;
-    parent_name: string;
+    parent_name?: string;
+    professor?: Professor;
+    student?: User;
+    professor_id: number;
+    student_id: number;
+    title: string;
     rating: number;
     comment: string;
+    status: 'pending' | 'approved' | 'rejected';
+    would_recommend: boolean;
     date: string;
-    subject: string;
+    subject?: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface ProfessorSearchFilters {
@@ -278,16 +289,22 @@ export interface ProfessorSearchResult {
 export interface Booking {
     id: number;
     professor: Professor;
-    child: Child;
+    child?: Child;
+    student?: User;
     subject: Subject;
     level: Level;
     duration: number;
     total_price: number;
+    start_time: string;
+    end_time: string;
     status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     payment_status: 'pending' | 'paid' | 'refunded';
     payment_method?: string;
     meeting_link?: string;
     notes?: string;
+    booking_type: 'parent_child' | 'student_direct';
+    parent_id?: number;
+    student_id?: number;
     created_at: string;
 }
 
@@ -302,16 +319,25 @@ export interface Session {
 
 export interface Feedback {
     id: number;
-    session: Session;
+    session?: Session;
+    booking?: Booking;
+    professor?: Professor;
+    student?: User;
+    professor_id: number;
+    student_id: number;
+    booking_id: number;
     rating: number;
     comment: string;
-    categories: {
+    status: 'pending' | 'approved' | 'rejected';
+    would_recommend: boolean;
+    categories?: {
         teaching_quality: number;
         punctuality: number;
         communication: number;
         patience: number;
     };
     created_at: string;
+    updated_at: string;
 }
 
 export interface PaymentMethod {
@@ -609,6 +635,17 @@ export interface User {
     total_reviews?: number;
     avatar?: string;
     
+    // Champs spécifiques aux étudiants
+    age?: number;
+    grade_level?: string;
+    school?: string;
+    learning_goals?: string;
+    preferred_subjects?: number[];
+    preferred_levels?: number[];
+    preferred_cities?: number[];
+    is_student?: boolean;
+    parent_id?: number;
+    
     // Relations
     roles?: Role[];
     subjects?: Subject[];
@@ -620,4 +657,12 @@ export interface User {
     children?: Child[];
     bookings?: Booking[];
     professor_bookings?: Booking[];
+    
+    // Relations spécifiques aux étudiants
+    parent?: User;
+    students?: User[];
+    student_bookings?: Booking[];
+    student_subjects?: Subject[];
+    student_levels?: Level[];
+    student_cities?: City[];
 }

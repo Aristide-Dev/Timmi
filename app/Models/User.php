@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Contracts\Auth\MustVerifyPhone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,6 +37,16 @@ class User extends Authenticatable implements MustVerifyPhone
         'rating',
         'total_reviews',
         'profile_photo',
+        // Champs étudiants
+        'age',
+        'grade_level',
+        'school',
+        'learning_goals',
+        'preferred_subjects',
+        'preferred_levels',
+        'preferred_cities',
+        'is_student',
+        'parent_id',
     ];
 
     /**
@@ -67,6 +78,12 @@ class User extends Authenticatable implements MustVerifyPhone
             'is_available' => 'boolean',
             'rating' => 'decimal:1',
             'total_reviews' => 'integer',
+            // Casts pour les étudiants
+            'age' => 'integer',
+            'preferred_subjects' => 'array',
+            'preferred_levels' => 'array',
+            'preferred_cities' => 'array',
+            'is_student' => 'boolean',
         ];
     }
 
@@ -244,5 +261,60 @@ class User extends Authenticatable implements MustVerifyPhone
     public function professorBookings(): HasMany
     {
         return $this->hasMany(Booking::class, 'professor_id');
+    }
+
+    // Relations pour les étudiants
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    public function studentBookings(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'student_id');
+    }
+
+    public function studentSubjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class, 'user_subject', 'user_id', 'subject_id');
+    }
+
+    public function studentLevels(): BelongsToMany
+    {
+        return $this->belongsToMany(Level::class, 'user_level', 'user_id', 'level_id');
+    }
+
+    public function studentCities(): BelongsToMany
+    {
+        return $this->belongsToMany(City::class, 'user_city', 'user_id', 'city_id');
+    }
+
+    /**
+     * Vérifie si l'utilisateur est un étudiant.
+     */
+    public function isStudent(): bool
+    {
+        return $this->is_student === true;
+    }
+
+    /**
+     * Vérifie si l'utilisateur est un parent.
+     */
+    public function isParent(): bool
+    {
+        return $this->hasRole('parent');
+    }
+
+    /**
+     * Vérifie si l'utilisateur est un professeur.
+     */
+    public function isProfessor(): bool
+    {
+        return $this->hasRole('professor');
     }
 }

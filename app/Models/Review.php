@@ -12,23 +12,21 @@ class Review extends Model
 
     protected $fillable = [
         'professor_id',
-        'parent_id',
-        'booking_id',
+        'student_id',
+        'title',
         'rating',
         'comment',
-        'is_verified',
-        'is_featured',
+        'would_recommend',
         'status',
-        'verified_at',
-        'featured_at',
+        'parent_name',
+        'subject',
+        'date',
     ];
 
     protected $casts = [
         'rating' => 'integer',
-        'is_verified' => 'boolean',
-        'is_featured' => 'boolean',
-        'verified_at' => 'datetime',
-        'featured_at' => 'datetime',
+        'would_recommend' => 'boolean',
+        'date' => 'date',
     ];
 
     /**
@@ -40,19 +38,11 @@ class Review extends Model
     }
 
     /**
-     * Relation avec le parent
+     * Relation avec l'étudiant
      */
-    public function parent(): BelongsTo
+    public function student(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'parent_id');
-    }
-
-    /**
-     * Relation avec la réservation
-     */
-    public function booking(): BelongsTo
-    {
-        return $this->belongsTo(Booking::class);
+        return $this->belongsTo(User::class, 'student_id');
     }
 
     /**
@@ -77,22 +67,6 @@ class Review extends Model
     public function scopeRejected($query)
     {
         return $query->where('status', 'rejected');
-    }
-
-    /**
-     * Scope pour les avis vérifiés
-     */
-    public function scopeVerified($query)
-    {
-        return $query->where('is_verified', true);
-    }
-
-    /**
-     * Scope pour les avis mis en vedette
-     */
-    public function scopeFeatured($query)
-    {
-        return $query->where('is_featured', true);
     }
 
     /**
@@ -125,22 +99,6 @@ class Review extends Model
     public function isRejected(): bool
     {
         return $this->status === 'rejected';
-    }
-
-    /**
-     * Vérifier si l'avis est vérifié
-     */
-    public function isVerified(): bool
-    {
-        return $this->is_verified;
-    }
-
-    /**
-     * Vérifier si l'avis est mis en vedette
-     */
-    public function isFeatured(): bool
-    {
-        return $this->is_featured;
     }
 
     /**

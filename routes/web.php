@@ -334,5 +334,60 @@ Route::middleware(['auth', 'role:professor'])->prefix('professor')->name('profes
     Route::post('/sessions/{session}/cancel', [App\Http\Controllers\Professor\SessionController::class, 'cancel'])->name('sessions.cancel');
 });
 
+// Routes pour les Étudiants
+Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Student\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Recherche de professeurs
+    Route::get('/search/professors', [App\Http\Controllers\Student\SearchController::class, 'professors'])->name('search.professors');
+    
+    // Profils des professeurs
+    Route::get('/professors/{professor}', [App\Http\Controllers\Student\ProfessorController::class, 'show'])->name('professors.show');
+    
+    // Réservations
+    Route::get('/bookings', [App\Http\Controllers\Student\BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/booking/create', [App\Http\Controllers\Student\BookingController::class, 'create'])->name('booking.create');
+    Route::post('/booking', [App\Http\Controllers\Student\BookingController::class, 'store'])->name('booking.store');
+    Route::get('/bookings/{booking}', [App\Http\Controllers\Student\BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking}/edit', [App\Http\Controllers\Student\BookingController::class, 'edit'])->name('bookings.edit');
+    Route::put('/bookings/{booking}', [App\Http\Controllers\Student\BookingController::class, 'update'])->name('bookings.update');
+    Route::post('/bookings/{booking}/cancel', [App\Http\Controllers\Student\BookingController::class, 'cancel'])->name('bookings.cancel');
+    
+    // Profil étudiant
+    Route::get('/profile', [App\Http\Controllers\Student\ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [App\Http\Controllers\Student\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [App\Http\Controllers\Student\ProfileController::class, 'update'])->name('profile.update');
+    
+    // Gestion des matières et niveaux préférés
+    Route::get('/subjects', [App\Http\Controllers\Student\SubjectController::class, 'index'])->name('subjects.index');
+    Route::post('/subjects', [App\Http\Controllers\Student\SubjectController::class, 'store'])->name('subjects.store');
+    Route::delete('/subjects/{subject}', [App\Http\Controllers\Student\SubjectController::class, 'destroy'])->name('subjects.destroy');
+    
+    Route::get('/levels', [App\Http\Controllers\Student\LevelController::class, 'index'])->name('levels.index');
+    Route::post('/levels', [App\Http\Controllers\Student\LevelController::class, 'store'])->name('levels.store');
+    Route::delete('/levels/{level}', [App\Http\Controllers\Student\LevelController::class, 'destroy'])->name('levels.destroy');
+    
+    // Gestion des villes préférées
+    Route::get('/cities', [App\Http\Controllers\Student\CityController::class, 'index'])->name('cities.index');
+    Route::post('/cities', [App\Http\Controllers\Student\CityController::class, 'store'])->name('cities.store');
+    Route::delete('/cities/{city}', [App\Http\Controllers\Student\CityController::class, 'destroy'])->name('cities.destroy');
+    
+    // Sessions
+    Route::get('/sessions/{session}/join', [App\Http\Controllers\Student\SessionController::class, 'join'])->name('sessions.join');
+    Route::post('/sessions/{session}/cancel', [App\Http\Controllers\Student\SessionController::class, 'cancel'])->name('sessions.cancel');
+    
+    // Feedback et avis
+    Route::get('/feedback', [App\Http\Controllers\Student\FeedbackController::class, 'index'])->name('feedback.index');
+    Route::post('/feedback', [App\Http\Controllers\Student\FeedbackController::class, 'store'])->name('feedback.store');
+    
+    // Avis sur les professeurs
+    Route::get('/reviews', [App\Http\Controllers\Student\ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews', [App\Http\Controllers\Student\ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('/reviews/{review}/edit', [App\Http\Controllers\Student\ReviewController::class, 'edit'])->name('reviews.edit');
+    Route::put('/reviews/{review}', [App\Http\Controllers\Student\ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [App\Http\Controllers\Student\ReviewController::class, 'destroy'])->name('reviews.destroy');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

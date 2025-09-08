@@ -19,6 +19,10 @@ class DashboardController extends Controller
             return redirect()->route('professor.dashboard');
         }
 
+        if($user->hasRole('student')){
+            return redirect()->route('student.dashboard');
+        }        
+
         if($user->hasRole('admin') || $user->hasRole('super-admin')){
             return Inertia::render('dashboard', [
                 'user' => $user,
