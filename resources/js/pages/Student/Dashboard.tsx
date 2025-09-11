@@ -228,7 +228,7 @@ export default function StudentDashboard({ stats, recent_bookings, favorite_prof
                                                         </span>
                                                     </div>
                                                     <span className="text-xs text-muted-foreground">
-                                                        {professor.hourly_rate}€/h
+                                                        {professor.hourly_rate}GNF/h
                                                     </span>
                                                 </div>
                                             </div>

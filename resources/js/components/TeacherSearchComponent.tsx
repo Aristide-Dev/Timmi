@@ -2,26 +2,47 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, BookOpen, GraduationCap, Filter, X, Star, Clock, Users, ChevronDown } from "lucide-react";
+import { Search, MapPin, BookOpen, GraduationCap, Filter, X, Star, Clock, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { router } from "@inertiajs/react";
 
 // Types
 interface Teacher {
-  id: string;
+  id: number;
   name: string;
-  avatar: string;
-  subject: string;
-  level: string;
-  city: string;
-  rating: number;
-  reviewCount: number;
-  hourlyRate: number;
-  experience: number;
-  description: string;
-  languages: string[];
-  availability: string;
-  verified: boolean;
-  responseTime: string;
+  email: string;
+  avatar?: string;
+  phone?: string;
+  bio?: string;
+  hourly_rate?: number;
+  experience_years?: number;
+  is_verified: boolean;
+  created_at: string;
+  updated_at: string;
+  subjects?: Array<{
+    id: number;
+    name: string;
+  }>;
+  levels?: Array<{
+    id: number;
+    name: string;
+  }>;
+  cities?: Array<{
+    id: number;
+    name: string;
+  }>;
+  reviews?: Array<{
+    id: number;
+    rating: number;
+    comment: string;
+    student: {
+      name: string;
+    };
+  }>;
+  bookings?: Array<{
+    id: number;
+    status: string;
+  }>;
 }
 
 interface FilterState {
@@ -32,115 +53,64 @@ interface FilterState {
   rating: number;
 }
 
-// Sample data
-const sampleTeachers: Teacher[] = [
-  {
-    id: "1",
-    name: "Marie Dubois",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-    subject: "Mathématiques",
-    level: "Lycée",
-    city: "Paris",
-    rating: 4.9,
-    reviewCount: 127,
-    hourlyRate: 35,
-    experience: 8,
-    description: "Professeure certifiée avec 8 ans d'expérience. Spécialisée dans la préparation au baccalauréat.",
-    languages: ["Français", "Anglais"],
-    availability: "Disponible",
-    verified: true,
-    responseTime: "< 2h"
-  },
-  {
-    id: "2",
-    name: "Jean Martin",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    subject: "Physique",
-    level: "Université",
-    city: "Lyon",
-    rating: 4.8,
-    reviewCount: 89,
-    hourlyRate: 42,
-    experience: 12,
-    description: "Docteur en physique, ancien chercheur au CNRS. Cours particuliers et préparation aux concours.",
-    languages: ["Français", "Anglais", "Allemand"],
-    availability: "Disponible",
-    verified: true,
-    responseTime: "< 1h"
-  },
-  {
-    id: "3",
-    name: "Sophie Laurent",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    subject: "Français",
-    level: "Collège",
-    city: "Marseille",
-    rating: 4.7,
-    reviewCount: 156,
-    hourlyRate: 28,
-    experience: 6,
-    description: "Passionnée de littérature, j'aide les élèves à améliorer leur expression écrite et orale.",
-    languages: ["Français", "Espagnol"],
-    availability: "Occupée",
-    verified: true,
-    responseTime: "< 4h"
-  },
-  {
-    id: "4",
-    name: "Pierre Moreau",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    subject: "Anglais",
-    level: "Primaire",
-    city: "Toulouse",
-    rating: 4.6,
-    reviewCount: 203,
-    hourlyRate: 25,
-    experience: 4,
-    description: "Professeur d'anglais natif, méthodes ludiques et interactives pour tous les âges.",
-    languages: ["Anglais", "Français"],
-    availability: "Disponible",
-    verified: false,
-    responseTime: "< 6h"
-  },
-  {
-    id: "5",
-    name: "Claire Rousseau",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-    subject: "Chimie",
-    level: "Lycée",
-    city: "Nice",
-    rating: 4.9,
-    reviewCount: 94,
-    hourlyRate: 38,
-    experience: 10,
-    description: "Ingénieure chimiste, spécialisée dans la préparation aux concours d'ingénieurs.",
-    languages: ["Français", "Italien"],
-    availability: "Disponible",
-    verified: true,
-    responseTime: "< 3h"
-  },
-  {
-    id: "6",
-    name: "Thomas Bernard",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-    subject: "Histoire",
-    level: "Collège",
-    city: "Bordeaux",
-    rating: 4.5,
-    reviewCount: 78,
-    hourlyRate: 30,
-    experience: 7,
-    description: "Historien passionné, j'aide les élèves à comprendre et mémoriser les événements historiques.",
-    languages: ["Français"],
-    availability: "Disponible",
-    verified: true,
-    responseTime: "< 2h"
-  }
-];
+interface TeacherSearchProps {
+  teachers: {
+    data: Teacher[];
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number;
+    to: number;
+    links: Array<{
+      url: string | null;
+      label: string;
+      active: boolean;
+    }>;
+  };
+  subjects: Array<{ id: number; name: string }>;
+  levels: Array<{ id: number; name: string }>;
+  cities: Array<{ id: number; name: string }>;
+  filters: {
+    search?: string;
+    subject?: string;
+    level?: string;
+    city?: string;
+    min_price?: number;
+    max_price?: number;
+    min_rating?: number;
+  };
+}
 
-const subjects = ["Toutes matières", "Mathématiques", "Physique", "Chimie", "Français", "Anglais", "Histoire", "Géographie", "SVT", "Philosophie"];
-const levels = ["Tous niveaux", "Primaire", "Collège", "Lycée", "Université", "Adulte"];
-const cities = ["Toutes villes", "Paris", "Lyon", "Marseille", "Toulouse", "Nice", "Bordeaux", "Nantes", "Strasbourg", "Lille"];
+// Helper functions
+const getTeacherRating = (teacher: Teacher): number => {
+  if (!teacher.reviews || teacher.reviews.length === 0) return 0;
+  const totalRating = teacher.reviews.reduce((sum, review) => sum + review.rating, 0);
+  return totalRating / teacher.reviews.length;
+};
+
+const getTeacherReviewCount = (teacher: Teacher): number => {
+  return teacher.reviews?.length || 0;
+};
+
+const getTeacherSubjects = (teacher: Teacher): string[] => {
+  return teacher.subjects?.map(s => s.name) || [];
+};
+
+const getTeacherLevels = (teacher: Teacher): string[] => {
+  return teacher.levels?.map(l => l.name) || [];
+};
+
+const getTeacherCities = (teacher: Teacher): string[] => {
+  return teacher.cities?.map(c => c.name) || [];
+};
+
+const getTeacherAvailability = (teacher: Teacher): string => {
+  const activeBookings = teacher.bookings?.filter(b => 
+    b.status === 'confirmed' || b.status === 'pending'
+  ).length || 0;
+  return activeBookings > 0 ? "Occupé" : "Disponible";
+};
 
 // Animated search input component
 const AnimatedSearchInput = ({ value, onChange, placeholder }: {
@@ -264,6 +234,13 @@ const FilterDropdown = ({ label, value, options, onChange, icon: Icon }: {
 
 // Teacher card component
 const TeacherCard = ({ teacher }: { teacher: Teacher }) => {
+  const rating = getTeacherRating(teacher);
+  const reviewCount = getTeacherReviewCount(teacher);
+  const subjects = getTeacherSubjects(teacher);
+  const levels = getTeacherLevels(teacher);
+  const cities = getTeacherCities(teacher);
+  const availability = getTeacherAvailability(teacher);
+
   return (
     <motion.div
       layout
@@ -278,11 +255,11 @@ const TeacherCard = ({ teacher }: { teacher: Teacher }) => {
         <div className="flex items-start gap-4 mb-4">
           <div className="relative">
             <img
-              src={teacher.avatar}
+              src={teacher.avatar || "/images/default-avatar.png"}
               alt={teacher.name}
               className="w-16 h-16 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700"
             />
-            {teacher.verified && (
+            {teacher.is_verified && (
               <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -299,10 +276,10 @@ const TeacherCard = ({ teacher }: { teacher: Teacher }) => {
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 text-yellow-400 fill-current" />
                 <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  {teacher.rating}
+                  {rating.toFixed(1)}
                 </span>
                 <span className="text-sm text-slate-500">
-                  ({teacher.reviewCount} avis)
+                  ({reviewCount} avis)
                 </span>
               </div>
             </div>
@@ -310,66 +287,56 @@ const TeacherCard = ({ teacher }: { teacher: Teacher }) => {
 
           <div className="text-right">
             <div className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-              {teacher.hourlyRate}€
+              {teacher.hourly_rate || 0}GNF
             </div>
             <div className="text-sm text-slate-500">par heure</div>
           </div>
         </div>
 
         {/* Subject and level */}
-        <div className="flex items-center gap-2 mb-3">
-          <div className="flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
-            <BookOpen className="h-3 w-3" />
-            {teacher.subject}
-          </div>
-          <div className="flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
-            <GraduationCap className="h-3 w-3" />
-            {teacher.level}
-          </div>
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          {subjects.slice(0, 2).map((subject, index) => (
+            <div key={index} className="flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
+              <BookOpen className="h-3 w-3" />
+              {subject}
+            </div>
+          ))}
+          {levels.slice(0, 1).map((level, index) => (
+            <div key={index} className="flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
+              <GraduationCap className="h-3 w-3" />
+              {level}
+            </div>
+          ))}
         </div>
 
         {/* Location and experience */}
-        <div className="flex items-center gap-4 mb-4 text-sm text-slate-600 dark:text-slate-400">
-          <div className="flex items-center gap-1">
-            <MapPin className="h-4 w-4" />
-            {teacher.city}
-          </div>
+        <div className="flex items-center gap-4 mb-4 text-sm text-slate-600 dark:text-slate-400 flex-wrap">
+          {cities.slice(0, 1).map((city, index) => (
+            <div key={index} className="flex items-center gap-1">
+              <MapPin className="h-4 w-4" />
+              {city}
+            </div>
+          ))}
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            {teacher.experience} ans d'exp.
-          </div>
-          <div className="flex items-center gap-1">
-            <Users className="h-4 w-4" />
-            Répond en {teacher.responseTime}
+            {teacher.experience_years || 0} ans d'exp.
           </div>
         </div>
 
         {/* Description */}
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
-          {teacher.description}
+          {teacher.bio || "Professeur qualifié disponible pour des cours particuliers."}
         </p>
-
-        {/* Languages */}
-        <div className="flex flex-wrap gap-1 mb-4">
-          {teacher.languages.map((lang) => (
-            <span
-              key={lang}
-              className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded text-xs"
-            >
-              {lang}
-            </span>
-          ))}
-        </div>
 
         {/* Availability and action */}
         <div className="flex items-center justify-between">
           <div className={cn(
             "px-3 py-1 rounded-full text-xs font-medium",
-            teacher.availability === "Disponible"
+            availability === "Disponible"
               ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
               : "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300"
           )}>
-            {teacher.availability}
+            {availability}
           </div>
           
           <motion.button
@@ -386,32 +353,42 @@ const TeacherCard = ({ teacher }: { teacher: Teacher }) => {
 };
 
 // Main component
-const TeacherSearchComponent = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+const TeacherSearchComponent = ({ teachers, subjects, levels, cities, filters: initialFilters }: TeacherSearchProps) => {
+  const [searchQuery, setSearchQuery] = useState(initialFilters?.search || "");
   const [filters, setFilters] = useState<FilterState>({
-    subject: "Toutes matières",
-    level: "Tous niveaux",
-    city: "Toutes villes",
-    priceRange: [0, 100],
-    rating: 0
+    subject: initialFilters?.subject || "Toutes matières",
+    level: initialFilters?.level || "Tous niveaux",
+    city: initialFilters?.city || "Toutes villes",
+    priceRange: [initialFilters?.min_price || 0, initialFilters?.max_price || 100],
+    rating: initialFilters?.min_rating || 0
   });
   const [showFilters, setShowFilters] = useState(false);
 
-  // Filter teachers based on search and filters
-  const filteredTeachers = sampleTeachers.filter((teacher) => {
-    const matchesSearch = searchQuery === "" || 
-      teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      teacher.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      teacher.city.toLowerCase().includes(searchQuery.toLowerCase());
+  // Initialiser les filtres avec les paramètres d'URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const subjectParam = urlParams.get('subject');
+    const searchParam = urlParams.get('search');
+    
+    if (subjectParam) {
+      setFilters(prev => ({
+        ...prev,
+        subject: subjectParam
+      }));
+    }
+    
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, []);
 
-    const matchesSubject = filters.subject === "Toutes matières" || teacher.subject === filters.subject;
-    const matchesLevel = filters.level === "Tous niveaux" || teacher.level === filters.level;
-    const matchesCity = filters.city === "Toutes villes" || teacher.city === filters.city;
-    const matchesPrice = teacher.hourlyRate >= filters.priceRange[0] && teacher.hourlyRate <= filters.priceRange[1];
-    const matchesRating = teacher.rating >= filters.rating;
+  // Préparer les options pour les dropdowns
+  const subjectOptions = ["Toutes matières", ...subjects.map(s => s.name)];
+  const levelOptions = ["Tous niveaux", ...levels.map(l => l.name)];
+  const cityOptions = ["Toutes villes", ...cities.map(c => c.name)];
 
-    return matchesSearch && matchesSubject && matchesLevel && matchesCity && matchesPrice && matchesRating;
-  });
+  // Les professeurs sont déjà filtrés côté serveur
+  const filteredTeachers = teachers.data;
 
   const activeFiltersCount = Object.values(filters).filter((value, index) => {
     if (index === 0) return value !== "Toutes matières";
@@ -422,6 +399,49 @@ const TeacherSearchComponent = () => {
     return false;
   }).length;
 
+  // Fonction pour effectuer une nouvelle recherche (navigation Inertia, sans rechargement complet)
+  const performSearch = (newFilters: Partial<FilterState>, newSearchQuery?: string) => {
+    const params: Record<string, string | number> = {};
+
+    const effectiveSearch = newSearchQuery !== undefined ? newSearchQuery : searchQuery;
+    if (effectiveSearch && effectiveSearch.trim()) {
+      params.search = effectiveSearch.trim();
+    }
+
+    if (newFilters.subject && newFilters.subject !== "Toutes matières") {
+      params.subject = newFilters.subject;
+    }
+    if (newFilters.level && newFilters.level !== "Tous niveaux") {
+      params.level = newFilters.level;
+    }
+    if (newFilters.city && newFilters.city !== "Toutes villes") {
+      params.city = newFilters.city;
+    }
+    if (newFilters.priceRange) {
+      if (newFilters.priceRange[0] > 0) params.min_price = newFilters.priceRange[0];
+      if (newFilters.priceRange[1] < 100) params.max_price = newFilters.priceRange[1];
+    }
+    if (newFilters.rating && newFilters.rating > 0) {
+      params.min_rating = newFilters.rating;
+    }
+
+    router.get(window.location.pathname, params, {
+      preserveScroll: true,
+      replace: true,
+    });
+  };
+
+  // Gestion de la recherche textuelle avec debounce (Inertia soft navigation)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery !== initialFilters?.search) {
+        performSearch(filters, searchQuery);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
+
   const clearFilters = () => {
     setFilters({
       subject: "Toutes matières",
@@ -430,13 +450,23 @@ const TeacherSearchComponent = () => {
       priceRange: [0, 100],
       rating: 0
     });
+    setSearchQuery("");
+    performSearch({
+      subject: "Toutes matières",
+      level: "Tous niveaux",
+      city: "Toutes villes",
+      priceRange: [0, 100],
+      rating: 0
+    }, "");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Header */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" />
+      <div className="relative overflow-hidden py-12 lg:py-24">
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" /> */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--primary-900)]/95 via-[color:var(--primary-800)]/95 to-[color:var(--primary-700)]/95 shadow-2xl border-b border-white/10 opacity-95" />
+        <div className="absolute min-h-screen h-full w-full bg-[url('/images/heros/hero-03.jpg')] bg-contain md:bg-cover bg-no-repeat bg-fixed"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -470,22 +500,34 @@ const TeacherSearchComponent = () => {
               <FilterDropdown
                 label="Matière"
                 value={filters.subject}
-                options={subjects}
-                onChange={(value) => setFilters(prev => ({ ...prev, subject: value }))}
+                options={subjectOptions}
+                onChange={(value) => {
+                  const newFilters = { ...filters, subject: value };
+                  setFilters(newFilters);
+                  performSearch(newFilters);
+                }}
                 icon={BookOpen}
               />
               <FilterDropdown
                 label="Niveau"
                 value={filters.level}
-                options={levels}
-                onChange={(value) => setFilters(prev => ({ ...prev, level: value }))}
+                options={levelOptions}
+                onChange={(value) => {
+                  const newFilters = { ...filters, level: value };
+                  setFilters(newFilters);
+                  performSearch(newFilters);
+                }}
                 icon={GraduationCap}
               />
               <FilterDropdown
                 label="Ville"
                 value={filters.city}
-                options={cities}
-                onChange={(value) => setFilters(prev => ({ ...prev, city: value }))}
+                options={cityOptions}
+                onChange={(value) => {
+                  const newFilters = { ...filters, city: value };
+                  setFilters(newFilters);
+                  performSearch(newFilters);
+                }}
                 icon={MapPin}
               />
               
@@ -534,7 +576,7 @@ const TeacherSearchComponent = () => {
                     {/* Price range */}
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
-                        Prix par heure: {filters.priceRange[0]}€ - {filters.priceRange[1]}€
+                        Prix par heure: {filters.priceRange[0]}GNF - {filters.priceRange[1]}GNF
                       </label>
                       <div className="flex items-center gap-4">
                         <input
@@ -613,6 +655,87 @@ const TeacherSearchComponent = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Pagination */}
+        {teachers.last_page > 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-12 flex justify-center"
+          >
+            <div className="flex items-center gap-2">
+              {/* Bouton Précédent */}
+              {teachers.current_page > 1 && (
+                <button
+                  onClick={() => {
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('page', (teachers.current_page - 1).toString());
+                    router.get(`${window.location.pathname}?${params.toString()}`, {}, { preserveScroll: true, replace: true });
+                  }}
+                  className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                >
+                  Précédent
+                </button>
+              )}
+
+              {/* Numéros de page */}
+              {teachers.links.map((link, index) => {
+                if (link.url === null) {
+                  return (
+                    <span
+                      key={index}
+                      className={`px-4 py-2 rounded-lg ${
+                        link.active
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                  );
+                }
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      const url = new URL(link.url!);
+                      const page = url.searchParams.get('page');
+                      const params = new URLSearchParams(window.location.search);
+                      if (page) {
+                        params.set('page', page);
+                      } else {
+                        params.delete('page');
+                      }
+                      router.get(`${window.location.pathname}?${params.toString()}`, {}, { preserveScroll: true, replace: true });
+                    }}
+                    className={`px-4 py-2 rounded-lg transition-colors ${
+                      link.active
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                );
+              })}
+
+              {/* Bouton Suivant */}
+              {teachers.current_page < teachers.last_page && (
+                <button
+                  onClick={() => {
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('page', (teachers.current_page + 1).toString());
+                    router.get(`${window.location.pathname}?${params.toString()}`, {}, { preserveScroll: true, replace: true });
+                  }}
+                  className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                >
+                  Suivant
+                </button>
+              )}
+            </div>
+          </motion.div>
+        )}
 
         {filteredTeachers.length === 0 && (
           <motion.div

@@ -14,17 +14,38 @@ const DesktopNav = () => {
 
   const isActiveRoute = (item) => {
     if (item.href) {
-      return url === route(item.href);
+      try {
+        const itemRoute = route(item.href);
+        return url === itemRoute || url === itemRoute + '/';
+      } catch (error) {
+        // Fallback si la route n'existe pas
+        console.warn(`Route "${item.href}" not found`);
+        return url.includes(item.href);
+      }
     }
     if (item.actif) {
-      return url.startsWith(route(item.actif.replace('.*', '')));
+      try {
+        const baseRoute = route(item.actif.replace('.*', ''));
+        return url.startsWith(baseRoute);
+      } catch (error) {
+        console.warn(`Route "${item.actif}" not found`);
+        return url.includes(item.actif.replace('.*', ''));
+      }
     }
     return false;
   };
 
   const isActiveParent = (item) => {
     if (item.children) {
-      return item.children.some(child => url === route(child.href));
+      return item.children.some(child => {
+        try {
+          const childRoute = route(child.href);
+          return url === childRoute || url === childRoute + '/';
+        } catch (error) {
+          console.warn(`Child route "${child.href}" not found`);
+          return url.includes(child.href);
+        }
+      });
     }
     return false;
   };
@@ -162,20 +183,45 @@ const DesktopNav = () => {
             {!item.children ? (
               <motion.a
                 href={item.href && item.href !== '#' ? route(item.href) : '#'}
-                className={`flex items-center px-4 py-2 rounded-lg text-md font-medium
+                className={`flex items-center px-4 py-2 rounded-lg text-md font-medium transition-all duration-300 relative overflow-hidden
                   ${isActive ? 
-                    'bg-white text-[color:var(--primary-500)] shadow-lg' : 
-                    'text-white hover:bg-white/10'
+                    'bg-white text-[color:var(--primary-600)] shadow-xl border border-[color:var(--primary-200)] font-semibold' : 
+                    'text-white hover:bg-white/10 hover:shadow-md'
                   }
-                  ${isHovered ? 'shadow-md' : ''}
+                  ${isHovered && !isActive ? 'shadow-md bg-white/5' : ''}
                 `}
+                whileHover={{ scale: isActive ? 1.02 : 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
                     >
+                      {/* Indicateur actif */}
+                      {isActive && (
+                        <motion.div
+                          className="absolute left-0 top-0 bottom-0 w-1 bg-[color:var(--primary-500)] rounded-r-full"
+                          initial={{ scaleY: 0 }}
+                          animate={{ scaleY: 1 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      )}
+                      
                       {item.icon && (
-                  <motion.div>
-                    <item.icon className="w-4 h-4 mr-2" />
+                        <motion.div
+                          animate={{ rotate: isActive ? [0, 5, 0] : 0 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <item.icon className={`w-4 h-4 mr-2 ${isActive ? 'text-[color:var(--primary-600)]' : ''}`} />
                         </motion.div>
                       )}
-                <span>{item.label}</span>
+                      <span>{item.label}</span>
+                      
+                      {/* Effet de brillance pour l'élément actif */}
+                      {isActive && (
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[color:var(--primary-100)]/30 to-transparent"
+                          animate={{ x: ['-100%', '100%'] }}
+                          transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                        />
+                      )}
               </motion.a>
             ) : (
               <>
@@ -184,17 +230,33 @@ const DesktopNav = () => {
                   aria-haspopup="true"
                   aria-expanded={openDropdown === item.label}
                   onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
-                  className={`flex items-center px-4 py-2 rounded-lg text-md font-medium
+                  className={`flex items-center px-4 py-2 rounded-lg text-md font-medium transition-all duration-300 relative overflow-hidden
                     ${isDropdownActive || openDropdown === item.label ? 
-                      'bg-white text-[color:var(--primary-500)] shadow-lg' : 
-                      'text-white hover:bg-white/10'
+                      'bg-white text-[color:var(--primary-600)] shadow-xl border border-[color:var(--primary-200)] font-semibold' : 
+                      'text-white hover:bg-white/10 hover:shadow-md'
                     }
-                    ${isHovered ? 'shadow-md' : ''}
+                    ${isHovered && !isDropdownActive && openDropdown !== item.label ? 'shadow-md bg-white/5' : ''}
                   `}
+                  whileHover={{ scale: (isDropdownActive || openDropdown === item.label) ? 1.02 : 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
                 >
+                  {/* Indicateur actif pour dropdown */}
+                  {(isDropdownActive || openDropdown === item.label) && (
+                    <motion.div
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-[color:var(--primary-500)] rounded-r-full"
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                  
                   {item.icon && (
-                    <motion.div>
-                      <item.icon className="w-4 h-4 mr-2" />
+                    <motion.div
+                      animate={{ rotate: (isDropdownActive || openDropdown === item.label) ? [0, 5, 0] : 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <item.icon className={`w-4 h-4 mr-2 ${(isDropdownActive || openDropdown === item.label) ? 'text-[color:var(--primary-600)]' : ''}`} />
                     </motion.div>
                   )}
                   <span>{item.label}</span>
@@ -204,9 +266,19 @@ const DesktopNav = () => {
                       rotate: openDropdown === item.label ? 180 : 0
                     }}
                     transition={{ duration: 0.3 }}
+                    className="ml-1"
                   >
-                    <ChevronDown className="w-4 h-4 ml-1" />
+                    <ChevronDown className={`w-4 h-4 ${(isDropdownActive || openDropdown === item.label) ? 'text-[color:var(--primary-600)]' : ''}`} />
                   </motion.div>
+                  
+                  {/* Effet de brillance pour l'élément dropdown actif */}
+                  {(isDropdownActive || openDropdown === item.label) && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-[color:var(--primary-100)]/30 to-transparent"
+                      animate={{ x: ['-100%', '100%'] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                    />
+                  )}
                 </motion.button>
 
                 <AnimatePresence>

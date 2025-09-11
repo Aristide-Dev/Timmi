@@ -1,11 +1,9 @@
 import { 
   Home,
-  FileText,
   Users,
-  Heart,
-  Newspaper,
-  Briefcase,
   Phone,
+  HelpCircle,
+  Search,
   // AlertTriangle,
   // Palette
 } from 'lucide-react';
@@ -17,24 +15,19 @@ const baseMenuItems = [
     icon: Home,
   },
   {
-    label: 'Articles',
-    href: 'articles',
-    icon: Newspaper,
-  },
-  {
-    label: 'Services',
-    href: 'services', 
-    icon: Briefcase,
+    label: 'Rechercher',
+    href: 'search.teachers',
+    icon: Search,
   },
   {
     label: 'À propos',
+    href: 'about',
     icon: Users,
-    actif: 'about.*',
-    children: [
-      { label: 'Notre équipe', href: 'about', icon: Users },
-      { label: 'Notre mission', href: 'about', icon: FileText },
-      { label: 'Nos valeurs', href: 'about', icon: Heart },
-    ]
+  },
+  {
+    label: 'FAQ',
+    href: 'faq',
+    icon: HelpCircle,
   },
   {
     label: 'Contact',

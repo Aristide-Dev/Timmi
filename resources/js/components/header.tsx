@@ -154,7 +154,7 @@ const Header: React.FC = () => {
                                 transition={{ duration: 0.7, ease: 'easeOut' }}
                             />
 
-                            <div className="relative overflow-hidden rounded-xl">
+                            <motion.div className="relative overflow-hidden rounded-xl">
                                 <motion.div
                                     className={`flex items-center justify-center rounded-lg bg-white/20 ${state.isScrolled && !state.isMenuOpen ? 'h-10 w-full' : 'h-12 w-full'} `}
                                     style={{
@@ -164,9 +164,9 @@ const Header: React.FC = () => {
                                     whileTap={{ scale: 0.95 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <img src="/logo.jpg" className="size-full object-cover"/>
+                                    <img src="/logo.jpg" className="w-32 object-cover"/>
                                 </motion.div>
-                            </div>
+                            </motion.div>
                         </Link>
 
                         {/* Navigation desktop avec composant sophistiqué */}

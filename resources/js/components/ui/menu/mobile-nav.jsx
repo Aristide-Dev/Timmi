@@ -12,17 +12,38 @@ const MobileNav = ({ isOpen, onClose }) => {
 
   const isActiveRoute = (item) => {
     if (item.href) {
-      return url === route(item.href);
+      try {
+        const itemRoute = route(item.href);
+        return url === itemRoute || url === itemRoute + '/';
+      } catch (error) {
+        // Fallback si la route n'existe pas
+        console.warn(`Route "${item.href}" not found`);
+        return url.includes(item.href);
+      }
     }
     if (item.actif) {
-      return url.startsWith(route(item.actif.replace('.*', '')));
+      try {
+        const baseRoute = route(item.actif.replace('.*', ''));
+        return url.startsWith(baseRoute);
+      } catch (error) {
+        console.warn(`Route "${item.actif}" not found`);
+        return url.includes(item.actif.replace('.*', ''));
+      }
     }
     return false;
   };
 
   const isActiveParent = (item) => {
     if (item.children) {
-      return item.children.some(child => url === route(child.href));
+      return item.children.some(child => {
+        try {
+          const childRoute = route(child.href);
+          return url === childRoute || url === childRoute + '/';
+        } catch (error) {
+          console.warn(`Child route "${child.href}" not found`);
+          return url.includes(child.href);
+        }
+      });
     }
     return false;
   };
@@ -163,12 +184,12 @@ const MobileNav = ({ isOpen, onClose }) => {
                     <div className="space-y-1">
                       <button
                         onClick={() => toggleExpanded(index)}
-                        className={cn(
-                          "w-full flex items-center justify-between p-4 rounded-2xl text-left transition-all duration-300 group relative overflow-hidden",
-                          "hover:bg-gradient-to-r hover:from-[color:var(--primary-100)]/50 hover:to-[color:var(--accent-100)]/50",
-                          "focus:bg-gradient-to-r focus:from-[color:var(--primary-100)]/50 focus:to-[color:var(--accent-100)]/50 focus:outline-none",
-                          (isActiveRoute(item) || isActiveParent(item)) && "bg-gradient-to-r from-[color:var(--primary-100)] to-[color:var(--accent-100)] shadow-lg"
-                        )}
+                      className={cn(
+                        "w-full flex items-center justify-between p-4 rounded-2xl text-left transition-all duration-300 group relative overflow-hidden",
+                        "hover:bg-gradient-to-r hover:from-[color:var(--primary-100)]/50 hover:to-[color:var(--accent-100)]/50",
+                        "focus:bg-gradient-to-r focus:from-[color:var(--primary-100)]/50 focus:to-[color:var(--accent-100)]/50 focus:outline-none",
+                        (isActiveRoute(item) || isActiveParent(item)) && "bg-gradient-to-r from-[color:var(--primary-100)] to-[color:var(--accent-100)] shadow-xl border-2 border-[color:var(--primary-200)]"
+                      )}
                       >
                         {/* Effet de brillance au hover */}
                         <motion.div
@@ -278,7 +299,7 @@ const MobileNav = ({ isOpen, onClose }) => {
                         "flex items-center gap-3 p-4 rounded-2xl transition-all duration-300 group relative overflow-hidden",
                         "hover:bg-gradient-to-r hover:from-[color:var(--primary-100)]/50 hover:to-[color:var(--accent-100)]/50",
                         "focus:bg-gradient-to-r focus:from-[color:var(--primary-100)]/50 focus:to-[color:var(--accent-100)]/50",
-                        isActiveRoute(item) && "bg-gradient-to-r from-[color:var(--primary-100)] to-[color:var(--accent-100)] shadow-lg"
+                        isActiveRoute(item) && "bg-gradient-to-r from-[color:var(--primary-100)] to-[color:var(--accent-100)] shadow-xl border-2 border-[color:var(--primary-200)]"
                       )}
                     >
                       {/* Effet de brillance au hover */}

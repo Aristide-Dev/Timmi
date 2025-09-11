@@ -244,7 +244,7 @@ export default function StudentBookings({ bookings }: BookingsProps) {
 
                                                 <div>
                                                     <p className="text-lg font-bold">
-                                                        {booking.total_price.toFixed(2)}€
+                                                        {booking.total_price.toFixed(2)}GNF
                                                     </p>
                                                     <p className="text-xs text-muted-foreground">
                                                         Total

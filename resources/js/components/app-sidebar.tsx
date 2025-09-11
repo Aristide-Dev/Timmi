@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap, Search, Calendar, Home, User, FileText, DollarSign, BarChart3, Settings, MessageSquare, CreditCard, UserCheck, UserX, TrendingUp, Database } from 'lucide-react';
+import { LayoutGrid, ShieldCheck, Users, MapPin, BookOpen, GraduationCap, Search, Calendar, Home, User, FileText, DollarSign, BarChart3, Settings, MessageSquare, CreditCard, UserCheck, TrendingUp, Database } from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
@@ -165,6 +165,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Utilisateurs',
+                    icon: Users,
                     items: [
                         {
                             title: 'Tous les utilisateurs',
@@ -195,6 +196,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Réservations & Sessions',
+                    icon: Calendar,
                     items: [
                         {
                             title: 'Toutes les réservations',
@@ -220,6 +222,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Contenu & Feedback',
+                    icon: FileText,
                     items: [
                         {
                             title: 'Avis & Commentaires',
@@ -240,6 +243,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Localisation',
+                    icon: MapPin,
                     items: [
                         {
                             title: 'Gestion des villes',
@@ -255,6 +259,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Éducation',
+                    icon: BookOpen,
                     items: [
                         {
                             title: 'Gestion des cycles',
@@ -275,6 +280,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Statistiques & Rapports',
+                    icon: BarChart3,
                     items: [
                         {
                             title: 'Analytics',
@@ -290,6 +296,7 @@ export function AppSidebar() {
                 },
                 {
                     title: 'Système',
+                    icon: Settings,
                     items: [
                         {
                             title: 'Paramètres',

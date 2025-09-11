@@ -1,62 +1,59 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PagesController extends Controller
 {
     /**
-     * Page des favoris
-     */
-    public function favorites(): Response
-    {
-        return Inertia::render('favorites', [
-            'title' => 'Mes Favoris'
-        ]);
-    }
-
-    /**
-     * Page À propos
+     * Affiche la page À propos
      */
     public function about(): Response
     {
         return Inertia::render('about', [
-            'title' => 'À propos de nous'
+            'title' => 'À propos - TIMMI'
         ]);
     }
 
     /**
-     * Page Contact
+     * Affiche la page Contact
      */
     public function contact(): Response
     {
         return Inertia::render('contact', [
-            'title' => 'Nous contacter'
+            'title' => 'Contact - TIMMI'
         ]);
     }
 
     /**
-     * Page Articles
+     * Affiche la page FAQ
      */
-    public function articles(): Response
+    public function faq(): Response
     {
-        return Inertia::render('articles', [
-            'title' => 'Articles'
+        return Inertia::render('faq', [
+            'title' => 'FAQ - TIMMI'
         ]);
     }
 
     /**
-     * Page Services
+     * Affiche la page Conditions d'utilisation
      */
-    public function services(): Response
+    public function terms(): Response
     {
-        return Inertia::render('services', [
-            'title' => 'Nos Services'
+        return Inertia::render('terms', [
+            'title' => 'Conditions d\'utilisation - TIMMI'
         ]);
     }
-} 
+
+    /**
+     * Affiche la page Politique de confidentialité
+     */
+    public function privacy(): Response
+    {
+        return Inertia::render('privacy', [
+            'title' => 'Politique de confidentialité - TIMMI'
+        ]);
+    }
+}

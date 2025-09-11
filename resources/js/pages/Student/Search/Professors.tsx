@@ -284,7 +284,7 @@ export default function SearchProfessors({ professors, filters, subjects, levels
                                                 </span>
                                             </div>
                                             <div className="text-lg font-bold">
-                                                {professor.hourly_rate}€/h
+                                                {professor.hourly_rate}GNF/h
                                             </div>
                                         </div>
 

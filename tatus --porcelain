@@ -1,0 +1,5 @@
+[33mb7384b3da0c14d7f63bdfc81b96edd36082a4296[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m feat(frontend): add Blog, FAQ, Pricing pages and Accordion UI component (Inertia + shadcn/ui)
+A	resources/js/components/ui/accordion.tsx
+A	resources/js/pages/blog.tsx
+A	resources/js/pages/faq.tsx
+A	resources/js/pages/pricing.tsx

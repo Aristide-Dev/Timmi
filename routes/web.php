@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorTestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\TeacherSearchController;
 use App\Http\Controllers\Parent\DashboardController as ParentDashboardController;
 use App\Http\Controllers\Professor\DashboardController as ProfessorDashboardController;
 use App\Http\Controllers\Admin\UserController;
@@ -31,16 +32,14 @@ use Inertia\Inertia;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Routes pour les pages principales
-Route::get('/favorites', [PagesController::class, 'favorites'])->name('favorites');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
-Route::get('/articles', [PagesController::class, 'articles'])->name('articles');
-Route::get('/services', [PagesController::class, 'services'])->name('services');
+Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
+Route::get('/terms', [PagesController::class, 'terms'])->name('terms');
+Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy');
 
 // Route pour la recherche de professeurs
-Route::get('/search/teachers', function () {
-    return Inertia::render('TeacherSearch');
-})->name('search.teachers');
+Route::get('/search/teachers', [TeacherSearchController::class, 'index'])->name('search.teachers');
 
 // Routes de test pour les pages d'erreur (uniquement en développement)
 if (app()->environment(['local', 'testing'])) {

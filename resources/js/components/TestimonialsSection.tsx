@@ -82,7 +82,7 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: Testimonial; ind
       viewport={{ once: true }}
       className="group"
     >
-      <Card className="p-6 h-full bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
+      <Card className="p-6 h-full bg-gradient-to-br from-background to-muted/20 border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02] backdrop-blur-sm">
         {/* Quote icon */}
         <div className="flex justify-center mb-4">
           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -99,8 +99,8 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: Testimonial; ind
                 className={cn(
                   "h-4 w-4",
                   i < testimonial.rating
-                    ? "text-yellow-400 fill-current"
-                    : "text-gray-300"
+                    ? "text-[color:var(--accent-400)] fill-current"
+                    : "text-muted-foreground"
                 )}
               />
             ))}
@@ -109,7 +109,7 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: Testimonial; ind
 
         {/* Content */}
         <blockquote className="text-center mb-6">
-          <p className="text-slate-700 dark:text-slate-300 italic leading-relaxed">
+          <p className="text-foreground/90 italic leading-relaxed">
             "{testimonial.content}"
           </p>
         </blockquote>
@@ -121,18 +121,18 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: Testimonial; ind
           </div>
           <div className="text-center">
             <div className="flex items-center gap-2 justify-center">
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100">
+              <h4 className="font-semibold text-foreground">
                 {testimonial.name}
               </h4>
               {testimonial.verified && (
-                <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                <div className="w-4 h-4 bg-[color:var(--accent-500)] rounded-full flex items-center justify-center">
                   <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
               )}
             </div>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+            <p className="text-sm text-muted-foreground">
               {testimonial.role}
             </p>
           </div>
@@ -144,7 +144,7 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: Testimonial; ind
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-muted/30 via-background to-primary/5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -153,10 +153,10 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Ce que disent nos utilisateurs
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Découvrez les témoignages de parents et d'élèves qui font confiance à TIMMI
           </p>
         </motion.div>
@@ -181,26 +181,26 @@ const TestimonialsSection = () => {
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="space-y-2">
-              <div className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+              <div className="text-3xl font-bold text-foreground">
                 4.9/5
               </div>
-              <div className="text-slate-600 dark:text-slate-400">
+              <div className="text-muted-foreground">
                 Note moyenne
               </div>
             </div>
             <div className="space-y-2">
-              <div className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+              <div className="text-3xl font-bold text-foreground">
                 1200+
               </div>
-              <div className="text-slate-600 dark:text-slate-400">
+              <div className="text-muted-foreground">
                 Avis clients
               </div>
             </div>
             <div className="space-y-2">
-              <div className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+              <div className="text-3xl font-bold text-foreground">
                 98%
               </div>
-              <div className="text-slate-600 dark:text-slate-400">
+              <div className="text-muted-foreground">
                 Satisfaction
               </div>
             </div>

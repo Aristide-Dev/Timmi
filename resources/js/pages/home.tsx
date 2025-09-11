@@ -205,11 +205,12 @@ export default function HomePage() {
                       animate={prefersReducedMotion ? {} : { rotate: 360 }}
                       transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                     >
-                      <Star className="h-4 w-4 text-yellow-300" fill="currentColor" />
+                      <Star className="h-4 w-4 text-red-500" fill="currentColor" />
+                      <Star className="h-4 w-4 text-yellow-500" fill="currentColor" />
+                      <Star className="h-4 w-4 text-green-500" fill="currentColor" />
                     </motion.div>
-                    <span>✨ Nouvelle génération</span>
                     <div className="h-4 w-px bg-white/30" />
-                    <span className="text-xs opacity-90">Version 2024</span>
+                    <span className="text-xs opacity-90">GUINEE</span>
                   </Badge>
                 </motion.div>
 
@@ -218,7 +219,7 @@ export default function HomePage() {
                   <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] text-white">
                     Trouvez le{' '}
                   <motion.span 
-                      className="relative text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 inline-block"
+                      className="relative text-transparent bg-clip-text bg-gradient-to-r from-[color:var(--primary-700)] via-[color:var(--accent-200)] to-[color:var(--primary-900)] inline-block"
                       animate={prefersReducedMotion ? {} : { 
                         backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                     }}
@@ -234,7 +235,7 @@ export default function HomePage() {
                       professeur
                       {/* Effet de brillance sous le texte */}
                       <motion.div
-                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-yellow-300/60 to-transparent rounded-full"
+                        className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-[color:var(--primary-700)] via-[color:var(--accent-300)]/60 to-transparent rounded-full"
                         animate={prefersReducedMotion ? {} : { 
                           opacity: [0.5, 1, 0.5], 
                           scaleX: [0.8, 1.1, 0.8] 
@@ -268,7 +269,7 @@ export default function HomePage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.8 + index * 0.1 }}
                       >
-                        <Icon className="h-4 w-4 text-yellow-300" />
+                        <Icon className="h-4 w-4 text-[color:var(--accent-300)]" />
                         <span>{text}</span>
                       </motion.div>
                     ))}
@@ -282,7 +283,7 @@ export default function HomePage() {
                 >
                   <Button 
                     size="lg" 
-                    className="bg-white text-primary hover:bg-white/95 group relative overflow-hidden shadow-xl border-0 px-8 py-4 text-lg font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]"
+                    className=" group relative overflow-hidden shadow-xl border-0 px-8 py-4 text-lg font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]"
                     asChild
                   >
                     <Link href="/search/teachers">
@@ -307,7 +308,7 @@ export default function HomePage() {
                       
                       {/* Effet de brillance au hover */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-[color:var(--primary-500)]/20 to-transparent"
                         initial={{ x: '-100%' }}
                         whileHover={{ x: '100%' }}
                         transition={{ duration: 0.6 }}
@@ -318,7 +319,7 @@ export default function HomePage() {
                   <Button 
                     size="lg" 
                     variant="outline" 
-                    className="border-2 border-white/30 text-white hover:bg-white/15 hover:border-white/50 group relative overflow-hidden backdrop-blur-sm px-8 py-4 text-lg font-semibold transition-all duration-300"
+                    className="hover:text-white border-2 border-white/30 hover:bg-white/15 hover:border-white/50 group relative overflow-hidden backdrop-blur-sm px-8 py-4 text-lg font-semibold transition-all duration-300"
                     asChild
                   >
                     <Link href="/professor/profile">
@@ -346,7 +347,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-2">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 text-yellow-300 fill-current" />
+                        <Star key={i} className="h-4 w-4 text-[color:var(--accent-400)] fill-current" />
                       ))}
                     </div>
                     <span className="text-sm">4.9/5 (1200+ avis)</span>
@@ -409,7 +410,7 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="max-w-6xl mx-auto"
             >
-              <Card className="p-8 shadow-xl border-0 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900">
+              <Card className="p-8 shadow-xl border-0 bg-gradient-to-br from-background to-muted/20 backdrop-blur-sm">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-foreground mb-2">
                     Recherche avancée
@@ -504,21 +505,21 @@ export default function HomePage() {
                   title: "Recherchez",
                   description: "Filtrez par matière, niveau et localisation pour trouver des professeurs qualifiés",
                   icon: Search,
-                  color: "bg-blue-500"
+                  color: "bg-gradient-to-br from-[color:var(--primary-500)] to-[color:var(--primary-600)]"
                 },
                 {
                   step: "2", 
                   title: "Choisissez",
                   description: "Consultez les profils, avis et tarifs pour sélectionner le professeur idéal",
                   icon: CheckCircle,
-                  color: "bg-green-500"
+                  color: "bg-gradient-to-br from-[color:var(--accent-500)] to-[color:var(--accent-600)]"
                 },
                 {
                   step: "3",
                   title: "Réservez",
                   description: "Sélectionnez un créneau et payez en toute sécurité pour confirmer votre cours",
                   icon: Calendar,
-                  color: "bg-purple-500"
+                  color: "bg-gradient-to-br from-[color:var(--primary-600)] to-[color:var(--primary-700)]"
                 }
               ].map((step, index) => (
                 <motion.div
@@ -534,8 +535,8 @@ export default function HomePage() {
                       {step.step}
                     </div>
                     <div className="absolute -top-2 -right-2">
-                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                        <step.icon className="h-4 w-4 text-gray-600" />
+                      <div className="w-8 h-8 bg-gradient-to-br from-background to-muted/50 rounded-full flex items-center justify-center shadow-lg border border-[color:var(--primary-200)]">
+                        <step.icon className="h-4 w-4 text-[color:var(--primary-600)]" />
                       </div>
                     </div>
                   </div>

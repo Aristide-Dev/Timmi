@@ -18,7 +18,7 @@ const demoServices = [
     title: "Développement Web",
     description: "Création d'applications web modernes avec Laravel, React et les dernières technologies.",
     icon: Code,
-    price: "À partir de 2 500€",
+    price: "À partir de 2 500GNF",
     features: ["Laravel 12", "React 19", "Tailwind CSS", "Base de données", "API REST"],
     popular: true
   },
@@ -27,7 +27,7 @@ const demoServices = [
     title: "Design UI/UX",
     description: "Conception d'interfaces utilisateur intuitives et expériences utilisateur optimales.",
     icon: Palette,
-    price: "À partir de 1 200€",
+    price: "À partir de 1 200GNF",
     features: ["Maquettes", "Prototypes", "Design System", "Responsive", "Accessibilité"],
     popular: false
   },
@@ -36,7 +36,7 @@ const demoServices = [
     title: "Optimisation Performance",
     description: "Amélioration des performances de vos applications existantes pour une meilleure UX.",
     icon: Zap,
-    price: "À partir de 800€",
+    price: "À partir de 800GNF",
     features: ["Audit performance", "Optimisation code", "CDN", "Cache", "Monitoring"],
     popular: false
   },
@@ -54,7 +54,7 @@ const demoServices = [
     title: "Déploiement & Hébergement",
     description: "Configuration serveur, déploiement automatisé et hébergement sécurisé.",
     icon: Globe,
-    price: "À partir de 300€/mois",
+    price: "À partir de 300GNF/mois",
     features: ["Serveur dédié", "CI/CD", "SSL", "Backups", "Monitoring"],
     popular: false
   }
